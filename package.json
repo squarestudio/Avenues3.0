@@ -1,0 +1,29 @@
+{
+  "scripts": {
+    "serve:desktop": "webpack-dev-server --env.mode=development  --env.type=desktop",
+    "serve:mobile": "webpack-dev-server --env.mode=development  --env.type=mobile",
+    "build:desktop": "webpack --env.mode=production  --env.type=desktop",
+    "build:mobile": "webpack --env.mode=production  --env.type=mobile"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "vue": "^2.6.12",
+    "vue-router": "^3.4.3",
+    "vuex": "^3.5.1"
+  },
+  "devDependencies": {
+    "css-loader": "^4.2.1",
+    "html-webpack-injector": "^1.1.4",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.10.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "prerender-spa-plugin": "^3.4.0",
+    "terser-webpack-plugin": "^4.1.0",
+    "vue-loader": "^15.9.3",
+    "vue-svg-loader": "^0.16.0",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

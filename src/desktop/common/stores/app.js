@@ -52,6 +52,7 @@ export default {
     state: {
         sound: false,
         bitrate: 1920,
+        loaded: 0,
         home: [],
         archive: [],
         about: {}
@@ -73,6 +74,10 @@ export default {
 
         images: ({home, archive}, getters) => {
             return getters.projects.map(project => project.cover).concat(getters.projects.map(project => project.frame)).filter(unique);
+        },
+
+        progress: ({loaded}, {videos, images}) => {
+            return loaded / (videos.length + images.length);
         }
 
     },
@@ -122,7 +127,34 @@ export default {
             })
         },
 
-        setVideoSize({state, getters}, {src, videoWidth, videoHeight}) {
+        loadAssets ({state, getters, dispatch}) {
+            const complete = () => state.loaded++;
+            return Promise.all([
+                ...getters.images.map(src => dispatch('loadImage', src).then(complete)),
+                ...getters.videos.map(src => dispatch('loadVideo', src).then($video => dispatch('setVideoDone', $video)).then(complete))
+            ])
+        },
+
+        loadImage ({state}, src) {
+            return new Promise(resolve => {
+                const $image = new Image();
+                $image.addEventListener('load', () => resolve($image));
+                $image.src = src;
+            })
+        },
+
+        loadVideo ({state, dispatch}, src) {
+            return new Promise(resolve => {
+                const $video = document.createElement('video');
+                $video.addEventListener('canplaythrough', () => document.body.removeChild($video) && resolve($video));
+                $video.style.display = 'none';
+                $video.src = src;
+                $video.load();
+                document.body.appendChild($video);
+            })
+        },
+
+        setVideoDone ({state, getters}, {src, videoWidth, videoHeight}) {
             getters.projects.forEach(project => {
                 if (project.video !== src) return;
                 project.videoWidth = videoWidth;

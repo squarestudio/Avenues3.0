@@ -38,7 +38,7 @@
 
 <script>
 
-    import {mapActions, mapMutations, mapGetters} from 'vuex'
+    import {mapActions, mapGetters} from 'vuex'
     import API from '@/desktop/common/modules/api';
     import Animation from '@/common/scripts/animation';
 
@@ -47,8 +47,7 @@
         data () {
             return {
                 animation: new Animation(1),
-                rows: 400,
-                loaded: 0
+                rows: 400
             }
         },
 
@@ -56,13 +55,8 @@
 
             ...mapGetters('App', [
                 'private',
-                'images',
-                'videos'
-            ]),
-
-            filesLength () {
-                return this.videos.length + this.images.length;
-            }
+                'progress'
+            ])
 
         },
 
@@ -71,7 +65,7 @@
             ...mapActions('App', [
                 'getBitRate',
                 'getData',
-                'setVideoSize'
+                'loadAssets'
             ]),
 
             update (value) {
@@ -89,25 +83,6 @@
                 const col = this.$el.offsetHeight - parseFloat(top) - parseFloat(bottom);
                 const row = this.$refs.row[0].offsetHeight;
                 this.rows = this.rowsTotal = Math.floor(col / row) * 4 - 1;
-            },
-
-            loadImage (src) {
-                const $image = new Image();
-                $image.addEventListener('load', () => this.loaded++);
-                $image.src = src;
-            },
-
-            loadVideo (src) {
-                const $video = document.createElement('video');
-                $video.addEventListener('canplaythrough', () => {
-                    this.loaded++;
-                    this.setVideoSize($video);
-                    document.body.removeChild($video);
-                })
-                $video.style.display = 'none';
-                $video.src = src;
-                $video.load();
-                document.body.appendChild($video);
             },
 
             getPassword () {
@@ -134,9 +109,9 @@
 
         watch: {
 
-            loaded (value) {
-                const to = 0.5 - 0.5 * value / this.filesLength;
-                if (value === this.filesLength) this.animation.to(to, 1000, this.update, this.complete);
+            progress (value) {
+                const to = 0.5 - 0.5 * value;
+                if (value === 1) this.animation.to(to, 1000, this.update, this.complete);
                 else this.animation.to(to, 1000, this.update);
             }
 
@@ -154,8 +129,7 @@
                     return this.getData();
                 })
                 .then(() => {
-                    this.videos.forEach(this.loadVideo);
-                    this.images.forEach(this.loadImage);
+                    this.loadAssets();
                 })
         }
 

@@ -4,16 +4,36 @@
 
 <style>
 
+
+    /* default */
+
     .l-section header {
-        opacity: 0;
+        transform: translateY(-100%);
+        transition: transform .5s;
     }
     .l-section main {
         opacity: 0;
+        transition: opacity .5s;
     }
     .l-section footer {
-        opacity: 0;
+        transform: translateY(100%);
+        transition: transform .5s;
     }
-    
+
+
+    /* loaded */
+
+    .l-section.loaded header {
+        transform: translateY(0);
+    }
+    .l-section.loaded main {
+        opacity: 1;
+    }
+    .l-section.loaded footer {
+        transform: translateY(0);
+    }
+
+
 </style>
 
 
@@ -29,7 +49,7 @@
             <slot name="header" />
         </header>
 
-        <main>
+        <main class="u-flex">
             <slot name="main" />
         </main>
 
@@ -48,12 +68,16 @@
 
 <script>
 
+    import {mapState} from 'vuex'
+
     export default {
 
-        data () {
-            return {
-                loaded: false
-            }
+        computed: {
+
+            ...mapState('App', [
+                'loaded'
+            ])
+
         }
 
     }

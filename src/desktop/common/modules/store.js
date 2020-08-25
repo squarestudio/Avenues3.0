@@ -5,6 +5,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import App from '@/desktop/common/stores/app'
+import Home from '@/desktop/common/stores/home'
 
 
 
@@ -13,24 +14,6 @@ import App from '@/desktop/common/stores/app'
 // ------------------
 
 Vue.use(Vuex);
-
-
-
-// ------------------
-// Home
-// ------------------
-
-const Home = {
-    namespaced: true,
-    state: {
-        video: -1,
-        contain: false,
-        loaded: false,
-        paused: false,
-        minimized: false,
-        about: false
-    }
-}
 
 
 

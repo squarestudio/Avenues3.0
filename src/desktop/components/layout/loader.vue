@@ -10,8 +10,6 @@
         column-fill: auto;
         padding: var(--padding);
         background: #000000;
-    }
-    .l-loader .col {
         overflow: hidden;
     }
     
@@ -38,15 +36,18 @@
 
 <script>
 
-    import {mapActions, mapGetters} from 'vuex'
+    import {mapActions, mapMutations, mapState, mapGetters} from 'vuex'
     import API from '@/desktop/common/modules/api';
     import Animation from '@/common/scripts/animation';
+
+
 
     export default {
 
         data () {
             return {
                 animation: new Animation(1),
+                cache: JSON.parse(localStorage.getItem('cache')),
                 rows: 400
             }
         },
@@ -55,12 +56,21 @@
 
             ...mapGetters('App', [
                 'private',
-                'progress'
+                'assetsProgress'
+            ]),
+
+            ...mapState('App', [
+                'about',
+                'home',
+                'archive'
             ])
 
         },
 
         methods: {
+
+
+            // vuex
 
             ...mapActions('App', [
                 'getBitRate',
@@ -68,22 +78,57 @@
                 'loadAssets'
             ]),
 
+            ...mapMutations('App', [
+                'setState'
+            ]),
+
+
+            // animation callbacks
+
             update (value) {
                 this.rows = Math.round(this.rowsTotal * value);
             },
 
             complete () {
-                console.log('done');
+                this.setState({loaded: true});
+                this.setCache();
             },
 
-            normalizeRows () {
-                const style = getComputedStyle(this.$el);
-                const top = style.getPropertyValue('padding-top');
-                const bottom = style.getPropertyValue('padding-bottom');
-                const col = this.$el.offsetHeight - parseFloat(top) - parseFloat(bottom);
-                const row = this.$refs.row[0].offsetHeight;
-                this.rows = this.rowsTotal = Math.floor(col / row) * 4 - 1;
+            progress (value) {
+                const to = 0.5 - 0.5 * value;
+                if (value === 1) this.animation.to(to, 1000, this.update, this.complete);
+                else this.animation.to(to, 1000, this.update);
             },
+
+
+            // cache
+
+            isCached () {
+                return this.cache && Date.now() - this.cache.timestamp < 60 * 1000 && (this.$route.params.id || 0) === this.cache.id
+            },
+
+            applyCache () {
+                this.rows = 0;
+                this.setState({
+                    about: this.cache.about,
+                    home: this.cache.home,
+                    archive: this.cache.archive,
+                    loaded: true
+                });
+            },
+
+            setCache () {
+                localStorage.setItem('cache', JSON.stringify({
+                    id: this.$route.params.id || 0,
+                    timestamp: Date.now(),
+                    about: this.about,
+                    home: this.home,
+                    archive: this.archive
+                }))
+            },
+
+
+            // authentication
 
             getPassword () {
                 const password = window.prompt('Password');
@@ -103,34 +148,32 @@
                     if (this.private) this.login(resolve);
                     else resolve();
                 });
+            },
+
+
+            // normalize rows
+
+            normalizeRows () {
+                const style = getComputedStyle(this.$el);
+                const top = style.getPropertyValue('padding-top');
+                const bottom = style.getPropertyValue('padding-bottom');
+                const col = this.$el.offsetHeight - parseFloat(top) - parseFloat(bottom);
+                const row = this.$refs.row[0].offsetHeight;
+                this.rows = this.rowsTotal = Math.floor(col / row) * 4 - 1;
             }
 
         },
 
-        watch: {
-
-            progress (value) {
-                const to = 0.5 - 0.5 * value;
-                if (value === 1) this.animation.to(to, 1000, this.update, this.complete);
-                else this.animation.to(to, 1000, this.update);
-            }
-
-        },
-
-        mounted () {
+        async mounted () {
+            await this.auth();
+            if (this.isCached()) return this.applyCache();
             this.normalizeRows();
-            this.auth()
-                .then(() => {
-                    this.animation.to(0.8, 1000, this.update);
-                    return this.getBitRate(1000);
-                })
-                .then(() => {
-                    this.animation.to(0.5, 1000, this.update);
-                    return this.getData();
-                })
-                .then(() => {
-                    this.loadAssets();
-                })
+            this.animation.to(0.8, 1000, this.update);
+            await this.getBitRate(1000);
+            this.animation.to(0.5, 1000, this.update);
+            await this.getData();
+            this.$watch('assetsProgress', this.progress);
+            this.loadAssets();
         }
 
     }

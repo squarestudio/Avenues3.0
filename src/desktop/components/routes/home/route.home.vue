@@ -1,3 +1,7 @@
+<!--
+    Styles
+-->
+
 <style>
 
     #home {
@@ -6,47 +10,73 @@
 
 </style>
 
+
+
+<!--
+    Template
+-->
+
 <template>
     <layout-section id="home">
 
         <template #header>
-            Home
+            <home-header />
         </template>
 
         <template #main>
-
-            <router-link to="/index">To index</router-link>
-            <router-link to="/archive">To archive</router-link>
-            <br>
-            <br>
-            <a @click="test()">Set query</a>
+            <home-player />
+            <home-controls />
         </template>
 
         <template #footer>
-            footer
+            <home-footer />
         </template>
 
     </layout-section>
 </template>
 
 
+
+<!--
+    Scripts
+-->
+
 <script>
 
+    import {mapState} from 'vuex'
     import layoutSection from '@/desktop/components/layout/section.vue'
+    import homeHeader from './home.header.vue'
+    import homeControls from './home.controls.vue'
+    import homePlayer from './home.player.vue'
+    import homeFooter from './home.footer.vue'
 
     export default {
 
         components: {
-            layoutSection
+            layoutSection,
+            homeHeader,
+            homeControls,
+            homePlayer,
+            homeFooter
         },
 
-        methods: {
+        computed: {
 
-            test () {
+            ...mapState('App', [
+                'home',
+                'loaded'
+            ])
 
-                // this.
+        },
 
-                this.$router.push({ name: 'home', query: { plan: Math.random() }})
+        mounted () {
+            // if (this.loaded) {}
+            // else this.
+        },
+
+        watch: {
+
+            'route.query.id' (id) {
 
             }
 

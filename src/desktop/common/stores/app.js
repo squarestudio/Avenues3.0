@@ -19,7 +19,7 @@ const convertedDir = `${API_ORIGIN}/uploads/${API_PROJECT}/converted`;
 // Helpers
 // ------------------
 
-function parseProjects (data, bitrate) {
+function parseProjects (data = [], bitrate) {
     return data.filter(item => item.projects_id).map(item => {
         let project = item.projects_id;
         project.cover = `${convertedDir}/covers/${project.cover}/${bitrate}.jpg`;
@@ -52,7 +52,8 @@ export default {
     state: {
         sound: false,
         bitrate: 1920,
-        loaded: 0,
+        loadedAssets: 0,
+        loaded: false,
         home: [],
         archive: [],
         about: {}
@@ -76,35 +77,31 @@ export default {
             return getters.projects.map(project => project.cover).concat(getters.projects.map(project => project.frame)).filter(unique);
         },
 
-        progress: ({loaded}, {videos, images}) => {
-            return loaded / (videos.length + images.length);
+        assetsProgress: ({loadedAssets}, {videos, images}) => {
+            return loadedAssets / (videos.length + images.length);
         }
 
     },
 
     mutations: {
 
-        setData (state, [home = [], about = {}, archive = []]) {
-            state.home = parseProjects(home, state.bitrate);
-            state.archive = parseProjects(archive, state.bitrate);
-            state.about = about;
-        },
-
         setSound (state, value) {
             state.sound = value;
+        },
+
+        setState (state, value) {
+            Object.keys(value).forEach(key => state[key] = value[key]);
         }
 
     },
 
     actions: {
 
-        private ({commit, getters}) {
+        private ({getters}) {
             Promise.all([
                 API('private', getters.private.params.id),
                 API('about'),
-            ]).then(data => {
-                commit('setData', data);
-            })
+            ]);
         },
 
         public ({commit}) {
@@ -112,13 +109,17 @@ export default {
                 API('home'),
                 API('about'),
                 API('archive'),
-            ]).then((data) => {
-                commit('setData', data);
-            })
+            ]);
         },
 
-        getData ({getters, dispatch}) {
-            return dispatch(getters.private ? 'private' : 'public');
+        getData ({state, commit, getters, dispatch}) {
+            return dispatch(getters.private ? 'private' : 'public').then(data => {
+                commit('setState', {
+                    home: parseProjects(data[0], state.bitrate),
+                    about: data[1],
+                    archive: parseProjects(data[2], state.bitrate)
+                })
+            });
         },
 
         getBitRate ({state}, time) {
@@ -128,7 +129,7 @@ export default {
         },
 
         loadAssets ({state, getters, dispatch}) {
-            const complete = () => state.loaded++;
+            const complete = () => state.loadedAssets++;
             return Promise.all([
                 ...getters.images.map(src => dispatch('loadImage', src).then(complete)),
                 ...getters.videos.map(src => dispatch('loadVideo', src).then($video => dispatch('setVideoDone', $video)).then(complete))

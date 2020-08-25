@@ -3,6 +3,7 @@
 // ------------------
 
 const path = require('path');
+const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
@@ -71,6 +72,10 @@ module.exports = ({mode, type, port = 49018}) => ({
             {
                 test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
+            },
+            {
+                test: /\.(jpg|woff|woff2)$/i,
+                loader: 'file-loader'
             }
         ]
     },
@@ -79,7 +84,11 @@ module.exports = ({mode, type, port = 49018}) => ({
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin(),
         ...configurePlugins(mode, type),
-        new HtmlWebpackInjector()
+        new HtmlWebpackInjector(),
+        new webpack.DefinePlugin({
+            API_ORIGIN: JSON.stringify('http://93.188.166.42:49001'),
+            API_PROJECT: JSON.stringify('avenues')
+        }),
     ],
 
     devServer: {

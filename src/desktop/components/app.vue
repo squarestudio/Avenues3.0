@@ -1,34 +1,96 @@
+<!--
+    Styles
+-->
+
 <style>
 
-    div {
-        background: #F00;
+
+    /* main */
+
+    #app      {overflow: hidden;}
+    #home     {z-index: 1;}
+    #index    {z-index: 2;}
+    #archive  {z-index: 3;}
+
+
+    /* route transitions */
+
+    #app .route-up-enter-active,
+    #app .route-up-leave-active,
+    #app .route-down-enter-active,
+    #app .route-down-leave-active {
+        transition: transform .5s;
     }
+
+    #app .route-up-enter      {transform: translateY(100%)}
+    #app .route-up-enter-to   {transform: translateY(0)}
+    #app .route-up-leave      {transform: translateY(0)}
+    #app .route-up-leave-to   {transform: translateY(-50%)}
+    #app .route-down-enter    {transform: translateY(-50%)}
+    #app .route-down-enter-to {transform: translateY(0)}
+    #app .route-down-leave    {transform: translateY(0)}
+    #app .route-down-leave-to {transform: translateY(100%)}
+
 
 </style>
 
-<template>
-    <div>
-        App {{id}}
-        <router-link to="/">Home</router-link>
-        <router-link to="/index">Index</router-link>
 
-        <router-view />
+
+<!--
+    Template
+-->
+
+<template>
+    <div id="app" class="u-stretch">
+
+        <layout-loader />
+
+        <transition :name="transition">
+            <router-view />
+        </transition>
+
     </div>
 </template>
 
 
+
+<!--
+    Scripts
+-->
+
 <script>
+
+    import layoutLoader from '@/desktop/components/layout/loader.vue'
 
     export default {
 
+        components: {
+            layoutLoader
+        },
+
         data () {
             return {
-                id: 1
+                route: {
+                    to: null,
+                    from: null
+                }
             }
         },
 
-        mounted () {
-            console.log('here')
+        computed: {
+
+            transition () {
+                if (this.route.to === 'archive') return 'route-up';
+                if (this.route.from === 'archive') return 'route-down';
+                return null;
+            }
+
+        },
+
+        watch: {
+            '$route.name' (to, from) {
+                this.route = {to, from};
+            }
         }
 
     }

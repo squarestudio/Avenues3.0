@@ -1,0 +1,80 @@
+/*
+    Reset
+*/
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    overflow: hidden;
+    background: #000000;
+    color: #f7f7f7;
+}
+a {
+    display: block;
+    cursor: pointer;
+    text-decoration: none;
+    color: currentColor;
+}
+p {
+    margin: 0;
+}
+h1, h2, h3 {
+    margin: 0;
+    font-weight: 400;
+}
+svg {
+    display: block;
+    fill: currentColor;
+}
+img {
+    display: block;
+}
+video {
+    display: block;
+}
+input {
+    margin: 0;
+    padding: 0;
+    display: block;
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    text-transform: inherit;
+    color: inherit;
+}
+input:focus {
+    outline: none;
+}
+
+
+
+/*
+    Typography
+*/
+
+@font-face {
+    font-family: 'Founders Grotesk';
+    font-weight: 400;
+    src: url('~@/common/fonts/founders-grotesk-web-regular.woff2') format('woff2'),
+         url('~@/common/fonts/founders-grotesk-web-regular.woff') format('woff');
+}
+@font-face {
+    font-family: 'Founders Grotesk';
+    font-weight: 300;
+    src: url('~@/common/fonts/founders-grotesk-web-light.woff2') format('woff2'),
+         url('~@/common/fonts/founders-grotesk-web-light.woff') format('woff');
+}
+
+body {
+    font-family: "Founders Grotesk", sans-serif;
+    font-weight: 300;
+    line-height: 1;
+    text-transform: uppercase;
+}

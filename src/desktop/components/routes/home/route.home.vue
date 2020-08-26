@@ -4,8 +4,10 @@
 
 <style>
 
-    #home {
-        /*background: #00F; */
+    #home header,
+    #home footer {
+        position: relative;
+        z-index: 1;
     }
 
 </style>
@@ -24,7 +26,7 @@
         </template>
 
         <template #main>
-<!--            <home-player />-->
+            <home-player />
 <!--            <home-controls />-->
         </template>
 

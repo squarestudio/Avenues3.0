@@ -206,13 +206,11 @@
 
     import {mapState} from 'vuex'
     import iconOpen from '@/common/icons/open.svg';
-    import uiText from '@/desktop/components/ui/text.vue'
     import uiMenu from '@/desktop/components/ui/menu.vue'
 
     export default {
 
         components: {
-            uiText,
             uiMenu,
             iconOpen
         },

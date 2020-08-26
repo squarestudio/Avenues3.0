@@ -79,6 +79,7 @@
 
         <div class="project"
              :class="{active: projectInfo}"
+             :key="project.id"
              v-for="(project, i) in home"
              v-if="i === active">
 
@@ -111,7 +112,6 @@
 <script>
 
     import {mapState, mapMutations} from 'vuex'
-    import {hasParent} from '@/common/scripts/utils'
     import uiView from '@/desktop/components/ui/view.vue'
     import uiSound from '@/desktop/components/ui/sound.vue'
     import uiMenu from '@/desktop/components/ui/menu.vue'

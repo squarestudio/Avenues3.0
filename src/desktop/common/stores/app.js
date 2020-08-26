@@ -50,7 +50,7 @@ export default {
     namespaced: true,
 
     state: {
-        muted: false,
+        muted: true,
         bitrate: 1920,
         loadedAssets: 0,
         loaded: false,

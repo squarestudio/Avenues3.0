@@ -24,8 +24,8 @@
         </template>
 
         <template #main>
-            <home-player />
-            <home-controls />
+<!--            <home-player />-->
+<!--            <home-controls />-->
         </template>
 
         <template #footer>

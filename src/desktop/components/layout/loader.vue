@@ -12,6 +12,15 @@
         background: #000000;
         overflow: hidden;
     }
+    .l-loader.index,
+    .l-loader.archive {
+        background: #FFFFFF;
+        color: #000000;
+    }
+    .l-loader.private-index {
+        background: #A86F6F;
+        color: #000000;
+    }
     
 </style>
 
@@ -22,7 +31,7 @@
 -->
 
 <template>
-    <div class="l-loader u-stretch">
+    <div class="l-loader u-stretch" :class="$route.name">
         <div>Avenues</div>
         <div v-for="n in rows" ref="row">Avenues</div>
     </div>
@@ -39,8 +48,6 @@
     import {mapActions, mapMutations, mapState, mapGetters} from 'vuex'
     import API from '@/desktop/common/modules/api';
     import Animation from '@/common/scripts/animation';
-
-
 
     export default {
 
@@ -104,7 +111,7 @@
             // cache
 
             isCached () {
-                return this.cache && Date.now() - this.cache.timestamp < 60 * 1000 && (this.$route.params.id || 0) === this.cache.id
+                return this.cache && Date.now() - this.cache.timestamp < 60 * 60 * 1000 && (this.$route.params.id || 0) === this.cache.id
             },
 
             applyCache () {

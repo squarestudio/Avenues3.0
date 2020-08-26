@@ -24,7 +24,7 @@ export default [
         component: home
     },
     {
-        name: 'private.index',
+        name: 'private-index',
         path: '/private/:id/index',
         component: index
     },

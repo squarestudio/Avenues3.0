@@ -1,5 +1,5 @@
 import Vue from 'vue'
 
-Vue.filter('text', function (value) {
-    return value.replace(/\n/g, '<br>');
+Vue.filter('text', text => {
+    return text && text.replace(/\n/g, '<br>');
 })

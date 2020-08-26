@@ -14,27 +14,27 @@
     .project {
         position: relative;
     }
-    .project .target {
+    .project >>> .target {
         display: inline-flex;
     }
-    .project .source {
+    .project >>> .source {
         position: absolute;
         top: 100%;
         left: 0;
         overflow: hidden;
         visibility: hidden;
-        transition: visibility 0s, .5s;
+        transition: visibility 0s .5s;
     }
-    .project .source .move {
+    .project >>> .source .u-text {
         padding-top: 1rem;
         transform: translateY(-100%);
         transition: transform .5s;
     }
-    .project.active .source {
+    .project.active >>> .source {
         visibility: visible;
-        transition-duration: 0s;
+        transition-delay: 0s;
     }
-    .project.active .source .move {
+    .project.active >>> .source .u-text {
         transform: translateY(0);
     }
 
@@ -82,17 +82,11 @@
              v-for="(project, i) in home"
              v-if="i === active">
 
-            <a class="target u-row"
-               @mouseenter="targetEnter"
-               @mouseleave="targetLeave">
-                {{project.client}}
-            </a>
-
-            <div class="source" @mouseleave="sourceLeave">
-                <div class="move">
-                    <div class="u-text" :inner-html.prop="project.description | text"></div>
-                </div>
-            </div>
+            <ui-menu
+                :active.sync="projectInfo"
+                :target="project.client"
+                :source="project.description | text"
+            />
 
         </div>
 
@@ -120,12 +114,14 @@
     import {hasParent} from '@/common/scripts/utils'
     import uiView from '@/desktop/components/ui/view.vue'
     import uiSound from '@/desktop/components/ui/sound.vue'
+    import uiMenu from '@/desktop/components/ui/menu.vue'
 
     export default {
 
         components: {
             uiView,
-            uiSound
+            uiSound,
+            uiMenu
         },
 
         data () {
@@ -153,25 +149,11 @@
                 'toggle'
             ]),
 
-            targetEnter () {
-                this.projectInfo = true;
-            },
-
-            targetLeave (event) {
-                if (!hasParent(event.relatedTarget, event.currentTarget.nextElementSibling)) this.projectInfo = false;
-            },
-
-            sourceLeave (event) {
-                if (!hasParent(event.relatedTarget, event.currentTarget.previousElementSibling)) this.projectInfo = false;
-            },
-
             viewToggle () {
                 this.toggle('contain');
             }
 
-        },
-
-
+        }
 
     }
 

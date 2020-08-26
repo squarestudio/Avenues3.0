@@ -108,7 +108,7 @@
 -->
 
 <template>
-    <a class="ui-view">
+    <a class="ui-view" :class="{active}">
         <div class="icon" :style="{transform}">
             <span class="hor"></span>
             <span class="ver"></span>
@@ -133,6 +133,10 @@
     const iconSize = 16; // .icon width
 
     export default {
+
+        props: [
+            'active'
+        ],
 
         data () {
             return {

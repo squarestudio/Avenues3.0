@@ -20,7 +20,7 @@
 -->
 
 <template>
-    <a class="ui-sound u-link">
+    <a class="ui-sound u-link" :class="{active: !muted}" @click="setMuted(!muted)">
         <span>Sound</span>
         <span>Off</span>
         <span>On</span>
@@ -35,9 +35,25 @@
 
 <script>
 
+    import {mapState, mapMutations} from 'vuex'
+
     export default {
 
+        computed: {
 
+            ...mapState('App', [
+                'muted'
+            ])
+
+        },
+
+        methods: {
+
+            ...mapMutations('App', [
+                'setMuted'
+            ])
+
+        }
 
     }
 

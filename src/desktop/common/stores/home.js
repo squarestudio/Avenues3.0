@@ -8,6 +8,14 @@ export default {
         paused: false,
         minimized: false,
         about: false
+    },
+
+    mutations: {
+
+        toggle (state, key) {
+            state[key] = !state[key];
+        }
+
     }
 
 }

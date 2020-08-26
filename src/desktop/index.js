@@ -8,6 +8,8 @@ import '@/common/styles/base.css'
 import '@/common/styles/utils.css'
 import '@/desktop/index.css'
 
+import '@/desktop/common/filters/text'
+
 sync(store, router);
 
 new Vue({

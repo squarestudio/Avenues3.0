@@ -90,7 +90,7 @@
 
             <div class="source" @mouseleave="sourceLeave">
                 <div class="move">
-                    <div class="u-text">{{project.description}}</div>
+                    <div class="u-text" :inner-html.prop="project.description | text"></div>
                 </div>
             </div>
 
@@ -101,7 +101,7 @@
 
         <div class="buttons u-row">
             <ui-sound />
-            <ui-view />
+            <ui-view @click.native="viewToggle" :active="contain" />
         </div>
 
 
@@ -116,7 +116,7 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapState, mapMutations} from 'vuex'
     import {hasParent} from '@/common/scripts/utils'
     import uiView from '@/desktop/components/ui/view.vue'
     import uiSound from '@/desktop/components/ui/sound.vue'
@@ -134,7 +134,24 @@
             }
         },
 
+        computed: {
+
+            ...mapState('App', [
+                'home'
+            ]),
+
+            ...mapState('Home', [
+                'active',
+                'contain'
+            ])
+
+        },
+
         methods: {
+
+            ...mapMutations('Home', [
+                'toggle'
+            ]),
 
             targetEnter () {
                 this.projectInfo = true;
@@ -146,16 +163,15 @@
 
             sourceLeave (event) {
                 if (!hasParent(event.relatedTarget, event.currentTarget.previousElementSibling)) this.projectInfo = false;
+            },
+
+            viewToggle () {
+                this.toggle('contain');
             }
 
         },
 
-        computed: {
 
-            ...mapState('App', ['home']),
-            ...mapState('Home', ['active'])
-
-        }
 
     }
 

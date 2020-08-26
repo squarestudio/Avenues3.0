@@ -50,7 +50,7 @@ export default {
     namespaced: true,
 
     state: {
-        sound: false,
+        muted: false,
         bitrate: 1920,
         loadedAssets: 0,
         loaded: false,
@@ -85,8 +85,8 @@ export default {
 
     mutations: {
 
-        setSound (state, value) {
-            state.sound = value;
+        setMuted (state, value) {
+            state.muted = value;
         },
 
         setState (state, value) {

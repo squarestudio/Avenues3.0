@@ -32,6 +32,7 @@
             v-if="active === i"
             :video="project.video"
             :poster="project.frame"
+            :paused="paused"
             :key="project.id"
             :style="styles[i]"
         />
@@ -72,7 +73,8 @@
 
             ...mapState('Home', [
                 'active',
-                'contain'
+                'contain',
+                'paused'
             ])
 
         },

@@ -23,7 +23,7 @@
     }
     .l-section main {
         opacity: 0;
-        transition: opacity .5s;
+        transition: opacity .5s .5s;
     }
     .l-section footer {
         transform: translateY(100%);
@@ -63,7 +63,7 @@
             <slot name="header" />
         </header>
 
-        <main class="u-flex">
+        <main class="u-flex" @transitionend="showed">
             <slot name="main" />
         </main>
 
@@ -91,6 +91,14 @@
             ...mapState('App', [
                 'loaded'
             ])
+
+        },
+
+        methods: {
+
+            showed () {
+
+            }
 
         }
 

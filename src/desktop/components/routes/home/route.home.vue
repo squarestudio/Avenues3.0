@@ -4,7 +4,9 @@
 
 <style>
 
+
     #home header,
+    #home .controls,
     #home footer {
         position: relative;
         z-index: 1;
@@ -27,7 +29,7 @@
 
         <template #main>
             <home-player />
-<!--            <home-controls />-->
+            <home-controls />
         </template>
 
         <template #footer>

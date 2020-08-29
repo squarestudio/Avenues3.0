@@ -4,12 +4,6 @@
 
 <style>
 
-    .ui-sound:not(.active) span:nth-child(2) {
-        display: none;
-    }
-    .ui-sound.active span:nth-child(3) {
-        display: none;
-    }
 
 </style>
 
@@ -21,9 +15,7 @@
 
 <template>
     <a class="ui-sound u-link" :class="{active: !muted}" @click="setMuted(!muted)">
-        <span>Sound</span>
-        <span>Off</span>
-        <span>On</span>
+        <span>Sound {{muted ? 'On' : 'Off'}}</span>
     </a>
 </template>
 
@@ -40,35 +32,13 @@
     export default {
 
         computed: {
-
-            ...mapState('App', [
-                'muted'
-            ])
-
+            ...mapState('App', ['muted'])
         },
 
         methods: {
-
-            ...mapMutations('App', [
-                'setMuted'
-            ])
-
+            ...mapMutations('App', ['setMuted'])
         }
 
     }
-
-    // import {App} from '@desktop/scripts/state'
-    //
-    // const $sounds = document.querySelectorArr('.ui-sound');
-    // const $videos = document.querySelectorArr('video');
-    //
-    // $sounds.forEach($sound => $sound.addEventListener('click', () => {
-    //     App.set('sound', !App.get('sound'));
-    // }));
-    //
-    // App.watch('sound', value => {
-    //     $sounds.forEach($sound => $sound.classList.toggle('active', value));
-    //     $videos.forEach($video => $video.muted = !value);
-    // });
 
 </script>

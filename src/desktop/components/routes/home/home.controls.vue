@@ -34,7 +34,7 @@
 
     /* prev */
 
-    .prev svg {
+    .next svg {
         height: 1rem;
     }
 
@@ -54,8 +54,8 @@
 
         <!-- prev -->
 
-        <div class="area prev" @mousemove="move" @mouseenter="activate('prev')">
-            <div class="badge" :class="{active: badge === 'prev'}">
+        <div class="area next" @mousemove="move" @mouseenter="activate('next')" @click="next">
+            <div class="badge" :class="{active: badge === 'next'}">
                 <icon-prev />
             </div>
         </div>
@@ -72,9 +72,9 @@
 
         <!-- next -->
 
-        <div class="area next u-flex" @mousemove="move" @mouseenter="activate('next')">
-            <div class="badge" :class="{active: badge === 'next'}">
-                01 / {{home.length | digits}}
+        <div class="area prev u-flex" @mousemove="move" @mouseenter="activate('prev')" @click="prev">
+            <div class="badge" :class="{active: badge === 'prev'}">
+                {{(index + 1) | digits}} / {{home.length | digits}}
             </div>
 
         </div>
@@ -91,8 +91,36 @@
 
 <script>
 
-    import {mapState, mapMutations} from 'vuex'
+
+    // imports
+
+    import {mapState, mapGetters, mapMutations} from 'vuex'
     import iconPrev from '@/common/icons/prev.svg'
+
+
+    // wait helper
+
+    class Wait {
+
+        constructor () {
+            this.waiting = false;
+            this.timeout = null;
+        }
+
+        wait () {
+            this.waiting = true;
+            this.timeout = setTimeout(this.stop, 5000);
+        }
+
+        stop () {
+            this.waiting = false;
+            clearTimeout(this.timeout);
+        }
+
+    }
+
+
+    // exports
 
     export default {
 
@@ -110,27 +138,22 @@
 
         data () {
             return {
-                badge: null
+                badge: null,
+                wait: new Wait()
             }
         },
 
         computed: {
 
-            ...mapState('App', [
-                'home'
-            ]),
-
-            ...mapState('Home', [
-                'paused'
-            ])
+            ...mapState('App', ['home']),
+            ...mapState('Home', ['paused', 'video']),
+            ...mapGetters('Home', ['index'])
 
         },
 
         methods: {
 
-            ...mapMutations('Home', [
-                'toggle'
-            ]),
+            ...mapMutations('Home', ['toggle', 'set']),
 
             activate (value) {
                 this.badge = value;
@@ -143,6 +166,33 @@
                 const badge = $badge.getBoundingClientRect();
                 $badge.style.left = event.clientX - area.left - badge.width / 2 + 'px';
                 $badge.style.top = event.clientY - area.top - badge.height / 2 + 'px';
+            },
+
+            next () {
+                if (this.wait.waiting) {
+                    let next = this.index + 1;
+                    if (next > this.home.length - 1) next = 0;
+                    this.$router.push({query: {id: this.home[next].id}});
+                }
+                else {
+                    this.video.currentTime = 0;
+                    this.wait.wait();
+                    this.set({paused: false});
+                }
+            },
+
+            prev () {
+                let prev = this.index - 1;
+                if (prev < 0) prev = this.home.length - 1;
+                this.$router.push({query: {id: this.home[prev].id}});
+            }
+
+        },
+
+        watch: {
+
+            index () {
+                this.wait.stop();
             }
 
         }

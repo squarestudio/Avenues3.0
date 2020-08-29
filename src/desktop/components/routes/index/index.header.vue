@@ -36,7 +36,7 @@
         <!-- logo -->
 
         <div>
-            <router-link :to="{name: private ? 'private' : 'home'}">Avenues</router-link>
+            <router-link class="logo" :to="{name: private ? 'private' : 'home'}">Avenues</router-link>
         </div>
 
 

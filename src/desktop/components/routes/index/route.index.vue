@@ -5,8 +5,11 @@
 <style>
 
     #index {
-        background: #FFF;
         color: #000;
+    }
+    #index .l-bg {
+        background: #FFFFFF;
+        z-index: -1;
     }
 
 </style>
@@ -18,21 +21,14 @@
 -->
 
 <template>
-    <layout-section id="index">
+    <ui-section id="index" class="u-stretch u-col">
 
-        <template #header>
-            <index-header />
-        </template>
+        <index-header class="l-header" />
+        <index-main class="l-content u-flex" />
+        <index-footer class="l-footer" />
+        <div class="l-bg u-stretch l-content"></div>
 
-        <template #main>
-            <index-main />
-        </template>
-
-        <template #footer>
-            <index-footer />
-        </template>
-
-    </layout-section>
+    </ui-section>
 </template>
 
 
@@ -43,7 +39,7 @@
 
 <script>
 
-    import layoutSection from '@/desktop/components/layout/section.vue'
+    import uiSection from '@/desktop/components/ui/section.vue'
     import indexHeader from './index.header.vue'
     import indexMain from './index.main.vue'
     import indexFooter from './index.footer.vue'
@@ -51,7 +47,7 @@
     export default {
 
         components: {
-            layoutSection,
+            uiSection,
             indexHeader,
             indexMain,
             indexFooter

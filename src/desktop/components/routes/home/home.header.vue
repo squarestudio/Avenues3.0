@@ -4,10 +4,6 @@
 
 <style scoped>
 
-    .header {
-        /*flex-shrink: 0;*/
-    }
-
 
     /* project */
 
@@ -45,10 +41,7 @@
         justify-content: space-between;
     }
 
-    /*.project {*/
-    /*    display: none;*/
-    /*}*/
-    
+
 </style>
 
 
@@ -58,20 +51,20 @@
 -->
 
 <template>
-    <div class="header u-grid">
+    <header class="l-header u-grid">
 
 
         <!-- logo -->
 
         <div>
-            <a class="logo link">Avenues</a>
+            <a class="logo u-link">Avenues</a>
         </div>
 
 
         <!-- index -->
 
         <div>
-            <router-link :to="{name: private ? 'private-index' : 'index'}">Index</router-link>
+            <router-link class="u-link" :to="{name: private ? 'private-index' : 'index'}">Index</router-link>
         </div>
 
 
@@ -80,8 +73,8 @@
         <div class="project"
              :class="{active: projectInfo}"
              :key="project.id"
-             v-for="(project, i) in home"
-             v-if="i === active">
+             v-for="project in home"
+             v-if="project.id === active">
 
             <ui-menu
                 :active.sync="projectInfo"
@@ -100,7 +93,7 @@
         </div>
 
 
-    </div>
+    </header>
 </template>
 
 
@@ -132,18 +125,10 @@
 
         computed: {
 
-            ...mapState('App', [
-                'home',
-            ]),
-
-            ...mapState('Home', [
-                'active',
-                'contain'
-            ]),
-
-            ...mapGetters('App', [
-                'private',
-            ]),
+            ...mapState('App', ['home']),
+            ...mapState('Home', ['contain']),
+            ...mapGetters('App', ['private']),
+            ...mapGetters('Home', ['active'])
 
         },
 

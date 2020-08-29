@@ -3,11 +3,27 @@ export default {
     namespaced: true,
 
     state: {
-        active: 0,
+        video: {},
         contain: false,
         paused: true,
         minimized: false,
         about: false
+    },
+
+    getters: {
+
+        active (state, getters, rootState) {
+            const home = rootState.App.home;
+            if (!home.length) return;
+            const id = +rootState.route.query.id;
+            if (!id || !home.find(project => project.id === id)) return home[0].id;
+            return id;
+        },
+
+        index (state, getters, rootState) {
+            return rootState.App.home.findIndex(project => project.id === getters.active);
+        }
+
     },
 
     mutations: {

@@ -15,7 +15,9 @@
 
     /* route transitions */
 
-    #app section {transition: none;}
+    #app section {
+        transition: none;
+    }
 
     #app .route-up-enter-active,
     #app .route-up-leave-active,

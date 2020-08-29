@@ -4,13 +4,11 @@
 
 <style>
 
-
-    #home header,
-    #home .controls,
-    #home footer {
-        position: relative;
-        z-index: 1;
-    }
+    #home {overflow: hidden;}
+    #home .l-player   {z-index: 1;}
+    #home .l-controls {z-index: 2;}
+    #home .l-header   {z-index: 3;}
+    #home .l-footer   {z-index: 4;}
 
 </style>
 
@@ -21,22 +19,12 @@
 -->
 
 <template>
-    <layout-section id="home" main="u-col">
-
-        <template #header>
-            <home-header />
-        </template>
-
-        <template #main>
-            <home-player />
-            <home-controls />
-        </template>
-
-        <template #footer>
-            <home-footer />
-        </template>
-
-    </layout-section>
+    <ui-section id="home" class="u-stretch u-col">
+        <home-header class="l-header" />
+        <home-player class="l-content l-player" />
+        <home-controls class="l-content l-controls u-flex" />
+        <home-footer class="l-footer" />
+    </ui-section>
 </template>
 
 
@@ -47,8 +35,8 @@
 
 <script>
 
-    import {mapState, mapMutations} from 'vuex'
-    import layoutSection from '@/desktop/components/layout/section.vue'
+    import {mapState, mapGetters, mapMutations} from 'vuex'
+    import uiSection from '@/desktop/components/ui/section.vue'
     import homeHeader from './home.header.vue'
     import homeControls from './home.controls.vue'
     import homePlayer from './home.player.vue'
@@ -57,7 +45,7 @@
     export default {
 
         components: {
-            layoutSection,
+            uiSection,
             homeHeader,
             homeControls,
             homePlayer,
@@ -65,34 +53,33 @@
         },
 
         computed: {
-
-            ...mapState('App', [
-                'home',
-                'showed'
-            ])
-
+            ...mapState('App', ['home', 'loaded']),
+            ...mapGetters('Home', ['active'])
         },
 
         methods: {
-
-            ...mapMutations('Home', [
-                'set'
-            ])
-
+            ...mapMutations('Home', ['set'])
         },
-
 
         watch: {
 
-            showed () {
+            loaded: {
+                immediate: true,
+                handler (value) {
+                    value && this.set({paused: false});
+                }
+            },
+
+            active () {
                 this.set({paused: false});
             }
 
         },
 
-        mounted () {
-            this.set({paused: false});
-        },
+        beforeRouteLeave (from, to, next) {
+            this.set({paused: true});
+            next();
+        }
 
 
     }

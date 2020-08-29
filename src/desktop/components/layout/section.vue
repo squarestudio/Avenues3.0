@@ -85,6 +85,8 @@
 
     import {mapState, mapMutations} from 'vuex'
 
+    let time;
+
     export default {
 
         props: [
@@ -105,6 +107,21 @@
                 'setState'
             ])
 
+        },
+
+        watch: {
+
+            loaded (value) {
+
+                console.log('loaded', value);
+                console.log('time', Date.now() - time);
+            }
+
+        },
+
+        mounted () {
+            time = Date.now();
+            console.log('mounted');
         }
 
     }

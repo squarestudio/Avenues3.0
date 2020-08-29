@@ -122,7 +122,6 @@
                     archive: this.cache.archive,
                     loaded: true
                 });
-                console.log('applyCache');
             },
 
             setCache () {
@@ -153,9 +152,8 @@
 
             auth () {
                 return new Promise(resolve => {
-                    // if (this.private) this.login(resolve);
-                    // else resolve();
-                    resolve();
+                    if (this.private) this.login(resolve);
+                    setTimeout(resolve); // for section transition
                 });
             },
 

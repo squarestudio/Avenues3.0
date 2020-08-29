@@ -4,16 +4,16 @@
 
 <style scoped>
 
-    .player {
+    .l-player {
         overflow: hidden;
     }
-    .player >>> .ui-video {
+    .l-player >>> .ui-video {
         position: absolute;
         top: 50%;
         left: 50%;
         transition: transform .3s;
     }
-    .player:not(.contain) >>> .ui-video {
+    .l-player:not(.contain) >>> .ui-video {
         transform: scale(1) !important;
     }
 
@@ -26,13 +26,15 @@
 -->
 
 <template>
-    <div class="u-stretch player" :class="{contain}">
+    <div class="u-stretch l-player" :class="{contain}">
         <ui-video
+            ref="video"
             v-for="(project, i) in home"
-            v-if="active === i"
+            v-show="project.id === active"
             :video="project.video"
             :poster="project.frame"
             :paused="paused"
+            :active="project.id === active"
             :key="project.id"
             :style="styles[i]"
         />
@@ -47,7 +49,7 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapState, mapGetters, mapMutations} from 'vuex'
     import uiVideo from '@/desktop/components/ui/video.vue'
 
     export default {
@@ -66,20 +68,21 @@
 
         computed: {
 
-            ...mapState('App', [
-                'home',
-                'loaded'
-            ]),
-
-            ...mapState('Home', [
-                'active',
-                'contain',
-                'paused'
-            ])
+            ...mapState('App', ['home', 'loaded']),
+            ...mapState('Home', ['contain', 'paused']),
+            ...mapGetters('Home', ['active', 'index']),
 
         },
 
         methods: {
+
+            ...mapMutations('Home', ['set']),
+
+            setVideo () {
+                const $video = this.$refs.video;
+                if (!$video) return;
+                this.set({video: $video[this.index].$refs.video});
+            },
 
             resize () {
                 this.styles = this.home.map(project => {
@@ -107,6 +110,11 @@
 
             loaded () {
                 this.resize();
+                this.$nextTick(this.setVideo);
+            },
+
+            active () {
+                this.setVideo();
             }
 
         },
@@ -114,6 +122,7 @@
         mounted () {
             window.addEventListener('resize', this.resize);
             this.resize();
+
         },
 
         destroyed () {

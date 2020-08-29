@@ -50,7 +50,6 @@ export default {
     namespaced: true,
 
     state: {
-        showed: false, // section header transition ended
         loaded: false, // loader animation ended
         loadedAssets: 0,
         bitrate: 1920,
@@ -74,8 +73,8 @@ export default {
             return getters.projects.map(project => project.video).filter(unique);
         },
 
-        images: ({home, archive}, getters) => {
-            return getters.projects.map(project => project.cover).concat(getters.projects.map(project => project.frame)).filter(unique);
+        images: ({home, archive}) => {
+            return home.map(project => project.cover).concat(home.map(project => project.frame)).concat(archive.map(project => project.frame)).filter(unique);
         },
 
         assetsProgress: ({loadedAssets}, {videos, images}) => {
@@ -115,9 +114,6 @@ export default {
 
         getData ({state, commit, getters, dispatch}) {
             return dispatch(getters.private ? 'private' : 'public').then(data => {
-
-                console.log(data);
-
                 commit('setState', {
                     home: parseProjects(data[0], state.bitrate),
                     about: data[1],

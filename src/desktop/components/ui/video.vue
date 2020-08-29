@@ -22,7 +22,8 @@
 
 <template>
     <div class="ui-video">
-        <video ref="video" :src="video" :poster="poster" />
+        <img class="u-stretch" :src="poster" v-show="!this.active || !this.canplay">
+        <video @canplay="canplay = true" ref="video" />
     </div>
 </template>
 
@@ -41,8 +42,15 @@
         props: [
             'video',
             'poster',
-            'paused'
+            'paused',
+            'active'
         ],
+
+        data () {
+            return {
+                canplay: false
+            }
+        },
 
         computed: {
 
@@ -54,9 +62,21 @@
 
         methods: {
 
+            setSource () {
+                if (this.active) {
+                    this.$refs.video.src = this.video;
+                    !this.paused && this.$refs.video.play();
+                }
+                else {
+                    this.canplay = false;
+                    this.$refs.video.src = '';
+                    this.$refs.video.load();
+                }
+            },
+
             setPause () {
                 if (this.paused) this.$refs.video.pause();
-                else this.$refs.video.play();
+                else if (this.active) this.$refs.video.play();
             },
 
             setMute () {
@@ -66,6 +86,10 @@
         },
 
         watch: {
+
+            active () {
+                this.setSource();
+            },
 
             paused () {
                 this.setPause();
@@ -79,7 +103,9 @@
 
         mounted () {
             this.setMute();
+            this.setSource();
             this.setPause();
+
         }
 
     }

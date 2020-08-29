@@ -47,7 +47,7 @@
         <!-- close -->
 
         <div>
-            <a class="close u-row" @click="$emit('back')">
+            <a class="close u-row u-link" @click="$emit('back')">
                 <span>Close archive</span>
                 <icon-close />
             </a>

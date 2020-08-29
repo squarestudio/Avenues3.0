@@ -5,15 +5,15 @@
 <style>
 
     #archive {
-        background: #FFF;
         color: #000;
     }
-    #archive header {
-        position: sticky;
-        top: 0;
-        flex-shrink: 0;
-        z-index: 2; /* above projects */
+    #archive .l-scroll {
+        overflow: auto;
+        border-bottom: 1px solid #000;
+    }
+    #archive .l-bg {
         background: #FFFFFF;
+        z-index: -1;
     }
     #archive .row {
         padding-top: .4rem;
@@ -30,21 +30,15 @@
 -->
 
 <template>
-    <layout-section id="archive">
-
-        <template #header>
-            <archive-header @back="back" />
-        </template>
-
-        <template #main>
+    <ui-section id="archive" class="u-stretch u-col">
+        <archive-header class="l-header" @back="back" />
+        <archive-sort class="l-content" />
+        <div class="l-scroll l-content u-flex">
             <archive-main />
-        </template>
-
-        <template #footer>
-            <archive-footer />
-        </template>
-
-    </layout-section>
+        </div>
+        <archive-footer class="l-footer" />
+        <div class="l-bg u-stretch l-content"></div>
+    </ui-section>
 </template>
 
 
@@ -55,7 +49,7 @@
 
 <script>
 
-    import layoutSection from '@/desktop/components/layout/section.vue'
+    import uiSection from '@/desktop/components/ui/section.vue'
     import archiveHeader from './archive.header.vue'
     import archiveSort from './archive.sort.vue'
     import archiveMain from './archive.main.vue'
@@ -64,7 +58,7 @@
     export default {
 
         components: {
-            layoutSection,
+            uiSection,
             archiveHeader,
             archiveSort,
             archiveMain,

@@ -20,13 +20,13 @@
 -->
 
 <template>
-    <div class="u-grid">
+    <header class="u-grid">
 
 
         <!-- logo -->
 
         <div>
-            <router-link :to="{name: 'home'}">Avenues</router-link>
+            <router-link class="u-link logo" :to="{name: 'home'}">Avenues</router-link>
         </div>
 
 
@@ -54,7 +54,7 @@
         </div>
 
 
-    </div>
+    </header>
 </template>
 
 

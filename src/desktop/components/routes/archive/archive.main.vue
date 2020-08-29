@@ -13,13 +13,16 @@
     .row.active {
         z-index: 1;
     }
+    .row:last-child {
+        border-bottom: none !important;
+    }
 
 
     /* video */
 
     .ui-video {
+        display: none;
         position: absolute;
-        top: .5rem;
         width: 30rem;
         pointer-events: none;
     }
@@ -35,6 +38,9 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
+    }
+    .row.active .ui-video {
+        display: block;
     }
 
 
@@ -53,7 +59,14 @@
             <div>{{project.title}}</div>
             <div>{{project.category}}</div>
             <div>{{project.editor}}</div>
-            <ui-video :video="project.video" :poster="project.poster" v-if="active === i" ref="video"></ui-video>
+
+            <ui-video
+                :video="project.video"
+                :poster="project.frame"
+                :paused="false"
+                :active="active === i"
+                ref="video"
+            />
         </div>
     </div>
 </template>
@@ -101,12 +114,17 @@
 
             move (event, index) {
                 const $row = event.currentTarget;
+                const $scroll = this.$el.parentNode;
                 const $video = $row.querySelector('.ui-video');
                 const row = $row.getBoundingClientRect();
                 const video = $video.getBoundingClientRect();
-                let x = event.clientX;
+                const scroll = $scroll.getBoundingClientRect();
+                let x = event.clientX - row.left;
+                let y = event.clientY - row.top;
                 if (x + video.width > row.width) x -= video.width;
+                if (event.clientY + video.height > scroll.top + scroll.height) y -= video.height;
                 $video.style.left = x + 'px';
+                $video.style.top = y + 'px';
             }
 
         }

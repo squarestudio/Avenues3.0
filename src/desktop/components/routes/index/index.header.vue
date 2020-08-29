@@ -30,7 +30,7 @@
 -->
 
 <template>
-    <div class="u-grid">
+    <header class="u-grid">
 
 
         <!-- logo -->
@@ -70,7 +70,7 @@
         </div>
 
 
-    </div>
+    </header>
 </template>
 
 

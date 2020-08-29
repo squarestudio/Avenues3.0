@@ -7,7 +7,7 @@
 
     /* main */
 
-    .footer {
+    footer {
         align-items: end;
         padding-top: 4rem;
     }
@@ -38,7 +38,7 @@
 -->
 
 <template>
-    <div class="footer u-grid">
+    <footer class="u-grid">
 
 
         <!-- texts -->
@@ -58,7 +58,7 @@
         </div>
 
 
-    </div>
+    </footer>
 </template>
 
 

@@ -25,6 +25,11 @@ const Index = {
     namespaced: true,
     state: {
         filter: ''
+    },
+    mutations: {
+        setFilter (state, value) {
+            state.filter = value;
+        }
     }
 }
 

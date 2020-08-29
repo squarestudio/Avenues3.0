@@ -51,12 +51,12 @@
 
         <div class="filter u-row">
 
-            <a class="u-row">
+            <a class="u-row" @click="setFilter('')" :class="{active: filter === ''}">
                 <span>All</span>
                 <icon-down />
             </a>
 
-            <a class="u-row" v-for="editor in editors">
+            <a class="u-row" v-for="editor in editors" :class="{active: filter === editor}" @click="setFilter(editor)">
                 <span>{{editor}}</span>
                 <icon-down />
             </a>
@@ -81,7 +81,7 @@
 
 <script>
 
-    import {mapState, mapGetters} from 'vuex'
+    import {mapState, mapGetters, mapMutations} from 'vuex'
     import uiSound from '@/desktop/components/ui/sound.vue'
     import iconDown from '@/common/icons/down.svg'
 
@@ -100,13 +100,9 @@
 
         computed: {
 
-            ...mapState('App', [
-                'home'
-            ]),
-
-            ...mapGetters('App', [
-                'private'
-            ]),
+            ...mapState('App', ['home']),
+            ...mapState('Index', ['filter']),
+            ...mapGetters('App', ['private']),
 
             editors () {
                 const editorsRate = this.home.reduce((result, project) => {
@@ -126,10 +122,7 @@
 
         methods: {
 
-
-        },
-
-        mounted() {
+            ...mapMutations('Index', ['setFilter'])
 
         }
 

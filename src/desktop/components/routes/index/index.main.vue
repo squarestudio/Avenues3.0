@@ -70,7 +70,7 @@
 
 <template>
     <div class="u-grid">
-        <a class="project" v-for="(project, i) in home" @mouseenter="enter(i)" @mouseleave="leave(i)">
+        <a class="project" v-for="(project, i) in home" @mouseenter="enter(i)" @mouseleave="leave(i)" :key="project.id" v-show="canShow(project)">
 
 
             <!-- video -->
@@ -124,9 +124,8 @@
 
         computed: {
 
-            ...mapState('App', [
-                'home'
-            ])
+            ...mapState('App', ['home']),
+            ...mapState('Index', ['filter'])
 
         },
 
@@ -140,6 +139,10 @@
 
             leave () {
                 this.active = -1;
+            },
+
+            canShow (project) {
+                return !this.filter || project.editor.toLowerCase() === this.filter
             }
 
         }

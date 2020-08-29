@@ -173,10 +173,10 @@
             <!-- archive -->
 
             <transition name="fade">
-                <a class="archive u-row" v-show="!contain">
+                <router-link :to="{name: 'archive'}" class="archive u-row" v-show="!private && !contain">
                     <span>Archive</span>
                     <icon-open />
-                </a>
+                </router-link>
             </transition>
 
 
@@ -227,7 +227,8 @@
         computed: {
 
             ...mapState('App', [
-                'about'
+                'about',
+                'private'
             ]),
 
             ...mapState('Home', [

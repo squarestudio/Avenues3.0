@@ -76,7 +76,7 @@
         methods: {
 
             ...mapMutations('Home', [
-                'toggle'
+                'set'
             ])
 
         },
@@ -85,14 +85,13 @@
         watch: {
 
             showed () {
-                this.toggle('paused');
+                this.set({paused: false});
             }
 
         },
 
         mounted () {
-            // if (this.loaded) {}
-            // else this.
+            this.set({paused: false});
         },
 
 

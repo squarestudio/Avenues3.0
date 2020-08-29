@@ -47,7 +47,7 @@
 
         <layout-loader />
 
-        <transition :name="null">
+        <transition :name="transition">
             <router-view />
         </transition>
 

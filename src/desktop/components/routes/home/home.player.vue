@@ -37,6 +37,7 @@
             :active="project.id === active"
             :key="project.id"
             :style="styles[i]"
+            @end="next"
         />
     </div>
 </template>
@@ -82,6 +83,12 @@
                 const $video = this.$refs.video;
                 if (!$video) return;
                 this.set({video: $video[this.index].$refs.video});
+            },
+
+            next () {
+                let next = this.index + 1;
+                if (next > this.home.length - 1) next = 0;
+                this.$router.push({query: {id: this.home[next].id}});
             },
 
             resize () {

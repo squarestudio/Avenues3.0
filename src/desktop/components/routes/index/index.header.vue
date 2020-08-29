@@ -36,14 +36,14 @@
         <!-- logo -->
 
         <div>
-            <router-link class="logo" :to="{name: private ? 'private' : 'home'}">Avenues</router-link>
+            <router-link class="u-link logo" :to="{name: private ? 'private' : 'home'}">Avenues</router-link>
         </div>
 
 
         <!-- index -->
 
         <div>
-            <router-link :to="{name: private ? 'private' : 'home'}">Fullscreen</router-link>
+            <router-link class="u-link" :to="{name: private ? 'private' : 'home'}">Fullscreen</router-link>
         </div>
 
 

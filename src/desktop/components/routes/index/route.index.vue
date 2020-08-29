@@ -6,6 +6,7 @@
 
     #index {
         color: #000;
+        overflow: auto;
     }
     #index .l-bg {
         background: #FFFFFF;
@@ -22,12 +23,10 @@
 
 <template>
     <ui-section id="index" class="u-stretch u-col">
-
         <index-header class="l-header" />
-        <index-main class="l-content u-flex" />
+        <div class="u-flex l-content"><index-main /></div>
         <index-footer class="l-footer" />
         <div class="l-bg u-stretch l-content"></div>
-
     </ui-section>
 </template>
 

@@ -184,9 +184,11 @@
 
             <div class="progress u-flex" @mouseenter="progressEnter" @mouseleave="progressLeave">
                 <transition :name="`bar-${barType}`">
-                    <a class="bar" :class="barType" v-show="contain || barActive"><div></div></a>
+                    <a class="bar" :class="barType" v-show="contain || barActive" @click="setProgress">
+                        <div :style="{left: time / duration * 100 + '%'}"></div>
+                    </a>
                 </transition>
-                <div class="time">00:00 / 00:00</div>
+                <div class="time">{{ time | time }} / {{ duration | time }}</div>
             </div>
 
 
@@ -220,20 +222,30 @@
                 barActive: false,
                 barType: 'large',
                 infoActive: false,
-                infoPadding: 0
+                infoPadding: 0,
+                duration: 0,
+                time: 0,
+                progress: 0,
+                request: null
             }
         },
 
         computed: {
 
-            ...mapState('App', [
-                'about',
-                'private'
-            ]),
+            ...mapState('App', ['about', 'private']),
+            ...mapState('Home', ['contain', 'video'])
 
-            ...mapState('Home', [
-                'contain'
-            ])
+        },
+
+        filters: {
+
+            time (value) {
+                const digits = n => ('0' + n).slice(-2);
+                value = Math.round(value) || 0;
+                let m = digits(Math.floor(value / 60) % 60);
+                let s = digits(value % 60);
+                return `${m}:${s}`
+            }
 
         },
 
@@ -256,6 +268,18 @@
 
             progressLeave () {
                 this.barActive = false;
+            },
+
+            updateProgress () {
+                this.time = this.video.currentTime;
+                this.duration = this.video.duration;
+                this.request = requestAnimationFrame(this.updateProgress);
+            },
+
+            setProgress (event) {
+                const rect = event.currentTarget.getBoundingClientRect();
+                const x = event.pageX - rect.left;
+                this.video.currentTime = this.duration * x / rect.width;
             }
 
         },
@@ -266,6 +290,14 @@
                 if (value) this.barType = 'large'
             }
 
+        },
+
+        mounted () {
+            this.updateProgress();
+        },
+
+        destroyed () {
+            cancelAnimationFrame(this.request);
         }
 
     }

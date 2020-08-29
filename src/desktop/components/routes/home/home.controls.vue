@@ -76,7 +76,6 @@
             <div class="badge" :class="{active: badge === 'prev'}">
                 {{(index + 1) | digits}} / {{home.length | digits}}
             </div>
-
         </div>
 
 

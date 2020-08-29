@@ -8,8 +8,8 @@
     /* main */
 
     .controls {
-        height: 100%;
         align-items: stretch;
+        cursor: none;
     }
 
 
@@ -49,7 +49,7 @@
 -->
 
 <template>
-    <div class="controls u-row" @mouseleave="activate(null)">
+    <div class="controls u-row u-flex" @mouseleave="activate(null)">
 
 
         <!-- prev -->

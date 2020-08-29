@@ -4,8 +4,8 @@
 
 <style scoped>
 
-    .link {
-
+    .header {
+        /*flex-shrink: 0;*/
     }
 
 
@@ -58,7 +58,7 @@
 -->
 
 <template>
-    <div class="u-grid">
+    <div class="header u-grid">
 
 
         <!-- logo -->
@@ -71,7 +71,7 @@
         <!-- index -->
 
         <div>
-            <a class="u-link" data-route-to="index">Index</a>
+            <router-link :to="{name: private ? 'private-index' : 'index'}">Index</router-link>
         </div>
 
 
@@ -111,7 +111,7 @@
 
 <script>
 
-    import {mapState, mapMutations} from 'vuex'
+    import {mapState, mapGetters, mapMutations} from 'vuex'
     import uiView from '@/desktop/components/ui/view.vue'
     import uiSound from '@/desktop/components/ui/sound.vue'
     import uiMenu from '@/desktop/components/ui/menu.vue'
@@ -133,13 +133,17 @@
         computed: {
 
             ...mapState('App', [
-                'home'
+                'home',
             ]),
 
             ...mapState('Home', [
                 'active',
                 'contain'
-            ])
+            ]),
+
+            ...mapGetters('App', [
+                'private',
+            ]),
 
         },
 

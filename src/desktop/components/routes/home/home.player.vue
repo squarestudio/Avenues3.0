@@ -105,17 +105,15 @@
 
         watch: {
 
-            loaded: {
-                immediate: true,
-                handler (value) {
-                    value && this.resize();
-                }
+            loaded () {
+                this.resize();
             }
 
         },
 
         mounted () {
             window.addEventListener('resize', this.resize);
+            this.resize();
         },
 
         destroyed () {

@@ -50,13 +50,14 @@ export default {
     namespaced: true,
 
     state: {
-        muted: true,
-        bitrate: 1920,
+        showed: false, // section header transition ended
+        loaded: false, // loader animation ended
         loadedAssets: 0,
-        loaded: false,
+        bitrate: 1920,
         home: [],
         archive: [],
-        about: {}
+        about: {},
+        muted: true
     },
 
     getters: {
@@ -98,13 +99,13 @@ export default {
     actions: {
 
         private ({getters}) {
-            Promise.all([
+            return Promise.all([
                 API('private', getters.private.params.id),
                 API('about'),
             ]);
         },
 
-        public ({commit}) {
+        public () {
             return Promise.all([
                 API('home'),
                 API('about'),
@@ -114,6 +115,9 @@ export default {
 
         getData ({state, commit, getters, dispatch}) {
             return dispatch(getters.private ? 'private' : 'public').then(data => {
+
+                console.log(data);
+
                 commit('setState', {
                     home: parseProjects(data[0], state.bitrate),
                     about: data[1],

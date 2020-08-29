@@ -4,7 +4,30 @@
 
 <style scoped>
 
-    
+
+    /* main */
+
+    .footer {
+        align-items: end;
+        padding-top: 4rem;
+    }
+
+
+    /* title */
+
+    .title {
+        padding-right: 15%;
+    }
+
+
+    /* archive */
+
+    .archive svg {
+        width: 1rem;
+        height: 1rem;
+        margin-left: .25rem;
+        flex-shrink: 0;
+    }
     
 </style>
 
@@ -15,15 +38,25 @@
 -->
 
 <template>
-    <div class="u-grid">
+    <div class="footer u-grid">
+
+
+        <!-- texts -->
+
+        <div class="title">{{about.title}}</div>
+        <div class="u-text" v-html="about.contacts_1"></div>
+        <div class="u-text" v-html="about.contacts_2"></div>
+
+
+        <!-- archive -->
 
         <div>
-            {{about.title}}
+            <router-link class="archive u-row" v-if="!private" :to="{name: 'archive'}">
+                <span>Archive</span>
+                <icon-open />
+            </router-link>
         </div>
 
-        <div class="u-text" v-html="about.contacts_1"></div>
-
-        <div class="u-text" v-html="about.contacts_2"></div>
 
     </div>
 </template>
@@ -36,14 +69,23 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapState, mapGetters} from 'vuex'
+    import iconOpen from '@/common/icons/open.svg';
 
     export default {
+
+        components: {
+            iconOpen
+        },
 
         computed: {
 
             ...mapState('App', [
                 'about'
+            ]),
+
+            ...mapGetters('App', [
+                'private'
             ])
 
         }

@@ -5,7 +5,7 @@ export default {
     state: {
         active: 0,
         contain: false,
-        paused: false,
+        paused: true,
         minimized: false,
         about: false
     },

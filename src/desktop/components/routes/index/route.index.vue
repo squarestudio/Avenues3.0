@@ -25,7 +25,7 @@
         </template>
 
         <template #main>
-
+            <index-main />
         </template>
 
         <template #footer>
@@ -45,6 +45,7 @@
 
     import layoutSection from '@/desktop/components/layout/section.vue'
     import indexHeader from './index.header.vue'
+    import indexMain from './index.main.vue'
     import indexFooter from './index.footer.vue'
 
     export default {
@@ -52,6 +53,7 @@
         components: {
             layoutSection,
             indexHeader,
+            indexMain,
             indexFooter
         }
 

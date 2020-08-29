@@ -8,6 +8,7 @@
     /* default */
 
     .l-section {
+        overflow: auto;
         transition: background .5s .5s;
     }
     .l-section:not(.loaded) {
@@ -59,11 +60,11 @@
 <template>
     <section class="l-section u-stretch u-col" :class="{loaded}">
 
-        <header>
+        <header @transitionend="setState({showed: true})">
             <slot name="header" />
         </header>
 
-        <main class="u-flex" @transitionend="showed">
+        <main class="u-flex" :class="main">
             <slot name="main" />
         </main>
 
@@ -82,9 +83,13 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapState, mapMutations} from 'vuex'
 
     export default {
+
+        props: [
+            'main'
+        ],
 
         computed: {
 
@@ -96,9 +101,9 @@
 
         methods: {
 
-            showed () {
-
-            }
+            ...mapMutations('App', [
+                'setState'
+            ])
 
         }
 

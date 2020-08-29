@@ -4,50 +4,22 @@
 
 <style scoped>
 
-    .link {
-
+    .filter a {
+        white-space: nowrap;
     }
-
-
-    /* project */
-
-    .project {
-        position: relative;
+    .filter a svg {
+        opacity: 0;
+        width: 1rem;
+        height: 1rem;
+        margin: 0 .2rem;
+        transition: opacity .3s ease;
     }
-    .project .target {
-        display: inline-flex;
+    .filter a:hover svg {
+        opacity: 1;
     }
-    .project .source {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        overflow: hidden;
-        visibility: hidden;
-        transition: visibility 0s, .5s;
+    .filter a.active svg {
+        opacity: 1;
     }
-    .project .source .move {
-        padding-top: 1rem;
-        transform: translateY(-100%);
-        transition: transform .5s;
-    }
-    .project.active .source {
-        visibility: visible;
-        transition-duration: 0s;
-    }
-    .project.active .source .move {
-        transform: translateY(0);
-    }
-
-
-    /* buttons */
-
-    .buttons {
-        justify-content: space-between;
-    }
-
-    /*.project {*/
-    /*    display: none;*/
-    /*}*/
     
 </style>
 
@@ -64,44 +36,37 @@
         <!-- logo -->
 
         <div>
-            <a class="logo link">Avenues</a>
+            <router-link :to="{name: private ? 'private' : 'home'}">Avenues</router-link>
         </div>
 
 
         <!-- index -->
 
         <div>
-            <a class="u-link" data-route-to="index">Index</a>
+            <router-link :to="{name: private ? 'private' : 'home'}">Fullscreen</router-link>
         </div>
 
 
-        <!-- project -->
+        <!-- editors -->
 
-        <div class="project"
-             :class="{active: projectInfo}"
-             v-for="(project, i) in home"
-             v-if="i === active">
+        <div class="filter u-row">
 
-            <a class="target u-row"
-               @mouseenter="targetEnter"
-               @mouseleave="targetLeave">
-                {{project.client}}
+            <a class="u-row">
+                <span>All</span>
+                <icon-down />
             </a>
 
-            <div class="source" @mouseleave="sourceLeave">
-                <div class="move">
-                    <div class="u-text">{{project.description}}</div>
-                </div>
-            </div>
-
+            <a class="u-row" v-for="editor in editors">
+                <span>{{editor}}</span>
+                <icon-down />
+            </a>
         </div>
 
 
-        <!-- buttons -->
+        <!-- sound -->
 
-        <div class="buttons u-row">
+        <div>
             <ui-sound />
-            <ui-view />
         </div>
 
 
@@ -116,46 +81,58 @@
 
 <script>
 
-    import {mapState} from 'vuex'
-    import {hasParent} from '@/common/scripts/utils'
-    import uiView from '@/desktop/components/ui/view.vue'
+    import {mapState, mapGetters} from 'vuex'
     import uiSound from '@/desktop/components/ui/sound.vue'
+    import iconDown from '@/common/icons/down.svg'
 
     export default {
 
         components: {
-            uiView,
-            uiSound
+            uiSound,
+            iconDown
         },
 
         data () {
             return {
-                projectInfo: false
+
             }
-        },
-
-        methods: {
-
-            targetEnter () {
-                this.projectInfo = true;
-            },
-
-            targetLeave (event) {
-                if (!hasParent(event.relatedTarget, event.currentTarget.nextElementSibling)) this.projectInfo = false;
-            },
-
-            sourceLeave (event) {
-                if (!hasParent(event.relatedTarget, event.currentTarget.previousElementSibling)) this.projectInfo = false;
-            }
-
         },
 
         computed: {
 
-            ...mapState('App', ['home']),
-            ...mapState('Home', ['active'])
+            ...mapState('App', [
+                'home'
+            ]),
+
+            ...mapGetters('App', [
+                'private'
+            ]),
+
+            editors () {
+                const editorsRate = this.home.reduce((result, project) => {
+                    const editor = project.editor.toLowerCase();
+                    result[editor] = result[editor] || 0;
+                    result[editor]++
+                    return result;
+                }, {});
+                return Object.keys(editorsRate).sort((a, b) => {
+                    if (editorsRate[a] < editorsRate[b]) return -1;
+                    if (editorsRate[a] > editorsRate[b]) return -1;
+                    return 0;
+                }).slice(0, 2);
+            }
+
+        },
+
+        methods: {
+
+
+        },
+
+        mounted() {
 
         }
+
 
     }
 

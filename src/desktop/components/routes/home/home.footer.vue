@@ -7,7 +7,7 @@
 
     /* main */
 
-    .u-grid {
+    .footer {
         align-items: end;
         justify-content: end;
     }
@@ -134,7 +134,7 @@
 -->
 
 <template>
-    <div class="u-grid">
+    <div class="footer u-grid">
 
 
         <!-- info -->

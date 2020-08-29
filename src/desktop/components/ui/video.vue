@@ -7,15 +7,9 @@
     .ui-video {
         position: relative;
     }
-    .ui-video img {
-        object-fit: cover;
-    }
     .ui-video video {
         width: 100%;
         height: 100%;
-    }
-    .ui-video.active img {
-        opacity: 0;
     }
     
 </style>
@@ -27,9 +21,8 @@
 -->
 
 <template>
-    <div class="ui-video" :class="{active: !paused && canplay}">
-        <img class="u-stretch" :src="poster" />
-        <video ref="video" @canplay="play" />
+    <div class="ui-video">
+        <video ref="video" :src="video" :poster="poster" />
     </div>
 </template>
 
@@ -59,29 +52,11 @@
 
         },
 
-        data () {
-            return {
-                canplay: false
-            }
-        },
-
         methods: {
 
-            play () {
-                this.canplay = true;
-            },
-
             setPause () {
-                if (this.paused) {
-                    this.canplay = false;
-                    this.$refs.video.src = '';
-                    this.$refs.video.load();
-                }
-                else {
-                    this.$refs.video.src = this.video;
-                    this.$refs.video.load();
-                    this.$refs.video.play();
-                }
+                if (this.paused) this.$refs.video.pause();
+                else this.$refs.video.play();
             },
 
             setMute () {

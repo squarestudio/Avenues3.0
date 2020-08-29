@@ -95,6 +95,7 @@ module.exports = ({mode, type, port = 49018}) => ({
         contentBase: absPath('dist/desktop'),
         host: '0.0.0.0',
         historyApiFallback: true,
+        clientLogLevel: 'none',
         port: port
     },
 

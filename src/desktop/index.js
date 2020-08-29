@@ -12,6 +12,9 @@ import '@/desktop/common/filters/text'
 
 sync(store, router);
 
+Vue.config.productionTip = false;
+Vue.config.devtools = false;
+
 new Vue({
     el: '#app',
     store,

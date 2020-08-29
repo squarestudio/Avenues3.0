@@ -21,7 +21,7 @@
 -->
 
 <template>
-    <layout-section id="home">
+    <layout-section id="home" main="u-col">
 
         <template #header>
             <home-header />
@@ -47,7 +47,7 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapState, mapMutations} from 'vuex'
     import layoutSection from '@/desktop/components/layout/section.vue'
     import homeHeader from './home.header.vue'
     import homeControls from './home.controls.vue'
@@ -68,8 +68,25 @@
 
             ...mapState('App', [
                 'home',
-                'loaded'
+                'showed'
             ])
+
+        },
+
+        methods: {
+
+            ...mapMutations('Home', [
+                'toggle'
+            ])
+
+        },
+
+
+        watch: {
+
+            showed () {
+                this.toggle('paused');
+            }
 
         },
 
@@ -78,13 +95,6 @@
             // else this.
         },
 
-        watch: {
-
-            'route.query.id' (id) {
-
-            }
-
-        }
 
     }
 

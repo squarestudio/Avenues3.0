@@ -15,6 +15,8 @@
 
     /* route transitions */
 
+    #app section {transition: none;}
+
     #app .route-up-enter-active,
     #app .route-up-leave-active,
     #app .route-down-enter-active,
@@ -45,7 +47,7 @@
 
         <layout-loader />
 
-        <transition :name="transition">
+        <transition :name="null">
             <router-view />
         </transition>
 
@@ -60,6 +62,7 @@
 
 <script>
 
+    import {mapState} from 'vuex'
     import layoutLoader from '@/desktop/components/layout/loader.vue'
 
     export default {
@@ -78,6 +81,10 @@
         },
 
         computed: {
+
+            ...mapState('App', [
+                'loaded'
+            ]),
 
             transition () {
                 if (this.route.to === 'archive') return 'route-up';

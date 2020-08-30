@@ -132,7 +132,7 @@
             ...mapMutations('Archive', ['set']),
 
             input (event) {
-                this.set({search: event.target.value});
+                this.set({search: event.target.value.toLowerCase()});
                 this.$nextTick(this.resize);
             },
 

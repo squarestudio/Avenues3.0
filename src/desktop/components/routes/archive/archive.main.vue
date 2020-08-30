@@ -54,7 +54,8 @@
 
 <template>
     <div class="main">
-        <div class="u-grid row" v-for="(project, i) in archive" @mouseenter="enter(i)" @mouseleave="leave" @mousemove="move($event, i)" :class="{active: active === i}">
+        <div class="u-grid row" v-for="(project, i) in sorted" @mouseenter="enter(i)" @mouseleave="leave" @mousemove="move($event, i)" :class="{active: active === i}" v-show="canShow(project)">
+
             <div>{{project.client}}</div>
             <div>{{project.title}}</div>
             <div>{{project.category}}</div>
@@ -96,9 +97,17 @@
 
         computed: {
 
-            ...mapState('App', [
-                'archive'
-            ])
+            ...mapState('App', ['archive']),
+            ...mapState('Archive', ['search', 'sort']),
+
+            sorted () {
+                if (!this.sort) return this.archive;
+                return this.archive.sort((a, b) => {
+                    if (a[this.sort] < b[this.sort]) return -1;
+                    if (a[this.sort] > b[this.sort]) return 1;
+                    return 0;
+                });
+            }
 
         },
 
@@ -125,6 +134,15 @@
                 if (event.clientY + video.height > scroll.top + scroll.height) y -= video.height;
                 $video.style.left = x + 'px';
                 $video.style.top = y + 'px';
+            },
+
+            canShow (project) {
+                if (!this.search) return true;
+                return !this.search ||
+                    project.editor.toLowerCase().includes(this.search) ||
+                    project.title.toLowerCase().includes(this.search) ||
+                    project.category.toLowerCase().includes(this.search) ||
+                    project.editor.toLowerCase().includes(this.search);
             }
 
         }

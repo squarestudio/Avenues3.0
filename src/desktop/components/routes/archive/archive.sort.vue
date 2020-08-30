@@ -7,6 +7,18 @@
     .sort {
         border-top: 1px solid #000000;
     }
+    .sort a svg {
+        opacity: 0;
+        width: 1rem;
+        height: 1rem;
+        margin-left: .25rem;
+    }
+    .sort a:hover svg {
+        opacity: 1;
+    }
+    .sort a.active svg {
+        opacity: 1;
+    }
     
 </style>
 
@@ -18,18 +30,12 @@
 
 <template>
     <div class="sort u-grid row">
-         <div>
-             <a>Client</a>
+         <div v-for="row in rows">
+             <a class="u-row u-link" @click="set({sort: row.key})" :class="{active: sort === row.key}">
+                 <span>{{ row.label }}</span>
+                 <icon-up />
+             </a>
          </div>
-        <div>
-            <a>Project</a>
-        </div>
-        <div>
-            <a>Category</a>
-        </div>
-        <div>
-            <a>Editor</a>
-        </div>
     </div>
 </template>
 
@@ -41,7 +47,45 @@
 
 <script>
 
+    import {mapState, mapMutations} from 'vuex'
+    import iconUp from '@/common/icons/up.svg'
+
     export default {
+
+        components: {
+            iconUp
+        },
+
+        data () {
+            return {
+                rows: [{
+                    label: 'Client',
+                    key: 'client',
+                }, {
+                    label: 'Project',
+                    key: 'title',
+                }, {
+                    label: 'Category',
+                    key: 'category',
+                }, {
+                    label: 'Editor',
+                    key: 'editor',
+                }]
+            }
+        },
+
+        computed: {
+
+            ...mapState('Archive', ['sort'])
+
+        },
+
+        methods: {
+
+            ...mapMutations('Archive', ['set'])
+
+        }
+
 
     }
 

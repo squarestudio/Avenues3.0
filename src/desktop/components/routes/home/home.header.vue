@@ -141,8 +141,6 @@
             logo () {
                 if (this.contain) this.$emit('update:contain', false);
                 else this.$router.push({query: {}});
-                
-
             }
 
         }

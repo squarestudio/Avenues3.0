@@ -114,37 +114,15 @@
                 this.$router.push({query: {id: this.home[prev].id}});
             }
 
-        }
+        },
 
-        //
-        // computed: {
-        //     ...mapState('App', ['loaded']),
-        //     ...mapGetters('Home', ['active'])
-        // },
-        //
-        // methods: {
-        //     ...mapMutations('Home', ['set'])
-        // },
-        //
-        // watch: {
-        //
-        //     loaded: {
-        //         immediate: true,
-        //         handler (value) {
-        //             value && this.set({paused: false});
-        //         }
-        //     },
-        //
-        //     active () {
-        //         this.set({paused: false});
-        //     }
-        //
-        // },
-        //
-        // beforeRouteLeave (from, to, next) {
-        //     this.set({paused: true});
-        //     next();
-        // }
+        watch: {
+
+            index () {
+                this.paused = false;
+            }
+
+        }
 
 
     }

@@ -5,19 +5,8 @@
 <style scoped>
 
 
-    /* main */
-
-    main {
-        overflow: auto;
-        border-bottom: 1px solid #000000;
-    }
-
-
     /* row */
 
-    .row:last-child {
-        border-bottom: none !important;
-    }
     .row.active {
         z-index: 1;
     }
@@ -126,11 +115,10 @@
             move (event, id) {
                 const $video = this.$refs.video;
                 const video = $video.getBoundingClientRect();
-                const main = this.$el.getBoundingClientRect();
                 let y = event.clientY;
                 let x = event.clientX;
-                if (y + video.height > main.top + main.height) y -= video.height;
-                if (x + video.width > main.left + main.width) x -= video.width;
+                if (y + video.height > window.innerHeight) y -= video.height;
+                if (x + video.width > window.innerWidth) x -= video.width;
                 $video.style.left = x + 'px';
                 $video.style.top = y + 'px';
                 this.active = id;

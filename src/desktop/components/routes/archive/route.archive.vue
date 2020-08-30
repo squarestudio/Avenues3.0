@@ -4,6 +4,14 @@
 
 <style>
 
+    #archive {
+        overflow: auto;
+    }
+    #archive .stick {
+        background: inherit;
+        position: sticky;
+        top: 0;
+    }
     #archive .row {
         padding-top: .4rem;
         padding-bottom: .4rem;
@@ -20,10 +28,15 @@
 
 <template>
     <section id="archive" class="u-stretch u-col">
-        <archive-header :search.sync="search" @back="back" />
-        <archive-sort :sort.sync="sort" />
+
+        <div class="stick">
+            <archive-header :search.sync="search" @back="back" />
+            <archive-sort :sort.sync="sort" />
+        </div>
+
         <archive-main :sort="sort" :search="search" class="u-flex" />
         <archive-footer />
+
     </section>
 </template>
 

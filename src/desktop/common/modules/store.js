@@ -44,6 +44,11 @@ const Archive = {
     state: {
         search: '',
         sort: '',
+    },
+    mutations: {
+        set (state, value) {
+            Object.keys(value).forEach(key => state[key] = value[key]);
+        }
     }
 }
 

@@ -9,14 +9,12 @@
 
     main {
         overflow: auto;
+        border-bottom: 1px solid #000000;
     }
 
 
     /* row */
 
-    .row {
-        position: relative;
-    }
     .row:last-child {
         border-bottom: none !important;
     }
@@ -35,7 +33,6 @@
     }
 
 
-
 </style>
 
 
@@ -46,16 +43,6 @@
 
 <template>
     <main @mouseleave="leave">
-
-
-        <!-- rows -->
-
-        <div class="u-grid row" v-for="project in sorted" v-show="canShow(project)" @mousemove="move($event, project.id)">
-            <div>{{project.client}}</div>
-            <div>{{project.title}}</div>
-            <div>{{project.category}}</div>
-            <div>{{project.editor}}</div>
-        </div>
 
 
         <!-- video -->
@@ -71,6 +58,17 @@
                 :paused="false"
             />
         </div>
+
+
+        <!-- rows -->
+
+        <div class="u-grid row" v-for="project in sorted" v-show="canShow(project)" @mousemove="move($event, project.id)">
+            <div>{{project.client}}</div>
+            <div>{{project.title}}</div>
+            <div>{{project.category}}</div>
+            <div>{{project.editor}}</div>
+        </div>
+
 
     </main>
 </template>
@@ -120,10 +118,6 @@
         },
 
         methods: {
-
-            enter (index) {
-                this.active = index;
-            },
 
             leave () {
                 this.active = false;

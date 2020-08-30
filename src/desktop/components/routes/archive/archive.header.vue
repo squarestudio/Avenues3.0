@@ -68,8 +68,8 @@
 
         <div class="search u-row">
             <p ref="searchMin">Search</p>
-            <p ref="searchMax">{{search}}</p>
-            <input type="text" placeholder="Search" @input="input" :value="search" :style="{width: searchWidth}">
+            <p ref="searchMax">{{ search }}</p>
+            <input type="text" placeholder="Search" @input="input" @focus="resize" :value="search" :style="{width: searchWidth}">
             <icon-right />
         </div>
 
@@ -102,10 +102,9 @@
 
 <script>
 
-    import {mapState, mapMutations} from 'vuex'
     import uiSound from '@/desktop/components/ui/sound.vue'
-    import iconClose from '@/common/icons/close.svg'
-    import iconRight from '@/common/icons/right.svg'
+    import iconClose from '@/common/assets/icons/close.svg'
+    import iconRight from '@/common/assets/icons/right.svg'
 
     export default {
 
@@ -115,24 +114,20 @@
             iconRight
         },
 
+        props: [
+            'search'
+        ],
+
         data () {
             return {
                 searchWidth: ''
             }
         },
 
-        computed: {
-
-            ...mapState('Archive', ['search'])
-
-        },
-
         methods: {
 
-            ...mapMutations('Archive', ['set']),
-
             input (event) {
-                this.set({search: event.target.value.toLowerCase()});
+                this.$emit('update:search', event.target.value.toLowerCase());
                 this.$nextTick(this.resize);
             },
 
@@ -142,15 +137,6 @@
                 this.searchWidth = Math.max(max, min) + 'px';
             }
 
-        },
-
-        mounted () {
-            window.addEventListener('resize', this.resize);
-            this.resize();
-        },
-
-        destroyed () {
-            window.removeEventListener('resize', this.resize);
         }
 
 

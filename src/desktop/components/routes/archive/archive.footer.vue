@@ -7,7 +7,7 @@
 
     /* main */
 
-    .footer {
+    footer {
         align-items: end;
         padding-top: 4rem;
     }
@@ -29,11 +29,11 @@
 -->
 
 <template>
-    <div class="footer u-grid">
-        <div class="title">{{about.title}}</div>
+    <footer class="u-grid">
+        <div class="title">{{ about.title | text }}</div>
         <div class="u-text" v-html="about.contacts_1"></div>
         <div class="u-text" v-html="about.contacts_2"></div>
-    </div>
+    </footer>
 </template>
 
 
@@ -44,8 +44,8 @@
 
 <script>
 
-    import {mapState, mapGetters} from 'vuex'
-    import iconOpen from '@/common/icons/open.svg';
+    import {mapState} from 'vuex'
+    import iconOpen from '@/common/assets/icons/open.svg';
 
     export default {
 
@@ -53,17 +53,9 @@
             iconOpen
         },
 
-        computed: {
-
-            ...mapState('App', [
-                'about'
-            ]),
-
-            ...mapGetters('App', [
-                'private'
-            ])
-
-        }
+        computed: mapState([
+            'about'
+        ])
 
     }
 

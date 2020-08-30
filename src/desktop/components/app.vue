@@ -11,29 +11,59 @@
     #home     {z-index: 1;}
     #index    {z-index: 2;}
     #archive  {z-index: 3;}
+    #loader   {z-index: 4;}
 
 
-    /* route transitions */
+    /* themes */
 
-    #app section {
-        transition: none;
+    .th-home {
+        background: #000000;
+        color: #FFFFFF;
+    }
+    .th-index, .th-archive {
+        background: #FFFFFF;
+        color: #000000;
+    }
+    .th-private-index {
+        background: #A86F6F;
+        color: #000000;
     }
 
-    #app .route-up-enter-active,
-    #app .route-up-leave-active,
-    #app .route-down-enter-active,
-    #app .route-down-leave-active {
+
+    /* route move transitions */
+
+    .route-up-enter-active,
+    .route-up-leave-active,
+    .route-down-enter-active,
+    .route-down-leave-active {
         transition: transform .5s;
     }
 
-    #app .route-up-enter      {transform: translateY(100%)}
-    #app .route-up-enter-to   {transform: translateY(0)}
-    #app .route-up-leave      {transform: translateY(0)}
-    #app .route-up-leave-to   {transform: translateY(-50%)}
-    #app .route-down-enter    {transform: translateY(-50%)}
-    #app .route-down-enter-to {transform: translateY(0)}
-    #app .route-down-leave    {transform: translateY(0)}
-    #app .route-down-leave-to {transform: translateY(100%)}
+    .route-up-enter      {transform: translateY(100%)}
+    .route-up-enter-to   {transform: translateY(0)}
+    .route-up-leave      {transform: translateY(0)}
+    .route-up-leave-to   {transform: translateY(-50%)}
+    .route-down-enter    {transform: translateY(-50%)}
+    .route-down-enter-to {transform: translateY(0)}
+    .route-down-leave    {transform: translateY(0)}
+    .route-down-leave-to {transform: translateY(100%)}
+
+
+    /* route fade transitions */
+
+    .route-fade-enter-active {transition-duration: 1s;}
+
+    .route-fade-enter        header > div:not(:first-child) {transform: translateY(calc(var(--padding) * -1 - 1rem));}
+    .route-fade-enter-to     header > div:not(:first-child) {transform: translateY(0);}
+    .route-fade-enter-active header > div:not(:first-child) {transition: transform .5s;}
+
+    .route-fade-enter        footer {transform: translateY(100%);}
+    .route-fade-enter-to     footer {transform: translateY(0);}
+    .route-fade-enter-active footer {transition: transform .5s;}
+
+    .route-fade-enter        nav, .route-fade-enter        main {opacity: 0;}
+    .route-fade-enter-to     nav, .route-fade-enter-to     main {opacity: 1;}
+    .route-fade-enter-active nav, .route-fade-enter-active main {transition: opacity .5s .5s}
 
 
 </style>
@@ -47,10 +77,9 @@
 <template>
     <div id="app" class="u-stretch">
 
-        <layout-loader />
-
         <transition :name="transition">
-            <router-view />
+            <router-view v-if="loaded" :class="theme" />
+            <loader v-else :class="theme" />
         </transition>
 
     </div>
@@ -65,12 +94,12 @@
 <script>
 
     import {mapState} from 'vuex'
-    import layoutLoader from '@/desktop/components/layout/loader.vue'
+    import loader from '@/common/components/loader.vue'
 
     export default {
 
         components: {
-            layoutLoader
+            loader
         },
 
         data () {
@@ -84,11 +113,16 @@
 
         computed: {
 
-            ...mapState('App', [
+            ...mapState([
                 'loaded'
             ]),
 
+            theme () {
+                return 'th-' + this.$route.name;
+            },
+
             transition () {
+                if (!this.route.from) return 'route-fade'
                 if (this.route.to === 'archive') return 'route-up';
                 if (this.route.from === 'archive') return 'route-down';
                 return null;

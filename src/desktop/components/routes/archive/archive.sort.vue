@@ -4,22 +4,30 @@
 
 <style scoped>
 
-    .sort {
+
+    /* main */
+
+    nav {
         border-top: 1px solid #000000;
     }
-    .sort a svg {
+
+
+    /* link */
+
+    a svg {
         opacity: 0;
         width: 1rem;
         height: 1rem;
         margin-left: .25rem;
     }
-    .sort a:hover svg {
+    a:hover svg {
         opacity: 1;
     }
-    .sort a.active svg {
+    a.active svg {
         opacity: 1;
     }
-    
+
+
 </style>
 
 
@@ -29,14 +37,14 @@
 -->
 
 <template>
-    <div class="sort u-grid row">
+    <nav class="u-grid row">
          <div v-for="row in rows">
-             <a class="u-row u-link" @click="set({sort: row.key})" :class="{active: sort === row.key}">
+             <a class="u-row u-link" @click="update(row.key)" :class="{active: sort === row.key}">
                  <span>{{ row.label }}</span>
                  <icon-up />
              </a>
          </div>
-    </div>
+    </nav>
 </template>
 
 
@@ -47,8 +55,26 @@
 
 <script>
 
-    import {mapState, mapMutations} from 'vuex'
-    import iconUp from '@/common/icons/up.svg'
+    import iconUp from '@/common/assets/icons/up.svg'
+
+    const rows = [
+        {
+            label: 'Client',
+            key: 'client',
+        },
+        {
+            label: 'Project',
+            key: 'title',
+        },
+        {
+            label: 'Category',
+            key: 'category',
+        },
+        {
+            label: 'Editor',
+            key: 'editor',
+        }
+    ]
 
     export default {
 
@@ -56,33 +82,21 @@
             iconUp
         },
 
+        props: [
+            'sort'
+        ],
+
         data () {
             return {
-                rows: [{
-                    label: 'Client',
-                    key: 'client',
-                }, {
-                    label: 'Project',
-                    key: 'title',
-                }, {
-                    label: 'Category',
-                    key: 'category',
-                }, {
-                    label: 'Editor',
-                    key: 'editor',
-                }]
+                rows
             }
-        },
-
-        computed: {
-
-            ...mapState('Archive', ['sort'])
-
         },
 
         methods: {
 
-            ...mapMutations('Archive', ['set'])
+            update (value) {
+                this.$emit('update:sort', value);
+            }
 
         }
 

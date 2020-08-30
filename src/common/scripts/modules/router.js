@@ -4,7 +4,6 @@
 
 import Vue from 'vue'
 import Router from 'vue-router'
-import routes from '@/desktop/common/configs/routes'
 
 
 
@@ -17,18 +16,18 @@ Vue.use(Router);
 
 
 // ------------------
-// Config
-// ------------------
-
-const router = new Router({
-    routes,
-    mode: 'history'
-});
-
-
-
-// ------------------
 // Export
 // ------------------
 
-export default router;
+export default routes => new Router({
+    mode: 'history',
+    routes: [
+        ...routes,
+        // {
+        //     path: '*',
+        //     redirect: {
+        //         name: 'home'
+        //     }
+        // }
+    ]
+});

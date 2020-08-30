@@ -2,7 +2,7 @@
     Font size
 */
 
-import font from '@/common/scripts/font'
+import font from '@/common/scripts/utils/font'
 
 font([
     {width: 1920, height: 1080, size: 17},

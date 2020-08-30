@@ -4,6 +4,9 @@
 
 <style>
 
+
+    /* main */
+
     .ui-video {
         position: relative;
     }
@@ -11,7 +14,25 @@
         width: 100%;
         height: 100%;
     }
-    
+
+
+    /* hd */
+
+    .ui-video.hd:before {
+        content: '';
+        display: block;
+        padding-top: 56.25%; /* 16:9 */
+    }
+    .ui-video.hd video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+
 </style>
 
 
@@ -54,7 +75,7 @@
 
         computed: {
 
-            ...mapState('App', [
+            ...mapState([
                 'muted'
             ])
 
@@ -69,6 +90,7 @@
                 }
                 else {
                     this.canplay = false;
+                    this.$refs.video.pause();
                     this.$refs.video.src = '';
                     this.$refs.video.load();
                 }

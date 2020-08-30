@@ -111,8 +111,8 @@ module.exports = ({mode, type, port = 49018}) => ({
     },
 
     entry: {
-        bundle_head: absPath(`src/${type}/head.js`),
-        bundle: absPath(`src/${type}/index.js`)
+        bundle_head: absPath(`src/${type}/scripts/head.js`),
+        bundle: absPath(`src/${type}/scripts/index.js`)
     },
 
     devtool: 'source-map'

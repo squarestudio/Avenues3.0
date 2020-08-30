@@ -4,17 +4,6 @@
 
 <style>
 
-    #archive {
-        color: #000;
-    }
-    #archive .l-scroll {
-        overflow: auto;
-        border-bottom: 1px solid #000;
-    }
-    #archive .l-bg {
-        background: #FFFFFF;
-        z-index: -1;
-    }
     #archive .row {
         padding-top: .4rem;
         padding-bottom: .4rem;
@@ -30,15 +19,12 @@
 -->
 
 <template>
-    <ui-section id="archive" class="u-stretch u-col">
-        <archive-header class="l-header" @back="back" />
-        <archive-sort class="l-content" />
-        <div class="l-scroll l-content u-flex">
-            <archive-main />
-        </div>
-        <archive-footer class="l-footer" />
-        <div class="l-bg u-stretch l-content"></div>
-    </ui-section>
+    <section id="archive" class="u-stretch u-col">
+        <archive-header :search.sync="search" @back="back" />
+        <archive-sort :sort.sync="sort" />
+        <archive-main :sort="sort" :search="search" class="u-flex" />
+        <archive-footer />
+    </section>
 </template>
 
 
@@ -49,7 +35,7 @@
 
 <script>
 
-    import uiSection from '@/desktop/components/ui/section.vue'
+    import mixinBack from '@/common/scripts/mixins/back'
     import archiveHeader from './archive.header.vue'
     import archiveSort from './archive.sort.vue'
     import archiveMain from './archive.main.vue'
@@ -58,31 +44,23 @@
     export default {
 
         components: {
-            uiSection,
             archiveHeader,
             archiveSort,
             archiveMain,
             archiveFooter
         },
 
+        mixins: [
+            mixinBack
+        ],
+
         data () {
             return {
-                canGoBack: false
+                sort: false,
+                search: ''
             }
-        },
-
-        beforeRouteEnter (to, from, next) {
-            next(vm => vm.canGoBack = !!from.name);
-        },
-
-        methods: {
-
-            back () {
-                if (this.canGoBack) this.$router.back();
-                else this.$router.push('/');
-            }
-
         }
+
 
     }
 

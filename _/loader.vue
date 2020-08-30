@@ -4,22 +4,12 @@
 
 <style>
 
-    .l-loader {
+    #loader {
         column-count: 4;
         column-gap: var(--padding);
         column-fill: auto;
         padding: var(--padding);
-        background: #000000;
         overflow: hidden;
-    }
-    .l-loader.index,
-    .l-loader.archive {
-        background: #FFFFFF;
-        color: #000000;
-    }
-    .l-loader.private-index {
-        background: #A86F6F;
-        color: #000000;
     }
     
 </style>
@@ -31,7 +21,7 @@
 -->
 
 <template>
-    <div class="l-loader u-stretch" :class="$route.name">
+    <div id="loader" class="u-stretch">
         <div>Avenues</div>
         <div v-for="n in rows" ref="row">Avenues</div>
     </div>
@@ -97,8 +87,8 @@
             },
 
             complete () {
-                this.setState({loaded: true});
                 this.setCache();
+                setTimeout(() => this.setState({loaded: true}), 100);
             },
 
             progress (value) {
@@ -145,7 +135,7 @@
 
             login (resolve) {
                 API('login', this.getPassword(), this.private.params.id).then(data => {
-                    if (data.length) return resolve();
+                    if (data) return resolve();
                     else return this.login(resolve);
                 });
             },
@@ -153,7 +143,7 @@
             auth () {
                 return new Promise(resolve => {
                     if (this.private) this.login(resolve);
-                    setTimeout(resolve); // for section transition
+                    else resolve();
                 });
             },
 

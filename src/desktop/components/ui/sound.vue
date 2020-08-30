@@ -14,7 +14,7 @@
 -->
 
 <template>
-    <a class="ui-sound u-link" :class="{active: !muted}" @click="setMuted(!muted)">
+    <a class="ui-sound u-link" @click="set({muted: !muted})">
         <span>Sound {{muted ? 'On' : 'Off'}}</span>
     </a>
 </template>
@@ -32,11 +32,11 @@
     export default {
 
         computed: {
-            ...mapState('App', ['muted'])
+            ...mapState(['muted'])
         },
 
         methods: {
-            ...mapMutations('App', ['setMuted'])
+            ...mapMutations(['set'])
         }
 
     }

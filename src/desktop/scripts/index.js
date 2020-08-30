@@ -47,22 +47,16 @@ const routes = [
         path: '/archive',
         component: archive
     },
-    // {
-    //     name: 'private',
-    //     path: '/private/:id',
-    //     component: home
-    // },
-    // {
-    //     name: 'private-index',
-    //     path: '/private/:id/index',
-    //     component: index
-    // },
-    // {
-    //     path: '*',
-    //     redirect: {
-    //         name: 'home'
-    //     }
-    // }
+    {
+        name: 'private',
+        path: '/private/:id',
+        component: home
+    },
+    {
+        name: 'private-index',
+        path: '/private/:id/index',
+        component: index
+    }
 ];
 
 

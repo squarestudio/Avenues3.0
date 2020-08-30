@@ -129,7 +129,7 @@ export const Request = (id, bitrate) => {
 
     }
 
-    const parse = data => data.map(item => {
+    const parse = (data = []) => data.map(item => {
         let project = item.projects_id;
         project.cover = `${API_ORIGIN}/uploads/${API_PROJECT}/converted/covers/${project.cover}/${bitrate}.jpg`;
         project.frame = `${API_ORIGIN}/uploads/${API_PROJECT}/converted/frames/${project.video}/${bitrate}.jpg`;

@@ -177,6 +177,7 @@
 
             enter (event) {
                 event.currentTarget.classList.add('active');
+                this.move(event);
             },
 
             leave (event) {

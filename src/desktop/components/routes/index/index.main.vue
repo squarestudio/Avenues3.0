@@ -57,7 +57,13 @@
 <template>
     <main>
         <div class="u-grid">
-            <a class="project" v-for="(project, i) in home" @mouseenter="enter(i)" @mouseleave="leave(i)" v-show="canShow(project)">
+            <router-link
+                class="project"
+                v-for="(project, i) in home"
+                v-show="canShow(project)"
+                :to="{name: private ? 'private' : 'home', query: {id: project.id}}"
+                @mouseenter.native="enter(i)"
+                @mouseleave.native="leave(i)">
 
 
                 <!-- video -->
@@ -81,7 +87,7 @@
                 </div>
 
 
-            </a>
+            </router-link>
         </div>
     </main>
 </template>
@@ -116,7 +122,8 @@
         computed: {
 
             ...mapState([
-                'home'
+                'home',
+                'private'
             ]),
 
         },

@@ -7,9 +7,8 @@
 
     /* main */
 
-    .footer {
+    footer {
         align-items: end;
-        justify-content: end;
     }
 
 
@@ -134,7 +133,7 @@
 -->
 
 <template>
-    <div class="footer u-grid">
+    <footer class="u-grid">
 
 
         <!-- info -->
@@ -185,17 +184,17 @@
             <div class="progress u-flex" @mouseenter="progressEnter" @mouseleave="progressLeave">
                 <transition :name="`bar-${barType}`">
                     <a class="bar" :class="barType" v-show="contain || barActive" @click="setProgress">
-                        <div :style="{left: time / duration * 100 + '%'}"></div>
+                        <div :style="{left: videoTime / videoDuration * 100 + '%'}"></div>
                     </a>
                 </transition>
-                <div class="time">{{ time | time }} / {{ duration | time }}</div>
+                <div class="time">{{ videoTime | time }} / {{ videoDuration | time }}</div>
             </div>
 
 
         </div>
 
 
-    </div>
+    </footer>
 </template>
 
 
@@ -207,7 +206,7 @@
 <script>
 
     import {mapState} from 'vuex'
-    import iconOpen from '@/common/icons/open.svg';
+    import iconOpen from '@/common/assets/icons/open.svg';
     import uiMenu from '@/desktop/components/ui/menu.vue'
 
     export default {
@@ -217,23 +216,29 @@
             iconOpen
         },
 
+        props: [
+            'contain',
+            'video'
+        ],
+
         data () {
             return {
                 barActive: false,
                 barType: 'large',
                 infoActive: false,
                 infoPadding: 0,
-                duration: 0,
-                time: 0,
-                progress: 0,
-                request: null
+                videoDuration: 0,
+                videoTime: 0,
+                videoLoop: null
             }
         },
 
         computed: {
 
-            ...mapState('App', ['about', 'private']),
-            ...mapState('Home', ['contain', 'video'])
+            ...mapState([
+                'about',
+                'private'
+            ])
 
         },
 
@@ -271,15 +276,15 @@
             },
 
             updateProgress () {
-                this.time = this.video.currentTime;
-                this.duration = this.video.duration;
-                this.request = requestAnimationFrame(this.updateProgress);
+                this.videoTime = this.video.currentTime;
+                this.videoDuration = this.video.duration;
+                this.videoLoop = requestAnimationFrame(this.updateProgress);
             },
 
             setProgress (event) {
                 const rect = event.currentTarget.getBoundingClientRect();
                 const x = event.pageX - rect.left;
-                this.video.currentTime = this.duration * x / rect.width;
+                this.video.currentTime = this.videoDuration * x / rect.width;
             }
 
         },
@@ -297,7 +302,7 @@
         },
 
         destroyed () {
-            cancelAnimationFrame(this.request);
+            cancelAnimationFrame(this.videoLoop);
         }
 
     }

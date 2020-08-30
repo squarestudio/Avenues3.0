@@ -51,13 +51,13 @@
 -->
 
 <template>
-    <header class="l-header u-grid">
+    <header class="u-grid">
 
 
         <!-- logo -->
 
         <div>
-            <a class="logo u-link">Avenues</a>
+            <a class="logo u-link" @click="logo">Avenues</a>
         </div>
 
 
@@ -72,7 +72,6 @@
 
         <div class="project"
              :class="{active: projectInfo}"
-             :key="project.id"
              v-for="project in home"
              v-if="project.id === active">
 
@@ -89,7 +88,7 @@
 
         <div class="buttons u-row">
             <ui-sound />
-            <ui-view @click.native="viewToggle" :active="contain" />
+            <ui-view @click.native="$emit('update:contain', !contain)" :active="contain" />
         </div>
 
 
@@ -104,7 +103,7 @@
 
 <script>
 
-    import {mapState, mapGetters, mapMutations} from 'vuex'
+    import {mapState} from 'vuex'
     import uiView from '@/desktop/components/ui/view.vue'
     import uiSound from '@/desktop/components/ui/sound.vue'
     import uiMenu from '@/desktop/components/ui/menu.vue'
@@ -117,6 +116,11 @@
             uiMenu
         },
 
+        props: [
+            'contain',
+            'active'
+        ],
+
         data () {
             return {
                 projectInfo: false
@@ -125,21 +129,20 @@
 
         computed: {
 
-            ...mapState('App', ['home']),
-            ...mapState('Home', ['contain']),
-            ...mapGetters('App', ['private']),
-            ...mapGetters('Home', ['active'])
+            ...mapState([
+                'home',
+                'private'
+            ])
 
         },
 
         methods: {
 
-            ...mapMutations('Home', [
-                'toggle'
-            ]),
+            logo () {
+                if (this.contain) this.$emit('update:contain', false);
+                else this.$router.push({query: {}});
+                
 
-            viewToggle () {
-                this.toggle('contain');
             }
 
         }

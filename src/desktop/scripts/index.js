@@ -7,7 +7,7 @@ import Router from '@/common/scripts/modules/router'
 import Store from '@/common/scripts/modules/store'
 
 import app from '@/desktop/components/app.vue'
-// import home from '@/desktop/components/routes/home/route.home.vue'
+import home from '@/desktop/components/routes/home/route.home.vue'
 import index from '@/desktop/components/routes/index/route.index.vue'
 import archive from '@/desktop/components/routes/archive/route.archive.vue'
 
@@ -32,11 +32,11 @@ Vue.config.devtools = false;
 // ------------------
 
 const routes = [
-    // {
-    //     name: 'home',
-    //     path: '/',
-    //     component: home
-    // },
+    {
+        name: 'home',
+        path: '/',
+        component: home
+    },
     {
         name: 'index',
         path: '/index',

@@ -4,16 +4,13 @@
 
 <style scoped>
 
-    .l-player {
+    main {
         overflow: hidden;
     }
-    .l-player >>> .ui-video {
-        position: absolute;
-        top: 50%;
-        left: 50%;
+    main .ui-video {
         transition: transform .3s;
     }
-    .l-player:not(.contain) >>> .ui-video {
+    main:not(.contain) .ui-video {
         transform: scale(1) !important;
     }
 
@@ -26,20 +23,21 @@
 -->
 
 <template>
-    <div class="u-stretch l-player" :class="{contain}">
-        <ui-video
-            ref="video"
-            v-for="(project, i) in home"
-            v-show="project.id === active"
-            :video="project.video"
-            :poster="project.frame"
-            :paused="paused"
-            :active="project.id === active"
-            :key="project.id"
-            :style="styles[i]"
-            @end="next"
-        />
-    </div>
+    <main class="u-stretch" :class="{contain}">
+        <div class="u-center">
+            <ui-video
+                ref="video"
+                v-for="(project, i) in home"
+                v-show="i === index"
+                :video="project.video"
+                :poster="project.frame"
+                :paused="paused"
+                :active="i === index"
+                :style="styles[i]"
+                @end="$emit('next')"
+            />
+        </div>
+    </main>
 </template>
 
 
@@ -50,7 +48,7 @@
 
 <script>
 
-    import {mapState, mapGetters, mapMutations} from 'vuex'
+    import {mapState} from 'vuex'
     import uiVideo from '@/desktop/components/ui/video.vue'
 
     export default {
@@ -58,6 +56,13 @@
         components: {
             uiVideo
         },
+
+        props: [
+            'index',
+            'video',
+            'contain',
+            'paused'
+        ],
 
         data () {
 
@@ -69,26 +74,16 @@
 
         computed: {
 
-            ...mapState('App', ['home', 'loaded']),
-            ...mapState('Home', ['contain', 'paused']),
-            ...mapGetters('Home', ['active', 'index']),
+            ...mapState([
+                'home'
+            ])
 
         },
 
         methods: {
 
-            ...mapMutations('Home', ['set']),
-
             setVideo () {
-                const $video = this.$refs.video;
-                if (!$video) return;
-                this.set({video: $video[this.index].$refs.video});
-            },
-
-            next () {
-                let next = this.index + 1;
-                if (next > this.home.length - 1) next = 0;
-                this.$router.push({query: {id: this.home[next].id}});
+                this.$emit('update:video', this.$refs.video[this.index].$refs.video);
             },
 
             resize () {
@@ -101,13 +96,7 @@
                     const minW = this.$el.offsetWidth / w;
                     const minH = this.$el.offsetHeight / h;
                     const minS = Math.min(minW, minH);
-                    return {
-                        width: w + 'px',
-                        height: h + 'px',
-                        marginLeft: -w / 2 + 'px',
-                        marginTop: -h / 2 + 'px',
-                        transform: `scale(${minS})`
-                    }
+                    return {width: w + 'px', height: h + 'px', transform: `scale(${minS})`}
                 })
             }
 
@@ -115,12 +104,7 @@
 
         watch: {
 
-            loaded () {
-                this.resize();
-                this.$nextTick(this.setVideo);
-            },
-
-            active () {
+            index () {
                 this.setVideo();
             }
 
@@ -129,7 +113,7 @@
         mounted () {
             window.addEventListener('resize', this.resize);
             this.resize();
-
+            this.setVideo();
         },
 
         destroyed () {

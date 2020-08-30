@@ -5,10 +5,10 @@
 <style>
 
     #home {overflow: hidden;}
-    #home .l-player   {z-index: 1;}
-    #home .l-controls {z-index: 2;}
-    #home .l-header   {z-index: 3;}
-    #home .l-footer   {z-index: 4;}
+    #home main   {z-index: 1;}
+    #home nav    {z-index: 2;}
+    #home header {z-index: 3;}
+    #home footer {z-index: 4;}
 
 </style>
 
@@ -19,12 +19,36 @@
 -->
 
 <template>
-    <ui-section id="home" class="u-stretch u-col">
-        <home-header class="l-header" />
-        <home-player class="l-content l-player" />
-        <home-controls class="l-content l-controls u-flex" />
-        <home-footer class="l-footer" />
-    </ui-section>
+    <section id="home" class="u-stretch u-col">
+
+        <home-player
+            :contain="contain"
+            :index="index"
+            :paused="paused"
+            :video.sync="video"
+            @next="next"
+        />
+
+        <home-header
+            :contain.sync="contain"
+            :active="active"
+        />
+
+        <home-controls
+            class="u-flex"
+            :index="index"
+            :video="video"
+            :paused.sync="paused"
+            @next="next"
+            @prev="prev"
+        />
+
+        <home-footer
+            :contain="contain"
+            :video="video"
+        />
+
+    </section>
 </template>
 
 
@@ -35,8 +59,7 @@
 
 <script>
 
-    import {mapState, mapGetters, mapMutations} from 'vuex'
-    import uiSection from '@/desktop/components/ui/section.vue'
+    import {mapState} from 'vuex'
     import homeHeader from './home.header.vue'
     import homeControls from './home.controls.vue'
     import homePlayer from './home.player.vue'
@@ -45,41 +68,83 @@
     export default {
 
         components: {
-            uiSection,
             homeHeader,
             homeControls,
             homePlayer,
             homeFooter
         },
 
+        data () {
+            return {
+                contain: false,
+                paused: false,
+                video: {}
+            }
+        },
+
         computed: {
-            ...mapState('App', ['home', 'loaded']),
-            ...mapGetters('Home', ['active'])
-        },
 
-        methods: {
-            ...mapMutations('Home', ['set'])
-        },
-
-        watch: {
-
-            loaded: {
-                immediate: true,
-                handler (value) {
-                    value && this.set({paused: false});
-                }
-            },
+            ...mapState([
+                'home'
+            ]),
 
             active () {
-                this.set({paused: false});
+                const id = +this.$route.query.id;
+                if (!id || !this.home.find(project => project.id === id)) return this.home[0].id;
+                return id;
+            },
+
+            index () {
+                return this.home.findIndex(project => project.id === this.active);
             }
 
         },
 
-        beforeRouteLeave (from, to, next) {
-            this.set({paused: true});
-            next();
+        methods: {
+
+            next () {
+                let next = this.index + 1;
+                if (next > this.home.length - 1) next = 0;
+                this.$router.push({query: {id: this.home[next].id}});
+            },
+
+            prev () {
+                let prev = this.index - 1;
+                if (prev < 0) prev = this.home.length - 1;
+                this.$router.push({query: {id: this.home[prev].id}});
+            }
+
         }
+
+        //
+        // computed: {
+        //     ...mapState('App', ['loaded']),
+        //     ...mapGetters('Home', ['active'])
+        // },
+        //
+        // methods: {
+        //     ...mapMutations('Home', ['set'])
+        // },
+        //
+        // watch: {
+        //
+        //     loaded: {
+        //         immediate: true,
+        //         handler (value) {
+        //             value && this.set({paused: false});
+        //         }
+        //     },
+        //
+        //     active () {
+        //         this.set({paused: false});
+        //     }
+        //
+        // },
+        //
+        // beforeRouteLeave (from, to, next) {
+        //     this.set({paused: true});
+        //     next();
+        // }
 
 
     }

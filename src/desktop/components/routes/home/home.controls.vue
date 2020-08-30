@@ -7,7 +7,8 @@
 
     /* main */
 
-    .controls {
+    nav {
+        position: relative;
         align-items: stretch;
         cursor: none;
     }
@@ -22,21 +23,20 @@
     .area .badge {
         position: absolute;
         visibility: hidden;
-        left: 50%;
-        top: 70%;
         pointer-events: none;
         white-space: nowrap;
     }
-    .area .badge.active {
+    .area.active .badge {
         visibility: visible;
     }
 
 
-    /* prev */
+    /* next */
 
     .next svg {
         height: 1rem;
     }
+
 
 
     
@@ -49,37 +49,55 @@
 -->
 
 <template>
-    <div class="controls u-row u-flex" @mouseleave="activate(null)">
-
-
-        <!-- prev -->
-
-        <div class="area next" @mousemove="move" @mouseenter="activate('next')" @click="next">
-            <div class="badge" :class="{active: badge === 'next'}">
-                <icon-prev />
-            </div>
-        </div>
-
-
-        <!-- stop -->
-
-        <div class="area stop" @mousemove="move" @mouseenter="activate('stop')" @click="toggle('paused')">
-            <div class="badge" :class="{active: badge === 'stop'}">
-                {{paused ? 'Play' : 'Stop'}}
-            </div>
-        </div>
+    <nav class="u-row" @mouseleave="leave">
 
 
         <!-- next -->
 
-        <div class="area prev u-flex" @mousemove="move" @mouseenter="activate('prev')" @click="prev">
-            <div class="badge" :class="{active: badge === 'prev'}">
-                {{(index + 1) | digits}} / {{home.length | digits}}
+        <div class="area next"
+             @mousemove="move"
+             @mouseenter="enter"
+             @mouseleave="leave"
+             @click="next">
+
+            <div class="badge">
+                <icon-prev />
             </div>
+
         </div>
 
 
-    </div>
+        <!-- pause -->
+
+        <div class="area pause"
+             @mousemove="move"
+             @mouseenter="enter"
+             @mouseleave="leave"
+             @click="$emit('update:paused', !paused)">
+
+            <div class="badge">
+                {{ paused ? 'Play' : 'Stop' }}
+            </div>
+
+        </div>
+
+
+        <!-- prev -->
+
+        <div class="area prev u-flex"
+             @mousemove="move"
+             @mouseenter="enter"
+             @mouseleave="leave"
+             @click="$emit('prev')">
+
+            <div class="badge">
+                {{ (index + 1) | digits }} / {{ home.length | digits }}
+            </div>
+
+        </div>
+
+
+    </nav>
 </template>
 
 
@@ -93,26 +111,26 @@
 
     // imports
 
-    import {mapState, mapGetters, mapMutations} from 'vuex'
-    import iconPrev from '@/common/icons/prev.svg'
+    import {mapState} from 'vuex'
+    import iconPrev from '@/common/assets/icons/prev.svg'
 
 
-    // wait helper
+    // timeout helper
 
-    class Wait {
+    class Timeout {
 
         constructor () {
-            this.waiting = false;
+            this.active = false;
             this.timeout = null;
         }
 
-        wait () {
-            this.waiting = true;
-            this.timeout = setTimeout(this.stop, 5000);
+        start () {
+            this.active = true;
+            this.timeout = setTimeout(this.stop.bind(this), 5000);
         }
 
         stop () {
-            this.waiting = false;
+            this.active = false;
             clearTimeout(this.timeout);
         }
 
@@ -127,6 +145,12 @@
             iconPrev
         },
 
+        props: [
+            'paused',
+            'index',
+            'video'
+        ],
+
         filters: {
 
             digits (value) {
@@ -137,30 +161,31 @@
 
         data () {
             return {
-                badge: null,
-                wait: new Wait()
+                timeout: new Timeout()
             }
         },
 
         computed: {
 
-            ...mapState('App', ['home']),
-            ...mapState('Home', ['paused', 'video']),
-            ...mapGetters('Home', ['index'])
+            ...mapState([
+                'home'
+            ])
 
         },
 
         methods: {
 
-            ...mapMutations('Home', ['toggle', 'set']),
+            enter (event) {
+                event.currentTarget.classList.add('active');
+            },
 
-            activate (value) {
-                this.badge = value;
+            leave (event) {
+                event.currentTarget.classList.remove('active');
             },
 
             move (event) {
                 const $area = event.currentTarget;
-                const $badge = $area.querySelector('.badge');
+                const $badge = $area.firstElementChild;
                 const area = $area.getBoundingClientRect();
                 const badge = $badge.getBoundingClientRect();
                 $badge.style.left = event.clientX - area.left - badge.width / 2 + 'px';
@@ -168,22 +193,11 @@
             },
 
             next () {
-                if (this.wait.waiting) {
-                    let next = this.index + 1;
-                    if (next > this.home.length - 1) next = 0;
-                    this.$router.push({query: {id: this.home[next].id}});
-                }
-                else {
-                    this.video.currentTime = 0;
-                    this.wait.wait();
-                    this.set({paused: false});
-                }
-            },
 
-            prev () {
-                let prev = this.index - 1;
-                if (prev < 0) prev = this.home.length - 1;
-                this.$router.push({query: {id: this.home[prev].id}});
+                if (this.timeout.active) return this.$emit('next');
+                this.video.currentTime = 0;
+                this.timeout.start();
+                this.$emit('update:paused', false);
             }
 
         },
@@ -191,7 +205,7 @@
         watch: {
 
             index () {
-                this.wait.stop();
+                this.timeout.stop();
             }
 
         }

@@ -43,7 +43,7 @@
         <!-- index -->
 
         <div>
-            <router-link class="u-link" :to="{name: private ? 'private' : 'home'}">Fullscreen</router-link>
+            <a class="u-link" @click="$emit('back')">Fullscreen</a>
         </div>
 
 
@@ -51,15 +51,16 @@
 
         <div class="filter u-row">
 
-            <a class="u-row" @click="setFilter('')" :class="{active: filter === ''}">
+            <a class="u-row" @click="$emit('update:filter', false)" :class="{active: !filter}">
                 <span>All</span>
                 <icon-down />
             </a>
 
-            <a class="u-row" v-for="editor in editors" :class="{active: filter === editor}" @click="setFilter(editor)">
+            <a class="u-row" v-for="editor in editors" :class="{active: filter === editor}" @click="$emit('update:filter', editor)">
                 <span>{{editor}}</span>
                 <icon-down />
             </a>
+
         </div>
 
 
@@ -81,9 +82,9 @@
 
 <script>
 
-    import {mapState, mapGetters, mapMutations} from 'vuex'
+    import {mapState} from 'vuex'
     import uiSound from '@/desktop/components/ui/sound.vue'
-    import iconDown from '@/common/icons/down.svg'
+    import iconDown from '@/common/assets/icons/down.svg'
 
     export default {
 
@@ -92,37 +93,32 @@
             iconDown
         },
 
-        data () {
-            return {
-
-            }
-        },
+        props: [
+            'filter'
+        ],
 
         computed: {
 
-            ...mapState('App', ['home']),
-            ...mapState('Index', ['filter']),
-            ...mapGetters('App', ['private']),
+            ...mapState([
+                'home',
+                'private'
+            ]),
 
             editors () {
+
                 const editorsRate = this.home.reduce((result, project) => {
-                    const editor = project.editor.toLowerCase();
-                    result[editor] = result[editor] || 0;
-                    result[editor]++
+                    result[project.editor] = result[project.editor] || 0;
+                    result[project.editor]++
                     return result;
                 }, {});
+
                 return Object.keys(editorsRate).sort((a, b) => {
                     if (editorsRate[a] < editorsRate[b]) return -1;
-                    if (editorsRate[a] > editorsRate[b]) return -1;
+                    if (editorsRate[a] > editorsRate[b]) return 1;
                     return 0;
                 }).slice(0, 2);
+
             }
-
-        },
-
-        methods: {
-
-            ...mapMutations('Index', ['setFilter'])
 
         }
 

@@ -5,12 +5,7 @@
 <style>
 
     #index {
-        color: #000;
         overflow: auto;
-    }
-    #index .l-bg {
-        background: #FFFFFF;
-        z-index: -1;
     }
 
 </style>
@@ -22,12 +17,11 @@
 -->
 
 <template>
-    <ui-section id="index" class="u-stretch u-col">
-        <index-header class="l-header" />
-        <div class="u-flex l-content"><index-main /></div>
-        <index-footer class="l-footer" />
-        <div class="l-bg u-stretch l-content"></div>
-    </ui-section>
+    <section id="index" class="u-stretch u-col">
+        <index-header :filter.sync="filter" @back="back" />
+        <index-main :filter="filter" class="u-flex" />
+        <index-footer />
+    </section>
 </template>
 
 
@@ -38,7 +32,7 @@
 
 <script>
 
-    import uiSection from '@/desktop/components/ui/section.vue'
+    import mixinBack from '@/common/scripts/mixins/back'
     import indexHeader from './index.header.vue'
     import indexMain from './index.main.vue'
     import indexFooter from './index.footer.vue'
@@ -46,10 +40,19 @@
     export default {
 
         components: {
-            uiSection,
             indexHeader,
             indexMain,
             indexFooter
+        },
+
+        mixins: [
+            mixinBack
+        ],
+
+        data () {
+            return {
+                filter: false
+            }
         }
 
     }

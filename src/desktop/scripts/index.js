@@ -8,7 +8,7 @@ import Store from '@/common/scripts/modules/store'
 
 import app from '@/desktop/components/app.vue'
 // import home from '@/desktop/components/routes/home/route.home.vue'
-// import index from '@/desktop/components/routes/index/route.index.vue'
+import index from '@/desktop/components/routes/index/route.index.vue'
 import archive from '@/desktop/components/routes/archive/route.archive.vue'
 
 import '@/common/scripts/filters/text'
@@ -37,11 +37,11 @@ const routes = [
     //     path: '/',
     //     component: home
     // },
-    // {
-    //     name: 'index',
-    //     path: '/index',
-    //     component: index
-    // },
+    {
+        name: 'index',
+        path: '/index',
+        component: index
+    },
     {
         name: 'archive',
         path: '/archive',

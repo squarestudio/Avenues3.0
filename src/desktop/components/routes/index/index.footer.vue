@@ -43,7 +43,7 @@
 
         <!-- texts -->
 
-        <div class="title">{{about.title}}</div>
+        <div class="title">{{ about.title | text }}</div>
         <div class="u-text" v-html="about.contacts_1"></div>
         <div class="u-text" v-html="about.contacts_2"></div>
 
@@ -51,7 +51,7 @@
         <!-- archive -->
 
         <div>
-            <router-link class="archive u-row" v-if="!private" :to="{name: 'archive'}">
+            <router-link class="archive u-link u-row" v-if="!private" :to="{name: 'archive'}">
                 <span>Archive</span>
                 <icon-open />
             </router-link>
@@ -69,8 +69,8 @@
 
 <script>
 
-    import {mapState, mapGetters} from 'vuex'
-    import iconOpen from '@/common/icons/open.svg';
+    import {mapState} from 'vuex'
+    import iconOpen from '@/common/assets/icons/open.svg';
 
     export default {
 
@@ -78,17 +78,10 @@
             iconOpen
         },
 
-        computed: {
-
-            ...mapState('App', [
-                'about'
-            ]),
-
-            ...mapGetters('App', [
-                'private'
-            ])
-
-        }
+        computed: mapState([
+            'about',
+            'private'
+        ])
 
     }
 

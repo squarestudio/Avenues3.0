@@ -5,27 +5,13 @@
 <style scoped>
 
 
-    /* project */
+    /* main */
 
+    .u-grid {
+        padding-top: 0;
+    }
     .project {
         overflow: hidden;
-    }
-
-
-    /* video */
-
-    .ui-video:before {
-        content: '';
-        display: block;
-        padding-top: 56.25%; /* 16:9 */
-    }
-    .ui-video >>> video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
     }
 
 
@@ -69,33 +55,35 @@
 -->
 
 <template>
-    <div class="u-grid">
-        <a class="project" v-for="(project, i) in home" @mouseenter="enter(i)" @mouseleave="leave(i)" :key="project.id" v-show="canShow(project)">
+    <main>
+        <div class="u-grid">
+            <a class="project" v-for="(project, i) in home" @mouseenter="enter(i)" @mouseleave="leave(i)" v-show="canShow(project)">
 
 
-            <!-- video -->
+                <!-- video -->
 
-            <ui-video
-                :video="project.video"
-                :poster="project.frame"
-                :key="project.id"
-                :active="i === active"
-                :paused="false"
-            />
+                <ui-video
+                    class="hd"
+                    :video="project.video"
+                    :poster="project.frame"
+                    :active="i === active"
+                    :paused="false"
+                />
 
 
-            <!-- title -->
+                <!-- title -->
 
-            <div class="title">
-                <div class="move u-row" ref="move" :class="{play: active === i && moving}" :style="{animationDuration: active === i ? moving : ''}">
-                    <p>{{ project.title}} / {{ project.client }} / {{ project.editor }}</p>
-                    <p>{{ project.title}} / {{ project.client }} / {{ project.editor }}</p>
+                <div class="title">
+                    <div class="move u-row" ref="move">
+                        <p>{{ project.title}} / {{ project.client }} / {{ project.editor }}</p>
+                        <p>{{ project.title}} / {{ project.client }} / {{ project.editor }}</p>
+                    </div>
                 </div>
-            </div>
 
 
-        </a>
-    </div>
+            </a>
+        </div>
+    </main>
 </template>
 
 
@@ -115,34 +103,43 @@
             uiVideo
         },
 
+        props: [
+            'filter'
+        ],
+
         data () {
             return {
-                active: -1,
-                moving: ''
+                active: -1
             }
         },
 
         computed: {
 
-            ...mapState('App', ['home']),
-            ...mapState('Index', ['filter'])
+            ...mapState([
+                'home'
+            ]),
 
         },
 
         methods: {
 
             enter (index) {
-                const $move = this.$refs.move[index];
-                this.moving = $move.offsetWidth > $move.parentNode.offsetWidth ? $move.offsetWidth / 75 + 's' : '';
                 this.active = index;
+                const $move = this.$refs.move[index];
+                if ($move.offsetWidth < $move.parentNode.offsetWidth) return;
+                $move.classList.add('play');
+                $move.style.animationDuration = $move.offsetWidth / 75 + 's';
             },
 
-            leave () {
+            leave (index) {
                 this.active = -1;
+                const $move = this.$refs.move[index];
+                $move.classList.remove('play');
+                $move.style.animationDuration = '';
             },
 
             canShow (project) {
-                return !this.filter || project.editor.toLowerCase() === this.filter
+                return !this.filter || project.editor === this.filter
             }
 
         }

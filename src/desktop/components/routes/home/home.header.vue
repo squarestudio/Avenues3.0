@@ -42,6 +42,16 @@
     }
 
 
+    /* minimized */
+
+    header {
+        transition: opacity .3s;
+    }
+    header.minimized {
+        opacity: 0;
+    }
+
+
 </style>
 
 
@@ -51,13 +61,13 @@
 -->
 
 <template>
-    <header class="u-grid">
+    <header class="u-grid" :class="{minimized}">
 
 
         <!-- logo -->
 
         <div>
-            <a class="logo u-link" @click="logo">Avenues</a>
+            <a class="logo u-link" @click="logo">Avenues {{minimized}}</a>
         </div>
 
 
@@ -118,7 +128,8 @@
 
         props: [
             'contain',
-            'active'
+            'active',
+            'minimized'
         ],
 
         data () {

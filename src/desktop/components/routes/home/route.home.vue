@@ -19,7 +19,7 @@
 -->
 
 <template>
-    <section id="home" class="u-stretch u-col">
+    <section id="home" class="u-stretch u-col" @mousemove="move">
 
         <home-player
             :contain="contain"
@@ -31,6 +31,7 @@
 
         <home-header
             :contain.sync="contain"
+            :minimized="minimized"
             :active="active"
         />
 
@@ -38,6 +39,7 @@
             class="u-flex"
             :index="index"
             :video="video"
+            :minimized="minimized"
             :paused.sync="paused"
             @next="next"
             @prev="prev"
@@ -46,6 +48,7 @@
         <home-footer
             :contain="contain"
             :video="video"
+            :minimized="minimized"
         />
 
     </section>
@@ -60,6 +63,7 @@
 <script>
 
     import {mapState} from 'vuex'
+    import Timeout from '@/common/scripts/utils/timeout'
     import homeHeader from './home.header.vue'
     import homeControls from './home.controls.vue'
     import homePlayer from './home.player.vue'
@@ -76,9 +80,11 @@
 
         data () {
             return {
+                video: {},
                 contain: false,
                 paused: false,
-                video: {}
+                minimized: false,
+                timeout: new Timeout(2000, this.minimize)
             }
         },
 
@@ -112,6 +118,17 @@
                 let prev = this.index - 1;
                 if (prev < 0) prev = this.home.length - 1;
                 this.$router.push({query: {id: this.home[prev].id}});
+            },
+
+            move () {
+                if (!this.contain) return;
+                this.minimized = false;
+                this.timeout.stop();
+                this.timeout.start();
+            },
+
+            minimize () {
+                this.minimized = true;
             }
 
         },
@@ -120,6 +137,11 @@
 
             index () {
                 this.paused = false;
+            },
+
+            contain (value) {
+                if (value) this.timeout.start();
+                else this.timeout.stop();
             }
 
         }

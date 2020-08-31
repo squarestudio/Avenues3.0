@@ -11,6 +11,10 @@
         position: relative;
         align-items: stretch;
         cursor: none;
+        transition: opacity .3s;
+    }
+    nav.minimized {
+        opacity: 0;
     }
 
 
@@ -49,7 +53,7 @@
 -->
 
 <template>
-    <nav class="u-row" @mouseleave="leave">
+    <nav class="u-row" @mouseleave="leave" :class="{minimized}">
 
 
         <!-- next -->
@@ -108,36 +112,9 @@
 
 <script>
 
-
-    // imports
-
     import {mapState} from 'vuex'
+    import Timeout from '@/common/scripts/utils/timeout'
     import iconPrev from '@/common/assets/icons/prev.svg'
-
-
-    // timeout helper
-
-    class Timeout {
-
-        constructor () {
-            this.active = false;
-            this.timeout = null;
-        }
-
-        start () {
-            this.active = true;
-            this.timeout = setTimeout(this.stop.bind(this), 5000);
-        }
-
-        stop () {
-            this.active = false;
-            clearTimeout(this.timeout);
-        }
-
-    }
-
-
-    // exports
 
     export default {
 
@@ -148,7 +125,8 @@
         props: [
             'paused',
             'index',
-            'video'
+            'video',
+            'minimized'
         ],
 
         filters: {
@@ -161,7 +139,7 @@
 
         data () {
             return {
-                timeout: new Timeout()
+                timeout: new Timeout(5000)
             }
         },
 
@@ -194,7 +172,6 @@
             },
 
             next () {
-
                 if (this.timeout.active) return this.$emit('next');
                 this.video.currentTime = 0;
                 this.timeout.start();

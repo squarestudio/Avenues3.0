@@ -9,6 +9,10 @@
 
     footer {
         align-items: end;
+        transition: opacity .3s;
+    }
+    footer.minimized {
+        opacity: 0;
     }
 
 
@@ -133,7 +137,7 @@
 -->
 
 <template>
-    <footer class="u-grid">
+    <footer class="u-grid" :class="{minimized}">
 
 
         <!-- info -->
@@ -218,7 +222,8 @@
 
         props: [
             'contain',
-            'video'
+            'video',
+            'minimized'
         ],
 
         data () {

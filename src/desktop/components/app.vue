@@ -51,19 +51,19 @@
 
     /* route fade transitions */
 
-    .route-fade-enter-active {transition-duration: 1s;}
+    section.route-fade-enter-active {transition-duration: 1s;}
 
-    .route-fade-enter        header > div:not(:first-child) {transform: translateY(calc(var(--padding) * -1 - 1rem));}
-    .route-fade-enter-to     header > div:not(:first-child) {transform: translateY(0);}
-    .route-fade-enter-active header > div:not(:first-child) {transition: transform .5s;}
+    section.route-fade-enter        header > div:not(:first-child) {transform: translateY(calc(var(--padding) * -1 - 1rem));}
+    section.route-fade-enter-to     header > div:not(:first-child) {transform: translateY(0);}
+    section.route-fade-enter-active header > div:not(:first-child) {transition: transform .5s;}
 
-    .route-fade-enter        footer {transform: translateY(100%);}
-    .route-fade-enter-to     footer {transform: translateY(0);}
-    .route-fade-enter-active footer {transition: transform .5s;}
+    section.route-fade-enter        footer {transform: translateY(100%);}
+    section.route-fade-enter-to     footer {transform: translateY(0);}
+    section.route-fade-enter-active footer {transition: transform .5s;}
 
-    .route-fade-enter        nav, .route-fade-enter        main {opacity: 0;}
-    .route-fade-enter-to     nav, .route-fade-enter-to     main {opacity: 1;}
-    .route-fade-enter-active nav, .route-fade-enter-active main {transition: opacity .5s .5s}
+    section.route-fade-enter        nav, .route-fade-enter        main {opacity: 0;}
+    section.route-fade-enter-to     nav, .route-fade-enter-to     main {opacity: 1;}
+    section.route-fade-enter-active nav, .route-fade-enter-active main {transition: opacity .5s .5s}
 
 
 </style>

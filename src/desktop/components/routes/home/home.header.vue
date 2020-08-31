@@ -67,7 +67,7 @@
         <!-- logo -->
 
         <div>
-            <a class="logo u-link" @click="logo">Avenues {{minimized}}</a>
+            <a class="logo u-link" @click="logo">Avenues</a>
         </div>
 
 

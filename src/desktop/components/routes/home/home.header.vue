@@ -114,7 +114,7 @@
 <script>
 
     import {mapState} from 'vuex'
-    import uiView from '@/desktop/components/ui/view.vue'
+    import uiView from '@/common/components/ui/view.vue'
     import uiSound from '@/desktop/components/ui/sound.vue'
     import uiMenu from '@/desktop/components/ui/menu.vue'
 

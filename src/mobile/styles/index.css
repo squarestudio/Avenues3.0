@@ -1,0 +1,23 @@
+:root {
+    --padding: 0.8rem;
+    --windowHeight: 100vh;
+}
+
+
+/* themes */
+
+.th-black {
+    background: #000000;
+    color: #FFFFFF;
+}
+.th-white {
+    background: #FFFFFF;
+    color: #000000;
+}
+
+
+/* fade transition */
+
+.fade-leave, .fade-enter-to {opacity: 1}
+.fade-enter, .fade-leave-to {opacity: 0}
+.fade-enter-active, .fade-leave-active {transition: opacity .5s;}

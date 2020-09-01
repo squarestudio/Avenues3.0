@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="animation.js"></script>
+</head>
+<body>
+
+
+    <script>
+
+        // from, to, duration, easing
+        // updateCb, completeCb
+        // pause, play
+
+        const animation = new Animation({
+            duration: 1000,
+            update (value) {
+                console.log(value);
+            }
+        });
+
+        animation.from(1).to(0).start();
+
+        setTimeout(() => {
+            animation.pause();
+        }, 200)
+
+        setTimeout(() => {
+            animation.to(2).start();
+        }, 1000)
+
+
+        //
+        // // method scroll
+        // animation.from(1).to(2).start();
+        // animation.from(1).to(2).pause();
+        //
+        // // scroll listener
+        // animation.pause();
+        //
+        //
+        //
+        // const animation2 = new Animation({
+        //     from: 1,
+        //     update: this.update
+        // });
+        //
+        // animation2.to(0.8).play();
+        //
+        // if (true) {
+        //     animation2.complete(() => {
+        //
+        //     });
+        // }
+
+
+        /*
+            from
+            to
+            play()
+            pause()
+            onUpdate()
+            onComplete()
+        */
+
+        // const animation = new Animation();
+        //
+        // animation.from(1).to(2);
+        //
+        // animation.play(value => {
+        //     console.log(value);
+        // })
+        //
+        // animation.complete(() => {
+        //     console.log()
+        // })
+        //
+        // animation.pause();
+        //
+        //
+        // const animation2 = new Animation({
+        //     from: 1,
+        //     to: 2,
+        //     play () {
+        //
+        //     },
+        //     complete () {
+        //
+        //     }
+        // });
+        //
+        // animation.from(1)
+        // animation.to(2)
+        //
+        // animation.play(value => {
+        //     console.log(value);
+        // })
+        //
+        // animation.complete(() => {
+        //     console.log()
+        // })
+        //
+        // animation.pause();
+
+
+    </script>
+
+</body>
+</html>

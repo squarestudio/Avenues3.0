@@ -4,30 +4,12 @@
 
 <style>
 
-
     /* main */
 
     #app      {overflow: hidden;}
     #home     {z-index: 1;}
-    #index    {z-index: 2;}
-    #archive  {z-index: 3;}
-    #loader   {z-index: 4;}
-
-
-    /* themes */
-
-    .th-home {
-        background: #000000;
-        color: #FFFFFF;
-    }
-    .th-index, .th-archive {
-        background: #FFFFFF;
-        color: #000000;
-    }
-    .th-private-index {
-        background: #A86F6F;
-        color: #000000;
-    }
+    #archive  {z-index: 2;}
+    #loader   {z-index: 3;}
 
 
     /* route move transitions */
@@ -51,21 +33,20 @@
 
     /* route fade transitions */
 
-    section.route-fade-enter-active {transition-duration: 1s;}
+    .route-fade-enter-active {transition-duration: 1s;}
 
-    section.route-fade-enter        header > div:not(:first-child) {transform: translateY(calc(var(--padding) * -1 - 1rem));}
-    section.route-fade-enter-to     header > div:not(:first-child) {transform: translateY(0);}
-    section.route-fade-enter-active header > div:not(:first-child) {transition: transform .5s;}
+    section.route-fade-enter        header . {transform: translateY(-100%);}
+    section.route-fade-enter-to     header {transform: translateY(0);}
+    section.route-fade-enter-active header {transition: transform .5s;}
 
-    section.route-fade-enter        footer {transform: translateY(100%);}
-    section.route-fade-enter-to     footer {transform: translateY(0);}
-    section.route-fade-enter-active footer {transition: transform .5s;}
+    section.route-fade-enter        nav {transform: translateY(100%);}
+    section.route-fade-enter-to     nav {transform: translateY(0);}
+    section.route-fade-enter-active nav {transition: transform .5s;}
 
-    section.route-fade-enter        nav, .route-fade-enter        main {opacity: 0;}
-    section.route-fade-enter-to     nav, .route-fade-enter-to     main {opacity: 1;}
-    section.route-fade-enter-active nav, .route-fade-enter-active main {transition: opacity .5s .5s}
-
-
+    /*section.route-fade-enter        nav, .route-fade-enter        main {opacity: 0;}*/
+    /*section.route-fade-enter-to     nav, .route-fade-enter-to     main {opacity: 1;}*/
+    /*section.route-fade-enter-active nav, .route-fade-enter-active main {transition: opacity .5s .5s}*/
+    
 </style>
 
 
@@ -78,8 +59,8 @@
     <div id="app" class="u-stretch">
 
         <transition :name="transition">
-            <router-view v-if="loaded" :class="theme" />
-            <loader v-else :class="theme" />
+            <router-view v-if="loaded" />
+            <loader v-else :class="`th-${theme}`" />
         </transition>
 
     </div>
@@ -118,7 +99,9 @@
             ]),
 
             theme () {
-                return 'th-' + this.$route.name;
+                if (this.$route.query.contain) return 'black';
+                if (this.$route.name === 'archive') return 'white';
+                return 'black';
             },
 
             transition () {

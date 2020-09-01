@@ -11,7 +11,7 @@ const Easing = {
 
 }
 
-export default class Animation {
+class Animation {
 
     constructor ({from, to, duration, easing, update, complete}) {
         this.config = {};
@@ -29,8 +29,9 @@ export default class Animation {
     }
 
     from (value) {
-        delete this.value;
-        return this.set('from', value);
+        this.set('value');
+        this.set('from', value);
+        return this;
     }
 
     to (value) {
@@ -54,7 +55,6 @@ export default class Animation {
     }
 
     start () {
-        if (this.active) return;
         this.config.from = this.value === undefined ? this.config.from : this.value;
         this.config.time = Date.now();
         this.active = true;

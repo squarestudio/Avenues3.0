@@ -29,14 +29,18 @@ function configureOptimization (mode) {
 }
 
 function configurePlugins (mode, type) {
-    let plugins = [new HtmlWebpackPlugin({
+
+    let html =  {
         title: 'Avenues',
         templateContent: `<html lang="en"><body><div id="app"></div></body></html>`,
         chunks: ['bundle', 'bundle_head']
-    })]
-    if (type === 'mobile') {
-        plugins[0].meta = {viewport: 'width=device-width, initial-scale=1'}
     }
+    if (type === 'mobile') {
+        html.meta = {viewport: 'width=device-width, initial-scale=1'}
+    }
+
+    let plugins = [new HtmlWebpackPlugin(html)];
+
     if (mode === 'production') {
         plugins.push(new PrerenderSPAPlugin({
             staticDir: absPath(`dist/${type}`),
@@ -92,7 +96,7 @@ module.exports = ({mode, type, port = 49018}) => ({
     ],
 
     devServer: {
-        contentBase: absPath('dist/desktop'),
+        contentBase: absPath(`dist/${type}`),
         host: '0.0.0.0',
         historyApiFallback: true,
         clientLogLevel: 'none',

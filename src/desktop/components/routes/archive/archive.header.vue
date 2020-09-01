@@ -5,6 +5,13 @@
 <style scoped>
 
 
+    /* main */
+
+    header {
+        padding-bottom: 2rem;
+    }
+
+
     /* search */
 
     .search {

@@ -44,7 +44,7 @@
 <template>
     <div class="ui-video">
         <img class="u-stretch" :src="poster" v-show="!this.active || !this.canplay">
-        <video @canplay="canplay = true" ref="video" @ended="$emit('end')" />
+        <video playsinline @canplay="canplay = true" ref="video" @ended="$emit('end')" />
     </div>
 </template>
 

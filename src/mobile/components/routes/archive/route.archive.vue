@@ -211,9 +211,7 @@
             scroll (value, duration) {
                 const from = this.$el.scrollTop;
                 const to = this.$el.scrollTop + value;
-                this.animation.from(from).to(to).duration(duration).start().complete(() => {
-                    console.log('scroll done');
-                });
+                this.animation.from(from).to(to).duration(duration).start();
             },
 
             next () {

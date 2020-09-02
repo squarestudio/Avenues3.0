@@ -75,7 +75,7 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapMutations, mapState} from 'vuex'
     import loader from './loader.vue'
 
     export default {
@@ -99,6 +99,10 @@
                 'loaded'
             ]),
 
+            contain () {
+                return this.$route.query.contain;
+            },
+
             theme () {
                 if (this.$route.query.contain) return 'black';
                 if (this.$route.name === 'archive') return 'white';
@@ -114,9 +118,22 @@
 
         },
 
+        methods: {
+
+            ...mapMutations([
+                'set'
+            ])
+
+        },
+
         watch: {
+
             '$route.name' (to, from) {
                 this.route = {to, from};
+            },
+
+            contain (value) {
+                this.set({muted: !value})
             }
         }
 

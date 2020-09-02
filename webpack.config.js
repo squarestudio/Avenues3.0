@@ -90,6 +90,7 @@ module.exports = ({mode, type, port = 49018}) => ({
         ...configurePlugins(mode, type),
         new HtmlWebpackInjector(),
         new webpack.DefinePlugin({
+            DEV: JSON.stringify(mode === 'development'),
             API_ORIGIN: JSON.stringify('http://93.188.166.42:49001'),
             API_PROJECT: JSON.stringify('avenues')
         }),

@@ -86,7 +86,7 @@
     .progress .bar.large {
         position: absolute;
         left: var(--padding);
-        right: 7.4rem;
+        right: 9.6rem;
         bottom: 1rem;
     }
 

@@ -123,7 +123,7 @@
         <!-- archive -->
 
         <transition name="fade">
-            <router-link :to="{name: 'archive'}" class="archive u-row" v-show="menu">
+            <router-link :to="{name: 'archive'}" class="archive u-row" v-show="!private && menu">
                 <span>Archive</span>
                 <icon-open />
             </router-link>
@@ -163,7 +163,8 @@
         computed: {
 
             ...mapState([
-                'about'
+                'about',
+                'private'
             ])
 
         },

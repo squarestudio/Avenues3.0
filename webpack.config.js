@@ -36,7 +36,7 @@ function configurePlugins (mode, type) {
         chunks: ['bundle', 'bundle_head']
     }
     if (type === 'mobile') {
-        html.meta = {viewport: 'width=device-width, initial-scale=1'}
+        html.meta = {viewport: 'width=device-width, initial-scale=1, maximum-scale=1'}
     }
 
     let plugins = [new HtmlWebpackPlugin(html)];

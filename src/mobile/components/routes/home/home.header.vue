@@ -18,11 +18,14 @@
         position: fixed;
         justify-content: space-between;
         padding: var(--padding);
-        transition: transform .5s;
+        transition: opacity .5s, transform .5s;
         transform: translateY(calc(-100% + var(--padding) + var(--padding) + 1rem));
     }
     .menu .u-text {
         width: 75%;
+    }
+    .menu .u-link {
+        align-self: flex-start;
     }
     .menu.active {
         transform: translateY(0);
@@ -61,13 +64,6 @@
         flex-shrink: 0;
     }
 
-
-    /* fade transition */
-
-    .fade-leave, .fade-enter-to {opacity: 1}
-    .fade-enter, .fade-leave-to {opacity: 0}
-    .fade-enter-active, .fade-leave-active {transition: opacity .5s;}
-
     
 </style>
 
@@ -99,7 +95,7 @@
                     <span v-html="about.description"></span>
                 </div>
 
-                <a @click="toggleMenu">{{ menu ? 'Close' : 'Avenues' }}</a>
+                <a class="u-link" @click="toggleMenu">{{ menu ? 'Close' : 'Avenues' }}</a>
 
             </div>
         </transition>
@@ -109,7 +105,7 @@
 
         <transition name="fade">
             <ui-view
-                class="view"
+                class="view loader-sync"
                 v-show="!menu"
                 :active="contain"
                 @click.native="$emit('update:contain', !contain)"
@@ -120,17 +116,17 @@
         <!-- copy -->
 
         <transition name="fade">
-            <ui-copy class="copy" v-show="contain" />
+            <ui-copy class="copy loader-sync" v-show="contain" ref="copy" />
         </transition>
 
 
         <!-- archive -->
 
         <transition name="fade">
-            <a class="archive u-row" v-show="menu">
+            <router-link :to="{name: 'archive'}" class="archive u-row" v-show="menu">
                 <span>Archive</span>
                 <icon-open />
-            </a>
+            </router-link>
         </transition>
 
 
@@ -159,14 +155,9 @@
         },
 
         props: [
-            'contain'
+            'contain',
+            'menu'
         ],
-
-        data () {
-            return {
-                menu: false
-            }
-        },
 
         computed: {
 
@@ -179,7 +170,7 @@
         methods: {
 
             toggleMenu () {
-                this.menu = !this.menu;
+                this.$emit('update:menu', !this.menu);
             }
 
         }

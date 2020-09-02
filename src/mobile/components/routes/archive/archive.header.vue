@@ -64,8 +64,8 @@
         <!-- default -->
 
         <div class="primary u-row">
-            <a>Avenues</a>
-            <a class="loader-sync">Close</a>
+            <router-link :to="{name: 'home'}">Avenues</router-link>
+            <router-link :to="{name: 'home'}" class="loader-sync">Close</router-link>
         </div>
 
 

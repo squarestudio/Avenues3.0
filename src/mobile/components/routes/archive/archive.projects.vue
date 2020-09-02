@@ -81,14 +81,14 @@
 
                 <div class="accordion" ref="accordion" v-show="i === index">
                     <ui-video
-                            ref="video"
-                            :video="project.video"
-                            :poster="project.frame"
-                            :paused="project.paused"
-                            :active="project.active"
-                            :style="project.style"
-                            @end="next"
-                            @click.native="$emit('update:contain', true)"
+                        ref="video"
+                        :video="project.video"
+                        :poster="project.frame"
+                        :paused="project.paused"
+                        :active="project.active"
+                        :style="project.style"
+                        @end="next"
+                        @click.native="$emit('update:contain', true)"
                     />
                 </div>
             </transition>
@@ -109,7 +109,12 @@
 
     import uiVideo from '@/common/components/ui/video.vue'
     import uiTicker from '@/common/components/ui/ticker.vue'
-    import {timeout, transition} from '@/mobile/scripts/utils'
+
+    function timeout (time = 0) {
+        return new Promise(resolve => {
+            setTimeout(resolve, time);
+        });
+    }
 
     function extend (self) {
         return self.$store.state.archive.map(project => Object.assign({
@@ -219,7 +224,6 @@
                 const top = $accordion.getBoundingClientRect().top;
                 const height = parseFloat(this.sorted[this.index].style.height);
                 const y = (window.innerHeight - height) / 2 - top;
-                console.log('centerVideo')
                 $accordion.style.transform = `translateY(${y}px)`;
             },
 

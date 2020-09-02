@@ -7,8 +7,11 @@
     main {
         overflow: hidden;
     }
-    main .slider > * {
+    .slider > * {
         height: 100%;
+    }
+    .slider.immediate {
+        transition: none !important;
     }
     
 </style>
@@ -21,9 +24,19 @@
 
 <template>
     <main class="u-stretch">
-        <div class="slider" ref="slider">
-            <home-project v-for="project in home" :project="project"/>
+        <div class="slider" ref="slider" :class="{immediate}" @transitionend="update">
+
+            <home-project
+                v-for="project in projects"
+                :project="project"
+                :contain="contain"
+                :active="project.active"
+                @video="$emit('update:video', $event)"
+                @end="next"
+            />
+
             <home-about />
+
         </div>
     </main>
 </template>
@@ -36,12 +49,17 @@
 
 <script>
 
-    import {mapState} from 'vuex'
     import homeProject from './home.project.vue'
     import homeAbout from './home.about.vue'
 
     function pageY (event) {
         return (event.touches && event.touches[0] || event.changedTouches && event.changedTouches[0] || event).pageY;
+    }
+
+    function extend (self) {
+        return self.$store.state.home.map(project => Object.assign({
+            active: false
+        }, project));
     }
 
     export default {
@@ -52,20 +70,20 @@
         },
 
         props: [
+            'contain',
             'index'
         ],
 
         data () {
             return {
-                drag: false
+                projects: extend(this),
+                drag: false,
+                prev: -1,
+                immediate: true
             }
         },
 
         computed: {
-
-            ...mapState([
-                'home'
-            ]),
 
             $slider () {
                 return this.$refs.slider;
@@ -80,6 +98,8 @@
         methods: {
 
             start (event) {
+                if (this.contain) return;
+                // this.immediate =
                 const y = this.$slider.getBoundingClientRect().top;
                 const e = pageY(event);
                 this.drag = {y, e};
@@ -121,21 +141,40 @@
             show () {
                 const y = 100 / this.$slides.length * this.index;
                 this.$slider.style.transform = `translateY(-${y}%)`;
+            },
+
+            update () {
+                if (this.projects[this.index]) this.projects[this.index].active = true;
+                if (this.projects[this.prev]) this.projects[this.prev].active = false;
+            },
+
+            next () {
+                let next = this.index + 1;
+                if (this.contain && next > this.projects.length - 1) next = 0;
+                this.$emit('update:index', next);
             }
 
         },
 
         watch: {
 
-            index () {
+            index (curr, prev) {
+                this.prev = prev;
                 this.$slider.style.transition = `transform .5s`;
                 this.show();
+                this.immediate && this.update();
+            },
+
+            contain (value) {
+                this.immediate = value;
             }
 
         },
 
         mounted () {
             this.show();
+            this.update();
+            this.immediate = this.contain;
             this.$el.addEventListener('mousedown', this.start);
             document.addEventListener('mousemove', this.move);
             document.addEventListener('mouseup', this.end);

@@ -16,10 +16,14 @@
 
 <template>
     <section id="home" class="u-stretch">
-        <home-slider :index.sync="index" />
-        <home-header :contain.sync="contain" />
-        <home-footer :contain="contain" />
-        <ui-controls :projects="home" :index="index" :bar="contain" :video="video" />
+
+        <home-slider :contain.sync="contain" :index.sync="index" :video.sync="video" />
+        <home-header :contain.sync="contain" :menu.sync="menu" />
+
+        <transition name="fade">
+            <ui-controls v-show="!menu" :projects="home" :index="index" :bar="contain" :video="video" />
+        </transition>
+
     </section>
 </template>
 
@@ -35,20 +39,19 @@
     import uiControls from '@/mobile/components/ui/controls.vue'
     import homeSlider from './home.slider.vue'
     import homeHeader from './home.header.vue'
-    import homeFooter from './home.footer.vue'
 
     export default {
 
         components: {
             homeSlider,
             homeHeader,
-            homeFooter,
             uiControls
         },
 
         data () {
             return {
-                video: {}
+                video: {},
+                menu: false
             }
         },
 

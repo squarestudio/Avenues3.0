@@ -62,7 +62,7 @@
              @mousemove="move"
              @mouseenter="enter"
              @mouseleave="leave"
-             @click="next">
+             @click="prev">
 
             <div class="badge">
                 <icon-prev />
@@ -92,7 +92,7 @@
              @mousemove="move"
              @mouseenter="enter"
              @mouseleave="leave"
-             @click="$emit('prev')">
+             @click="$emit('next')">
 
             <div class="badge">
                 {{ (index + 1) | digits }} / {{ home.length | digits }}
@@ -171,8 +171,8 @@
                 $badge.style.top = event.clientY - area.top - badge.height / 2 + 'px';
             },
 
-            next () {
-                if (this.timeout.active) return this.$emit('next');
+            prev () {
+                if (this.timeout.active) return this.$emit('prev');
                 this.video.currentTime = 0;
                 this.timeout.start();
                 this.$emit('update:paused', false);

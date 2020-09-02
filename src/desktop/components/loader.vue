@@ -22,8 +22,8 @@
 
 <template>
     <div id="loader" class="u-stretch">
-        <div>Avenues</div>
-        <div v-for="n in rows" ref="row">Avenues</div>
+        <div ref="row">Avenues</div>
+        <div v-for="n in rows">Avenues</div>
     </div>
 </template>
 
@@ -43,7 +43,7 @@
 
         data () {
             return {
-                rows: 400,
+                rows: 0,
                 animation: new Animation({
                     from: 1,
                     duration: 1000,
@@ -86,7 +86,7 @@
                 const top = style.getPropertyValue('padding-top');
                 const bottom = style.getPropertyValue('padding-bottom');
                 const col = this.$el.offsetHeight - parseFloat(top) - parseFloat(bottom);
-                const row = this.$refs.row[0].offsetHeight;
+                const row = this.$refs.row.offsetHeight;
                 this.rows = this.rowsTotal = Math.floor(col / row) * 4 - 1;
             }
 
@@ -94,7 +94,6 @@
 
         async mounted () {
 
-            this.normalizeRows();
             await Auth(this.id);
 
             if (Cache.valid(this.id)) {
@@ -104,6 +103,7 @@
                 return;
             }
 
+            this.normalizeRows();
             this.animate(0.8);
             this.bitrate = await BitRate(1000);
 

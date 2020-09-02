@@ -15,13 +15,16 @@
 -->
 
 <template>
-    <section id="home" class="u-stretch">
+    <section id="home" class="u-stretch" @mousemove="minimizeReset">
 
         <home-slider :contain.sync="contain" :index.sync="index" :video.sync="video" />
-        <home-header :contain.sync="contain" :menu.sync="menu" />
 
         <transition name="fade">
-            <ui-controls v-show="!menu" :projects="home" :index="index" :bar="contain" :video="video" />
+            <home-header v-show="!footer && !minimized" :contain.sync="contain" :menu.sync="menu" />
+        </transition>
+
+        <transition name="fade">
+            <ui-controls v-show="!menu && !footer && !minimized" :projects="home" :index="index" :bar="contain" :video="video" />
         </transition>
 
     </section>
@@ -36,6 +39,7 @@
 <script>
 
     import {mapState} from 'vuex'
+    import minimize from '@/common/scripts/mixins/minimize'
     import uiControls from '@/mobile/components/ui/controls.vue'
     import homeSlider from './home.slider.vue'
     import homeHeader from './home.header.vue'
@@ -47,6 +51,10 @@
             homeHeader,
             uiControls
         },
+
+        mixins: [
+            minimize
+        ],
 
         data () {
             return {
@@ -60,6 +68,10 @@
             ...mapState([
                 'home'
             ]),
+
+            footer () {
+                return this.$route.query.id === 'about';
+            },
 
             contain: {
 

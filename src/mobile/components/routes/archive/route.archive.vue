@@ -49,15 +49,18 @@
 -->
 
 <template>
-    <section id="archive" class="th-white u-stretch" :class="{contain}">
+    <section id="archive" class="th-white u-stretch" :class="{contain}" @mousemove="minimizeReset">
 
 
         <!-- header -->
 
-        <archive-header
-            :active="active"
-            :contain.sync="contain"
-        />
+        <transition name="fade">
+            <archive-header
+                v-show="!minimized"
+                :active="active"
+                :contain.sync="contain"
+            />
+        </transition>
 
 
         <!-- main -->
@@ -88,7 +91,7 @@
 
         <transition name="fade">
             <ui-controls
-                v-if="contain"
+                v-if="contain && !minimized"
                 :bar="true"
                 :projects="archive"
                 :index="index"
@@ -110,6 +113,7 @@
 
     import {mapState} from 'vuex'
     import Animation from '@/common/scripts/utils/animation';
+    import minimize from '@/common/scripts/mixins/minimize'
     import archiveHeader from './archive.header.vue'
     import archiveFilters from './archive.filters.vue'
     import archiveProjects from './archive.projects.vue'
@@ -125,6 +129,10 @@
             archiveFooter,
             uiControls
         },
+
+        mixins: [
+            minimize
+        ],
 
         data () {
             return {

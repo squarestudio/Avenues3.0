@@ -35,7 +35,7 @@
                 @end="next"
             />
 
-            <home-about />
+            <home-footer />
 
         </div>
     </main>
@@ -50,7 +50,7 @@
 <script>
 
     import homeProject from './home.project.vue'
-    import homeAbout from './home.about.vue'
+    import homeFooter from './home.footer.vue'
 
     function pageY (event) {
         return (event.touches && event.touches[0] || event.changedTouches && event.changedTouches[0] || event).pageY;
@@ -66,7 +66,7 @@
 
         components: {
             homeProject,
-            homeAbout
+            homeFooter
         },
 
         props: [

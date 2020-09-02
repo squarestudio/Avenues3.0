@@ -4,6 +4,9 @@
 
 <style scoped>
 
+
+    /* filter */
+
     .filter a {
         white-space: nowrap;
     }
@@ -20,7 +23,25 @@
     .filter a.active svg {
         opacity: 1;
     }
-    
+
+
+    /* private title */
+
+    .private svg {
+        width: 1rem;
+        height: 1rem;
+        margin-left: .25rem;
+        flex-shrink: 0;
+    }
+
+
+    /* invisible filter (private page) */
+
+    .filter.invisible {
+        visibility: hidden;
+    }
+
+
 </style>
 
 
@@ -43,13 +64,14 @@
         <!-- index -->
 
         <div>
-            <a class="u-link" @click="$emit('back')">Fullscreen</a>
+            <p v-if="private" class="u-row u-link private">{{ privateInfo.title }}<icon-down /></p>
+            <a v-else class="u-link" @click="$emit('back')">Fullscreen</a>
         </div>
 
 
         <!-- editors -->
 
-        <div class="filter u-row">
+        <div class="filter u-row" :class="{invisible: private}">
 
             <a class="u-row" @click="$emit('update:filter', false)" :class="{active: !filter}">
                 <span>All</span>
@@ -101,7 +123,8 @@
 
             ...mapState([
                 'home',
-                'private'
+                'private',
+                'privateInfo'
             ]),
 
             editors () {

@@ -55,6 +55,14 @@ const Config = {
         }
     },
 
+    privateInfo (id) {
+        return {
+            method: 'GET',
+            url: '/items/private/' + id,
+            params: {fields: 'title'}
+        }
+    },
+
     login (password, id) {
         return {
             method: 'GET',

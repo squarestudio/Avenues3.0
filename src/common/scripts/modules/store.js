@@ -23,6 +23,7 @@ export default state => new Vuex.Store({
 
     state: {
         private: /^\/private/.test(location.pathname),
+        privateInfo: {},
         loaded: false,
         muted: true,
         home: [],

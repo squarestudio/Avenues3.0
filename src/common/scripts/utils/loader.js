@@ -21,14 +21,14 @@ export const Cache = {
     },
 
     get () {
-        const {about, home, archive} = Cache.data;
-        return {about, home, archive}
+        const {about, home, archive, privateInfo} = Cache.data;
+        return {about, home, archive, privateInfo}
     },
 
-    set ({about, home, archive}, id) {
+    set ({about, home, archive, privateInfo}, id) {
         localStorage.setItem('cache', JSON.stringify({
             timestamp: Date.now(),
-            about, home, archive, id
+            about, home, archive, privateInfo, id
         }))
     }
 
@@ -119,6 +119,8 @@ export const Request = (id, bitrate) => {
         private: () => Promise.all([
             API('private', id),
             API('about'),
+            Promise.resolve(),
+            API('privateInfo', id)
         ]),
 
         public: () => Promise.all([
@@ -142,10 +144,11 @@ export const Request = (id, bitrate) => {
         return project
     });
 
-    return request[id ? 'private' : 'public']().then(([home, about, archive]) => ({
+    return request[id ? 'private' : 'public']().then(([home, about, archive = [], privateInfo = {}]) => ({
         about,
         home: parse(home),
-        archive: parse(archive)
+        archive: parse(archive),
+        privateInfo
     }));
 
 }

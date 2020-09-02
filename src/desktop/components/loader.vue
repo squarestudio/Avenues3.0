@@ -44,7 +44,11 @@
         data () {
             return {
                 rows: 400,
-                animation: new Animation(1)
+                animation: new Animation({
+                    from: 1,
+                    duration: 1000,
+                    update: this.update
+                })
             }
         },
 
@@ -63,7 +67,8 @@
             ]),
 
             animate (to) {
-                this.animation.to(to, 1000, this.update, !to && this.complete);
+                this.animation.to(to).start();
+                !to && this.animation.complete(this.complete);
             },
 
             update (value) {

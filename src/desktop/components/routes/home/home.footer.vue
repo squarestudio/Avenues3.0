@@ -148,7 +148,7 @@
                     ref="infoMenu"
                     :style="{transform: `translateY(-${infoPadding})`}"
                     :active.sync="infoActive"
-                    :target="about.title | text"
+                    :target="about.title"
                     :source="about.description"
                     @enter="infoEnter"
                     @leave="infoLeave"
@@ -244,18 +244,6 @@
                 'about',
                 'private'
             ])
-
-        },
-
-        filters: {
-
-            time (value) {
-                const digits = n => ('0' + n).slice(-2);
-                value = Math.round(value) || 0;
-                let m = digits(Math.floor(value / 60) % 60);
-                let s = digits(value % 60);
-                return `${m}:${s}`
-            }
 
         },
 

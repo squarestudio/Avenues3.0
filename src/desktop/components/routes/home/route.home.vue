@@ -19,7 +19,7 @@
 -->
 
 <template>
-    <section id="home" class="u-stretch u-col" @mousemove="move">
+    <section id="home" class="u-stretch u-col" @mousemove="minimizeReset">
 
         <home-player
             :contain="contain"
@@ -63,7 +63,7 @@
 <script>
 
     import {mapState} from 'vuex'
-    import Timeout from '@/common/scripts/utils/timeout'
+    import minimize from '@/common/scripts/mixins/minimize'
     import homeHeader from './home.header.vue'
     import homeControls from './home.controls.vue'
     import homePlayer from './home.player.vue'
@@ -78,13 +78,15 @@
             homeFooter
         },
 
+        mixins: [
+            minimize
+        ],
+
         data () {
             return {
                 video: {},
                 contain: false,
-                paused: false,
-                minimized: false,
-                timeout: new Timeout(2000, this.minimize)
+                paused: false
             }
         },
 
@@ -118,17 +120,6 @@
                 let prev = this.index - 1;
                 if (prev < 0) prev = this.home.length - 1;
                 this.$router.push({query: {id: this.home[prev].id}});
-            },
-
-            move () {
-                if (!this.contain) return;
-                this.minimized = false;
-                this.timeout.stop();
-                this.timeout.start();
-            },
-
-            minimize () {
-                this.minimized = true;
             }
 
         },
@@ -137,11 +128,6 @@
 
             index () {
                 this.paused = false;
-            },
-
-            contain (value) {
-                if (value) this.timeout.start();
-                else this.timeout.stop();
             }
 
         }

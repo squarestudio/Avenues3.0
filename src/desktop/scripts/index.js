@@ -12,6 +12,7 @@ import index from '@/desktop/components/routes/index/route.index.vue'
 import archive from '@/desktop/components/routes/archive/route.archive.vue'
 
 import '@/common/scripts/filters/text'
+import '@/common/scripts/filters/time'
 import '@/common/styles/base.css'
 import '@/common/styles/utils.css'
 import '@/desktop/styles/index.css'

@@ -43,7 +43,7 @@
 
         <!-- texts -->
 
-        <div class="title">{{ about.title | text }}</div>
+        <div class="title" v-html="about.title"></div>
         <div class="u-text" v-html="about.contacts_1"></div>
         <div class="u-text" v-html="about.contacts_2"></div>
 

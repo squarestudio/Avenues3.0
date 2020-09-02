@@ -101,7 +101,7 @@
 <script>
 
     import {mapState} from 'vuex'
-    import uiVideo from '@/desktop/components/ui/video.vue'
+    import uiVideo from '@/common/components/ui/video.vue'
 
     export default {
 

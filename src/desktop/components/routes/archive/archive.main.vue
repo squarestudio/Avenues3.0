@@ -126,7 +126,7 @@
 
             canShow (project) {
                 return !this.search ||
-                    project.editor.includes(this.search) ||
+                    project.client.includes(this.search) ||
                     project.title.includes(this.search) ||
                     project.category.includes(this.search) ||
                     project.editor.includes(this.search);

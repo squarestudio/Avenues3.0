@@ -14,39 +14,40 @@
 
     /* route move transitions */
 
-    .route-up-enter-active,
-    .route-up-leave-active,
-    .route-down-enter-active,
-    .route-down-leave-active {
+    #app .route-up-enter-active,
+    #app .route-up-leave-active,
+    #app .route-down-enter-active,
+    #app .route-down-leave-active {
         transition: transform .5s;
     }
 
-    .route-up-enter      {transform: translateY(100%)}
-    .route-up-enter-to   {transform: translateY(0)}
-    .route-up-leave      {transform: translateY(0)}
-    .route-up-leave-to   {transform: translateY(-50%)}
-    .route-down-enter    {transform: translateY(-50%)}
-    .route-down-enter-to {transform: translateY(0)}
-    .route-down-leave    {transform: translateY(0)}
-    .route-down-leave-to {transform: translateY(100%)}
+    #app .route-up-enter      {transform: translateY(100%)}
+    #app .route-up-enter-to   {transform: translateY(0)}
+    #app .route-up-leave      {transform: translateY(0)}
+    #app .route-up-leave-to   {transform: translateY(-50%)}
+    #app .route-down-enter    {transform: translateY(-50%)}
+    #app .route-down-enter-to {transform: translateY(0)}
+    #app .route-down-leave    {transform: translateY(0)}
+    #app .route-down-leave-to {transform: translateY(100%)}
 
 
     /* route fade transitions */
 
-    .route-fade-enter-active {transition-duration: 1s;}
+    #app .route-fade-enter-active {transition-duration: 1s;}
 
-    section.route-fade-enter        header . {transform: translateY(-100%);}
-    section.route-fade-enter-to     header {transform: translateY(0);}
-    section.route-fade-enter-active header {transition: transform .5s;}
+    #app .route-fade-enter        header .loader-sync {transform: translateY(calc(var(--padding) * -1 - 1rem));}
+    #app .route-fade-enter-to     header .loader-sync {transform: translateY(0);}
+    #app .route-fade-enter-active header .loader-sync {transition: transform .5s;}
 
-    section.route-fade-enter        nav {transform: translateY(100%);}
-    section.route-fade-enter-to     nav {transform: translateY(0);}
-    section.route-fade-enter-active nav {transition: transform .5s;}
+    #app .route-fade-enter        nav {transform: translateY(100%);}
+    #app .route-fade-enter-to     nav {transform: translateY(0);}
+    #app .route-fade-enter-active nav {transition: transform .5s;}
 
-    /*section.route-fade-enter        nav, .route-fade-enter        main {opacity: 0;}*/
-    /*section.route-fade-enter-to     nav, .route-fade-enter-to     main {opacity: 1;}*/
-    /*section.route-fade-enter-active nav, .route-fade-enter-active main {transition: opacity .5s .5s}*/
-    
+    #app .route-fade-enter        main {opacity: 0;}
+    #app .route-fade-enter-to     main {opacity: 1;}
+    #app .route-fade-enter-active main {transition: opacity .5s .5s}
+
+
 </style>
 
 

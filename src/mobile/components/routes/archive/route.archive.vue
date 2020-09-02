@@ -5,6 +5,13 @@
 <style>
 
 
+    /* z-indexes */
+
+    #archive header {z-index: 2;}
+    #archive main   {z-index: 1;}
+    #archive nav    {z-index: 3;}
+
+
     /* main */
 
     #archive {
@@ -44,15 +51,51 @@
 <template>
     <section id="archive" class="th-white u-stretch" :class="{contain}">
 
-        <archive-header :contain.sync="contain" />
+
+        <!-- header -->
+
+        <archive-header
+            :active="active"
+            :contain.sync="contain"
+        />
+
+
+        <!-- main -->
 
         <main>
-            <archive-filters :sort.sync="sort" :search.sync="search" />
-            <archive-projects :index.sync="index" :contain.sync="contain" :video.sync="video" @scroll="scroll" />
+
+            <archive-filters
+                :sort.sync="sort"
+                :search.sync="search"
+            />
+
+            <archive-projects
+                :active.sync="active"
+                :contain.sync="contain"
+                :video.sync="video"
+                :search="search"
+                :sort="sort"
+                @scroll="scroll"
+                @next="next"
+            />
+
             <archive-footer />
+
         </main>
 
-        <ui-controls :bar="true" :projects="archive" :index="index" :video="video" />
+
+        <!-- controls -->
+
+        <transition name="fade">
+            <ui-controls
+                v-if="contain"
+                :bar="true"
+                :projects="archive"
+                :index="index"
+                :video="video"
+            />
+        </transition>
+
 
     </section>
 </template>
@@ -101,6 +144,21 @@
                 'archive'
             ]),
 
+            active: {
+
+                get () {
+                    const id = +this.$route.query.id;
+                    if (!id || !this.archive.find(project => project.id === id)) return -1;
+                    return id;
+                },
+
+                set (id) {
+                    if (id === -1) id = undefined;
+                    this.query({id});
+                }
+
+            },
+
             index: {
 
                 get () {
@@ -135,7 +193,7 @@
                 this.$router.push({query: {
                     ...this.$route.query,
                     ...query
-                }});
+                }}).catch(() => {});
             },
 
             setScroll (value) {
@@ -145,7 +203,12 @@
             scroll (value, duration) {
                 const from = this.$el.scrollTop;
                 const to = this.$el.scrollTop + value;
-                this.animation.from(from).to(to).duration(duration).start();
+                this.animation.from(from).to(to).duration(duration).start().complete(() => {
+                    console.log('scroll done');
+                });
+            },
+
+            next () {
 
             }
 

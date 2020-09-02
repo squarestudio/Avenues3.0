@@ -112,8 +112,8 @@
 
         <!-- progress -->
 
-        <a class="progress" :class="{active: bar && !menu}" :style="{transform: menuTransform}">
-            <div></div>
+        <a class="progress" :class="{active: bar && !menu}" :style="{transform: menuTransform}" @click="setProgress">
+            <div :style="{left: videoTime / videoDuration * 100 + '%'}"></div>
         </a>
 
 
@@ -185,6 +185,12 @@
 
             toggleMenu (value = !this.menu) {
                 this.menu = value;
+            },
+
+            setProgress (event) {
+                const rect = event.currentTarget.getBoundingClientRect();
+                const x = event.pageX - rect.left;
+                this.video.currentTime = this.videoDuration * x / rect.width;
             },
 
             updateProgress () {

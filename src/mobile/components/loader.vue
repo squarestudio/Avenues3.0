@@ -99,13 +99,13 @@
 
             this.normalizeRows();
             await Auth(this.id);
-            //
-            // if (Cache.valid(this.id)) {
-            //     this.rows = this.rowsMin;
-            //     this.set(Cache.get());
-            //     this.set({loaded: true});
-            //     return;
-            // }
+
+            if (Cache.valid(this.id)) {
+                this.rows = this.rowsMin;
+                this.set(Cache.get());
+                this.set({loaded: true});
+                return;
+            }
 
             this.animate(0.8);
             this.bitrate = await BitRate(1000);

@@ -59,10 +59,12 @@ export default class Animation {
         this.config.time = Date.now();
         this.active = true;
         this.animate();
+        return this;
     }
 
     pause () {
         this.active = false;
+        return this;
     }
 
     animate () {

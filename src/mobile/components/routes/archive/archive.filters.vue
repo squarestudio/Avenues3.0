@@ -71,7 +71,7 @@
             class="row"
             placeholder="Search"
             :value="search"
-            @input="$emit('update:search', $event.target.value)"
+            @input="$emit('update:search', $event.target.value.toLowerCase())"
         >
 
 

@@ -65,15 +65,15 @@
 
         <div class="primary u-row">
             <a>Avenues</a>
-            <a>Close</a>
+            <a class="loader-sync">Close</a>
         </div>
 
 
         <!-- contain -->
 
         <transition name="fade">
-            <div class="secondary u-row u-stretch" v-show="contain">
-                <ui-copy />
+            <div class="secondary u-row u-stretch loader-sync" v-if="contain">
+                <ui-copy ref="copy" />
                 <a @click="$emit('update:contain', false)">Close</a>
             </div>
         </transition>
@@ -99,8 +99,17 @@
         },
 
         props: [
-            'contain'
-        ]
+            'contain',
+            'active'
+        ],
+
+        watch: {
+
+            active () {
+                this.$refs.copy && this.$refs.copy.reset();
+            }
+
+        }
 
     }
 

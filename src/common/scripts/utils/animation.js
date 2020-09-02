@@ -71,7 +71,7 @@ export default class Animation {
         if (!this.active) return;
         const {time, from, to, duration, easing, update, complete} = this.config;
         const t = Date.now() - time;
-        const k = Math.min(t / duration, 1);
+        const k = !duration ? 1 : Math.min(t / duration, 1);
         const e = easing(k);
         this.value = from + (to - from) * e;
         update && update(this.value);

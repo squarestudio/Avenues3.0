@@ -95,7 +95,7 @@
              @click="$emit('next')">
 
             <div class="badge">
-                {{ (index + 1) | digits }} / {{ home.length | digits }}
+                {{ index | index(home.length) }}
             </div>
 
         </div>

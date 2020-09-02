@@ -3,6 +3,10 @@
     --windowHeight: 100vh;
 }
 
+body{
+    -webkit-text-size-adjust: none;
+}
+
 
 /* themes */
 

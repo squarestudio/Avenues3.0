@@ -5,7 +5,7 @@ export default {
     data () {
         return {
             minimized: false,
-            timeout: new Timeout(2000, this.minimizeExec)
+            timeout: new Timeout(8000, this.minimizeExec)
         }
     },
 

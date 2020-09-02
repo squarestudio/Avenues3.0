@@ -20,7 +20,7 @@
         <home-slider :contain.sync="contain" :index.sync="index" :video.sync="video" />
 
         <transition name="fade">
-            <home-header v-show="!footer && !minimized" :contain.sync="contain" :menu.sync="menu" />
+            <home-header v-show="!footer && !minimized" :contain.sync="contain" :menu.sync="menu" :index="index" />
         </transition>
 
         <transition name="fade">

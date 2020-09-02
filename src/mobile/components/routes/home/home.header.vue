@@ -156,7 +156,8 @@
 
         props: [
             'contain',
-            'menu'
+            'menu',
+            'index'
         ],
 
         computed: {
@@ -171,6 +172,18 @@
 
             toggleMenu () {
                 this.$emit('update:menu', !this.menu);
+            }
+
+        },
+
+        watch: {
+
+            contain (value) {
+                value && this.$refs.copy.reset();
+            },
+
+            index () {
+                this.$refs.copy.reset();
             }
 
         }

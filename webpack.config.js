@@ -42,10 +42,10 @@ function configurePlugins (mode, type) {
     let plugins = [new HtmlWebpackPlugin(html)];
 
     if (mode === 'production') {
-        plugins.push(new PrerenderSPAPlugin({
-            staticDir: absPath(`dist/${type}`),
-            routes: ['/', '/index', '/archive'],
-        }))
+        // plugins.push(new PrerenderSPAPlugin({
+        //     staticDir: absPath(`dist/${type}`),
+        //     routes: ['/', '/index', '/archive'],
+        // }))
     }
     return plugins;
 }

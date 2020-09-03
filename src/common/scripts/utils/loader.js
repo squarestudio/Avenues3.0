@@ -195,7 +195,7 @@ export const Preload = ({home, archive}, callback) => {
 
     videos.filter(unique).forEach(src => {
         const $video = document.createElement('video');
-        $video.addEventListener('canplaythrough', videoLoaded);
+        $video.addEventListener('canplay', videoLoaded);
         $video.style.display = 'none';
         $video.src = src;
         $video.load();

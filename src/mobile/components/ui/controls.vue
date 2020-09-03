@@ -79,7 +79,7 @@
         overflow: hidden;
     }
     .ui-controls .index span:after {
-        content: ' ';
+        content: '\00a0 ';
         display: inline-block;
     }
     .ui-controls .index-enter,

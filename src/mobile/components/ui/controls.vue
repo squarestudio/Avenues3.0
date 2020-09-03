@@ -78,6 +78,10 @@
         white-space: nowrap;
         overflow: hidden;
     }
+    .ui-controls .index span:after {
+        content: ' ';
+        display: inline-block;
+    }
     .ui-controls .index-enter,
     .ui-controls .index-leave-to {
         width: 0 !important;
@@ -129,7 +133,7 @@
                 @after-enter="setIndexWidth($event, false)">
 
                 <div class="index" v-show="!bar">
-                    <span>{{ index | index(projects.length) }} &nbsp;</span>
+                    <span>{{ index | index(projects.length) }}</span>
                 </div>
 
             </transition>

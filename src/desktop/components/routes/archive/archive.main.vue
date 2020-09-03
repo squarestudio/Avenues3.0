@@ -41,6 +41,7 @@
                 class="hd"
                 v-for="project in sorted"
                 v-show="project.id === active"
+                :key="project.id"
                 :video="project.video"
                 :poster="project.frame"
                 :active="project.id === active"
@@ -51,7 +52,7 @@
 
         <!-- rows -->
 
-        <div class="u-grid row" v-for="project in sorted" v-show="canShow(project)" @mousemove="move($event, project.id)">
+        <div class="u-grid row" v-for="project in sorted" v-show="canShow(project)" :key="project.id" @mousemove="move($event, project.id)">
             <div>{{project.client}}</div>
             <div>{{project.title}}</div>
             <div>{{project.category}}</div>

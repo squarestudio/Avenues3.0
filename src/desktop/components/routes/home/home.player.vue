@@ -29,6 +29,7 @@
                 ref="video"
                 v-for="(project, i) in home"
                 v-show="i === index"
+                :key="project.id"
                 :video="project.video"
                 :poster="project.frame"
                 :paused="paused"

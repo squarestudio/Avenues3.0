@@ -28,6 +28,7 @@
 
             <home-project
                 v-for="project in projects"
+                :key="project.id"
                 :project="project"
                 :contain="contain"
                 :active="project.active"

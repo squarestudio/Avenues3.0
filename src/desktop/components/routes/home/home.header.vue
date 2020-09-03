@@ -83,7 +83,8 @@
         <div class="project"
              :class="{active: projectInfo}"
              v-for="project in home"
-             v-if="project.id === active">
+             v-if="project.id === active"
+             :key="project.id">
 
             <ui-menu
                 :active.sync="projectInfo"

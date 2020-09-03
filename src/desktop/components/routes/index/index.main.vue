@@ -61,6 +61,7 @@
                 class="project"
                 v-for="(project, i) in home"
                 v-show="canShow(project)"
+                :key="project.id"
                 :to="{name: private ? 'private' : 'home', query: {id: project.id}}"
                 @mouseenter.native="enter(i)"
                 @mouseleave.native="leave(i)">

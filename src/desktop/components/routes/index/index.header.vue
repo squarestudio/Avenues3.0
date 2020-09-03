@@ -78,7 +78,7 @@
                 <icon-down />
             </a>
 
-            <a class="u-row" v-for="editor in editors" :class="{active: filter === editor}" @click="$emit('update:filter', editor)">
+            <a class="u-row" v-for="editor in editors" :key="editor" :class="{active: filter === editor}" @click="$emit('update:filter', editor)">
                 <span>{{editor}}</span>
                 <icon-down />
             </a>

@@ -56,7 +56,7 @@
 
 <template>
     <div class="projects" :class="{immediate}">
-        <div class="project" v-for="(project, i) in sorted">
+        <div class="project" v-for="(project, i) in sorted" :key="project.id">
 
 
             <!-- title -->

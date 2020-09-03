@@ -129,7 +129,7 @@
                 @after-enter="setIndexWidth($event, false)">
 
                 <div class="index" v-show="!bar">
-                    <span>{{ index | index(projects.length) }}&nbsp;</span>
+                    <span>{{ index | index(projects.length) }} &nbsp;</span>
                 </div>
 
             </transition>

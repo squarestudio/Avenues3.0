@@ -13,7 +13,7 @@ import image from '@/common/assets/images/space.jpg'
 
 export const Cache = {
 
-    lifetime: DEV ? 60 * 60 * 1000 : 60 * 1000,
+    lifetime: DEV ? 3 * 60 * 60 * 1000 : 10 * 60 * 1000,
     data: JSON.parse(localStorage.getItem('cache')),
 
     valid (id) {

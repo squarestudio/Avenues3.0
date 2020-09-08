@@ -46,8 +46,8 @@
 <template>
     <div class="ui-ticker" :class="{active: active && duration}">
         <div class="move" :style="{animationDuration: duration}">
-            <component class="slot" :is="tag" ref="slot"><slot /></component>
-            <component class="slot" :is="tag"><slot /></component>
+            <component class="slot u-row" :is="tag" ref="slot"><slot /></component>
+            <component class="slot u-row" :is="tag"><slot /></component>
         </div>
     </div>
 </template>

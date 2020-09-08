@@ -8,7 +8,7 @@
     /* main */
 
     header {
-        padding-bottom: 2rem;
+        padding-bottom: 3.5rem;
     }
 
 

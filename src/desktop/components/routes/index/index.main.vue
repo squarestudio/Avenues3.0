@@ -15,18 +15,20 @@
     }
 
 
-    /* title */
+    /* ticker */
 
-    .title {
+    .ui-ticker {
         margin-top: .75rem;
-        overflow: hidden;
     }
-    .title .move {
-        display: inline-flex;
-        white-space: nowrap;
+    .ui-ticker span:after {
+        content: '/';
+        margin: 0 .3rem;
     }
-    .title p:nth-child(2) {
-        display: none;
+    .ui-ticker span:last-child:after {
+        visibility: hidden;
+    }
+    .ui-ticker.active span:last-child:after {
+        visibility: visible;
     }
 
 
@@ -78,14 +80,13 @@
                 />
 
 
-                <!-- title -->
+                <!-- ticker -->
 
-                <div class="title">
-                    <div class="move u-row" ref="move">
-                        <p>{{ project.title}} / {{ project.client }} / {{ project.editor }}</p>
-                        <p>{{ project.title}} / {{ project.client }} / {{ project.editor }}</p>
-                    </div>
-                </div>
+                <ui-ticker :active="i === active">
+                    <span>{{ project.title }}</span>
+                    <span>{{ project.client }}</span>
+                    <span>{{ project.editor }}</span>
+                </ui-ticker>
 
 
             </router-link>
@@ -103,11 +104,13 @@
 
     import {mapState} from 'vuex'
     import uiVideo from '@/common/components/ui/video.vue'
+    import uiTicker from '@/common/components/ui/ticker.vue'
 
     export default {
 
         components: {
-            uiVideo
+            uiVideo,
+            uiTicker
         },
 
         props: [
@@ -133,17 +136,10 @@
 
             enter (index) {
                 this.active = index;
-                const $move = this.$refs.move[index];
-                if ($move.offsetWidth < $move.parentNode.offsetWidth) return;
-                $move.classList.add('play');
-                $move.style.animationDuration = $move.offsetWidth / 75 + 's';
             },
 
-            leave (index) {
+            leave () {
                 this.active = -1;
-                const $move = this.$refs.move[index];
-                $move.classList.remove('play');
-                $move.style.animationDuration = '';
             },
 
             canShow (project) {

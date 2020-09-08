@@ -9,7 +9,6 @@
 
     .ui-ticker span:after {
         content: '/';
-        display: inline-block;
         margin: 0 .3rem;
     }
     .ui-ticker span:last-child:after {

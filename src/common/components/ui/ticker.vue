@@ -12,10 +12,12 @@
     }
     .ui-ticker .move {
         display: inline-flex;
+        white-space: nowrap;
     }
     .ui-ticker .move .slot:last-child {
         display: none;
     }
+
 
 
     /* active */

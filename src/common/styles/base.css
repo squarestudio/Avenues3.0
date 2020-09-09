@@ -41,6 +41,7 @@ input {
     padding: 0;
     display: block;
     border: none;
+    border-radius: 0;
     background: none;
     font-family: inherit;
     font-size: inherit;

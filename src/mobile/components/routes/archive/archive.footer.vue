@@ -5,7 +5,7 @@
 <style scoped>
 
     footer {
-        height: 100%;
+        height: var(--windowHeight);
         padding: var(--padding);
         justify-content: flex-end;
     }

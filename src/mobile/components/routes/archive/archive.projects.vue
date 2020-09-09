@@ -195,14 +195,17 @@
                 this.sorted[i].active = false;
             },
 
-            resize () {
+            resize (event) {
                 this.archive.forEach(project => {
                     const rw = window.innerWidth / project.videoWidth;
                     const rh = window.innerHeight / project.videoHeight;
                     const r = Math.min(rw, rh);
                     project.style.width = r * project.videoWidth + 'px';
                     project.style.height = r * project.videoHeight + 'px';
-                })
+                });
+                if (event && this.contain) {
+                    this.$nextTick(this.centerVideo);
+                }
             },
 
             scrollToVideo (curr, prev) {
@@ -220,7 +223,7 @@
                 const $accordion = this.$refs.accordion[this.index];
                 if (!$accordion) return;
                 if (!this.contain) return ($accordion.style.transform = '');
-                const top = $accordion.getBoundingClientRect().top;
+                const top = $accordion.offsetTop - document.getElementById('archive').scrollTop;
                 const height = parseFloat(this.sorted[this.index].style.height);
                 const y = (window.innerHeight - height) / 2 - top;
                 $accordion.style.transform = `translateY(${y}px)`;
@@ -266,7 +269,6 @@
                 this.setVideo();
                 await this.$nextTick();
                 this.scrollToVideo(curr, prev);
-
             },
 
             contain () {

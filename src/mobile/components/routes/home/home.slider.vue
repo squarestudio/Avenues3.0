@@ -8,7 +8,7 @@
         overflow: hidden;
     }
     .slider > * {
-        height: 100%;
+        height: var(--windowHeight);
     }
     .slider.immediate {
         transition: none !important;
@@ -72,7 +72,8 @@
 
         props: [
             'contain',
-            'index'
+            'index',
+            'video'
         ],
 
         data () {

@@ -123,10 +123,10 @@
         <!-- archive -->
 
         <transition name="fade">
-            <router-link :to="{name: 'archive'}" class="archive u-row" v-show="!private && menu">
+            <a class="archive u-row" v-show="!private && menu" @click="open('archive')">
                 <span>Archive</span>
                 <icon-open />
-            </router-link>
+            </a>
         </transition>
 
 
@@ -173,6 +173,10 @@
 
             toggleMenu () {
                 this.$emit('update:menu', !this.menu);
+            },
+
+            open (name) {
+                this.$router.push({name});
             }
 
         },

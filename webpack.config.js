@@ -30,16 +30,10 @@ function configureOptimization (mode) {
 
 function configurePlugins (mode, type) {
 
-    let html =  {
-        title: 'Avenues',
-        templateContent: `<html lang="en"><body><div id="app"></div></body></html>`,
+    let plugins = [new HtmlWebpackPlugin({
+        template: `src/${type}/index.html`,
         chunks: ['bundle', 'bundle_head']
-    }
-    if (type === 'mobile') {
-        html.meta = {viewport: 'width=device-width, initial-scale=1, maximum-scale=1'}
-    }
-
-    let plugins = [new HtmlWebpackPlugin(html)];
+    })];
 
     if (mode === 'production') {
         // plugins.push(new PrerenderSPAPlugin({

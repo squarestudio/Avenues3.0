@@ -64,8 +64,8 @@
         <!-- default -->
 
         <div class="primary u-row">
-            <router-link :to="{name: 'home'}">Avenues</router-link>
-            <router-link :to="{name: 'home'}" class="loader-sync">Close</router-link>
+            <a @click="open('home')">Avenues</a>
+            <a @click="open('home')" class="loader-sync">Close</a>
         </div>
 
 
@@ -107,6 +107,14 @@
 
             active () {
                 this.$refs.copy && this.$refs.copy.reset();
+            }
+
+        },
+
+        methods: {
+
+            open (name) {
+                this.$router.push({name});
             }
 
         }

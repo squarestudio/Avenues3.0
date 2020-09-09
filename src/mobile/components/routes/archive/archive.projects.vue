@@ -35,6 +35,7 @@
     }
     .accordion .ui-video {
         border-bottom: 1px solid #000000;
+        margin: 0 auto;
     }
 
 

@@ -147,7 +147,7 @@
         <!-- time -->
 
         <div class="time">
-            {{ videoTime | time }}
+            {{ videoTime | time }} / {{ videoDuration | time }}
         </div>
 
 

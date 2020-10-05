@@ -50,7 +50,7 @@
                 rows: this.rowsMin,
                 animation: new Animation({
                     from: 1,
-                    duration: 1000,
+                    duration: 5000,
                     update: this.update
                 })
             }

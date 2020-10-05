@@ -67,7 +67,8 @@
                 :key="project.id"
                 :to="{name: private ? 'private' : 'home', query: {id: project.id}}"
                 @mouseenter.native="enter(i)"
-                @mouseleave.native="leave(i)">
+                @mouseleave.native="leave(i)"
+                @click.native="set({muted: false})">
 
 
                 <!-- video -->
@@ -103,7 +104,7 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapMutations, mapState} from 'vuex'
     import uiVideo from '@/common/components/ui/video.vue'
     import uiTicker from '@/common/components/ui/ticker.vue'
 
@@ -134,6 +135,10 @@
         },
 
         methods: {
+
+            ...mapMutations([
+                'set'
+            ]),
 
             enter (index) {
                 this.active = index;

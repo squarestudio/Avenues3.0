@@ -1,16 +1,18 @@
-export default function ([origin, helper]) {
+export default function ([max, min]) {
 
-    const d1 = diagonal(origin.width, origin.height);
-    const d2 = diagonal(helper.width, helper.height);
-    const rate = (origin.size - helper.size) / (d1 - d2);
+    const d1 = diagonal(max.width, max.height);
+    const d2 = diagonal(min.width, min.height);
+    const rate = (max.size - min.size) / (d1 - d2);
 
     function diagonal (width, height) {
         return Math.sqrt(width * width + height * height);
     }
 
     function resize () {
-        const d = Math.min(diagonal(window.innerWidth, window.innerHeight), d1);
-        const f = origin.size + (d - d1) * rate;
+        const d = diagonal(window.innerWidth, window.innerHeight);
+        let f = max.size + (d - d1) * rate;
+        f = Math.min(f, max.size);
+        f = Math.max(f, min.size);
         document.documentElement.style.fontSize = f + 'px';
     }
 

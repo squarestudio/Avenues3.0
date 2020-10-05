@@ -43,7 +43,7 @@
 
 
 
-    
+
 </style>
 
 
@@ -73,7 +73,7 @@
 
         <!-- pause -->
 
-        <div class="area pause"
+        <div class="area pause u-flex"
              @mousemove="move"
              @mouseenter="enter"
              @mouseleave="leave"
@@ -88,7 +88,7 @@
 
         <!-- prev -->
 
-        <div class="area prev u-flex"
+        <div class="area prev"
              @mousemove="move"
              @mouseenter="enter"
              @mouseleave="leave"

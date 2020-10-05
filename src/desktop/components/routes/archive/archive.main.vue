@@ -5,6 +5,13 @@
 <style scoped>
 
 
+    /* main */
+
+    main {
+        overflow: auto;
+    }
+
+
     /* row */
 
     .row.active {

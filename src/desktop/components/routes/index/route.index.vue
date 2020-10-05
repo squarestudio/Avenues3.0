@@ -4,10 +4,6 @@
 
 <style>
 
-    #index {
-        overflow: auto;
-    }
-
 </style>
 
 

@@ -7,6 +7,10 @@
 
     /* main */
 
+    main {
+        overflow: auto;
+    }
+
     .u-grid {
         padding-top: 0;
     }

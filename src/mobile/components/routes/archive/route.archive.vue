@@ -5,13 +5,6 @@
 <style>
 
 
-    /* z-indexes */
-
-    #archive header {z-index: 2;}
-    #archive main   {z-index: 1;}
-    #archive nav    {z-index: 3;}
-
-
     /* main */
 
     #archive {
@@ -19,7 +12,10 @@
         transition: background .5s;
     }
     #archive main {
-        padding-top: 4rem;
+        padding-top: 2rem;
+    }
+    #archive nav {
+        z-index: 1;
     }
     #archive .row {
         padding: var(--padding);
@@ -52,11 +48,13 @@
     <section id="archive" class="th-white u-stretch" :class="{contain}" @mousemove="minimizeReset">
 
 
-        <!-- header -->
+        <!-- headers -->
+
+        <archive-header-cover />
 
         <transition name="fade">
-            <archive-header
-                v-show="!minimized"
+            <archive-header-contain
+                v-show="contain && !minimized"
                 :active="active"
                 :contain.sync="contain"
             />
@@ -114,7 +112,8 @@
     import {mapState} from 'vuex'
     import Animation from '@/common/scripts/utils/animation';
     import minimize from '@/common/scripts/mixins/minimize'
-    import archiveHeader from './archive.header.vue'
+    import archiveHeaderCover from './archive.header.cover.vue'
+    import archiveHeaderContain from './archive.header.contain.vue'
     import archiveFilters from './archive.filters.vue'
     import archiveProjects from './archive.projects.vue'
     import archiveFooter from './archive.footer.vue'
@@ -123,7 +122,8 @@
     export default {
 
         components: {
-            archiveHeader,
+            archiveHeaderCover,
+            archiveHeaderContain,
             archiveFilters,
             archiveProjects,
             archiveFooter,
@@ -212,10 +212,6 @@
                 const from = this.$el.scrollTop;
                 const to = this.$el.scrollTop + value;
                 this.animation.from(from).to(to).duration(duration).start();
-            },
-
-            next () {
-
             }
 
         }

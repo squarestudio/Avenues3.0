@@ -23,7 +23,8 @@
 
     .video {
         position: fixed;
-        width: 30rem;
+        width: 50rem;
+        max-width: calc(50% - 10px);
         pointer-events: none;
         background: #000;
     }
@@ -121,12 +122,13 @@
             },
 
             move (event, id) {
+                const margin = 10;
                 const $video = this.$refs.video;
                 const video = $video.getBoundingClientRect();
-                let y = event.clientY;
-                let x = event.clientX;
-                if (y + video.height > window.innerHeight) y -= video.height;
-                if (x + video.width > window.innerWidth) x -= video.width;
+                let y = event.clientY + margin;
+                let x = event.clientX + margin;
+                if (x + video.width > window.innerWidth) x = x - video.width - margin * 2;
+                if (y + video.height > window.innerHeight) y = y - video.height - margin * 2;
                 $video.style.left = x + 'px';
                 $video.style.top = y + 'px';
                 this.active = id;

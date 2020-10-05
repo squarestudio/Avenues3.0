@@ -87,7 +87,7 @@
             setSource () {
                 if (this.active) {
                     this.$refs.video.src = this.video;
-                    this.$refs.video.currentTime = this.time || 0;
+                    if (this.time) this.$refs.video.currentTime = this.time;
                     !this.paused && this.$refs.video.play();
                 }
                 else {

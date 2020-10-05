@@ -18,14 +18,14 @@
 
     .th-home {
         background: #000000;
-        color: #FFFFFF;
+        color: #f7f7f7;
     }
     .th-index, .th-archive {
-        background: #FFFFFF;
+        background: #f7f7f7;
         color: #000000;
     }
     .th-private-index {
-        background: #A86F6F;
+        background: #B1B1B1;
         color: #000000;
     }
 

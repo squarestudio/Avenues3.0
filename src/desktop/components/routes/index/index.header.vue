@@ -7,21 +7,11 @@
 
     /* filter */
 
-    .filter a {
-        white-space: nowrap;
-    }
-    .filter a svg {
-        opacity: 0;
-        width: 1rem;
-        height: 1rem;
-        margin: 0 .2rem;
-        transition: opacity .3s ease;
-    }
-    .filter a:hover svg {
-        opacity: 1;
-    }
-    .filter a.active svg {
-        opacity: 1;
+    .filter span {
+        height: .5rem;
+        width: 1px;
+        margin: 0 .5rem;
+        background: currentColor;
     }
 
 
@@ -69,20 +59,12 @@
         </div>
 
 
-        <!-- editors -->
+        <!-- filter -->
 
         <div class="filter u-row" :class="{invisible: private}">
-
-            <a class="u-row" @click="$emit('update:filter', false)" :class="{active: !filter}">
-                <span>All</span>
-                <icon-down />
-            </a>
-
-            <a class="u-row" v-for="editor in editors" :key="editor" :class="{active: filter === editor}" @click="$emit('update:filter', editor)">
-                <span>{{editor}}</span>
-                <icon-down />
-            </a>
-
+            <a @click="$emit('update:editors', true)">{{ filter ? filter : 'Editors'}}</a>
+            <span />
+            <a @click="$emit('update:filter', false)">All</a>
         </div>
 
 
@@ -122,26 +104,9 @@
         computed: {
 
             ...mapState([
-                'home',
                 'private',
                 'privateInfo'
-            ]),
-
-            editors () {
-
-                const editorsRate = this.home.reduce((result, project) => {
-                    result[project.editor] = result[project.editor] || 0;
-                    result[project.editor]++
-                    return result;
-                }, {});
-
-                return Object.keys(editorsRate).sort((a, b) => {
-                    if (editorsRate[a] < editorsRate[b]) return -1;
-                    if (editorsRate[a] > editorsRate[b]) return 1;
-                    return 0;
-                }).slice(0, 2);
-
-            }
+            ])
 
         }
 

@@ -4,6 +4,11 @@
 
 <style>
 
+    #index main {
+        position: relative;
+        overflow: auto;
+    }
+
 </style>
 
 
@@ -14,8 +19,11 @@
 
 <template>
     <section id="index" class="u-stretch u-col">
-        <index-header :filter.sync="filter" @back="back" />
-        <index-main :filter="filter" class="u-flex" />
+        <index-header :filter.sync="filter" :editors.sync="editors" @back="back" />
+        <main class="u-flex">
+            <index-projects :filter="filter" />
+            <index-editors :filter.sync="filter" :editors.sync="editors" />
+        </main>
         <index-footer />
     </section>
 </template>
@@ -30,14 +38,16 @@
 
     import mixinBack from '@/common/scripts/mixins/back'
     import indexHeader from './index.header.vue'
-    import indexMain from './index.main.vue'
+    import indexProjects from './index.projects.vue'
     import indexFooter from './index.footer.vue'
+    import indexEditors from './index.editors.vue'
 
     export default {
 
         components: {
             indexHeader,
-            indexMain,
+            indexProjects,
+            indexEditors,
             indexFooter
         },
 
@@ -47,7 +57,8 @@
 
         data () {
             return {
-                filter: false
+                filter: false,
+                editors: false
             }
         }
 

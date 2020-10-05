@@ -7,10 +7,6 @@
 
     /* main */
 
-    main {
-        overflow: auto;
-    }
-
     .u-grid {
         padding-top: 0;
     }
@@ -62,42 +58,40 @@
 -->
 
 <template>
-    <main>
-        <div class="u-grid">
-            <router-link
-                class="project"
-                v-for="(project, i) in home"
-                v-show="canShow(project)"
-                :key="project.id"
-                :to="{name: private ? 'private' : 'home', query: {id: project.id}}"
-                @mouseenter.native="enter(i)"
-                @mouseleave.native="leave(i)"
-                @click.native="set({muted: false})">
+    <div class="u-grid">
+        <router-link
+            class="project"
+            v-for="(project, i) in home"
+            v-show="canShow(project)"
+            :key="project.id"
+            :to="{name: private ? 'private' : 'home', query: {id: project.id}}"
+            @mouseenter.native="enter(i)"
+            @mouseleave.native="leave(i)"
+            @click.native="set({muted: false})">
 
 
-                <!-- video -->
+            <!-- video -->
 
-                <ui-video
-                    class="hd"
-                    :video="project.video"
-                    :poster="project.frame"
-                    :active="i === active"
-                    :paused="false"
-                />
-
-
-                <!-- ticker -->
-
-                <ui-ticker :active="i === active">
-                    <span>{{ project.title }}</span>
-                    <span>{{ project.client }}</span>
-                    <span>{{ project.editor }}</span>
-                </ui-ticker>
+            <ui-video
+                class="hd"
+                :video="project.video"
+                :poster="project.frame"
+                :active="i === active"
+                :paused="false"
+            />
 
 
-            </router-link>
-        </div>
-    </main>
+            <!-- ticker -->
+
+            <ui-ticker :active="i === active">
+                <span>{{ project.title }}</span>
+                <span>{{ project.client }}</span>
+                <span>{{ project.editor }}</span>
+            </ui-ticker>
+
+
+        </router-link>
+    </div>
 </template>
 
 
@@ -153,7 +147,7 @@
             },
 
             canShow (project) {
-                return !this.filter || project.editor === this.filter
+                return !this.filter || project.editor.includes(this.filter);
             }
 
         }

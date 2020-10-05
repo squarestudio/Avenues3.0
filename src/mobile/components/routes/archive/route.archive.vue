@@ -77,7 +77,6 @@
                 :search="search"
                 :sort="sort"
                 @scroll="scroll"
-                @next="next"
             />
 
             <archive-footer />

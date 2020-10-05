@@ -15,7 +15,7 @@
 
 <template>
     <a class="ui-sound u-link" @click="set({muted: !muted})">
-        <span>Sound {{muted ? 'On' : 'Off'}}</span>
+        <span>Sound {{muted ? 'Off' : 'On'}}</span>
     </a>
 </template>
 

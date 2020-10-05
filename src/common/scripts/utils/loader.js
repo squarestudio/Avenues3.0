@@ -131,6 +131,12 @@ export const Request = (id, bitrate) => {
 
     }
 
+    const parseStartsAt = value => {
+        if (!value) return 0;
+        const a = value.split(':');
+        return (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]) || 0;
+    }
+
     const parse = (data = []) => data.map(item => {
         let project = item.projects_id;
         project.cover = `${API_ORIGIN}/uploads/${API_PROJECT}/converted/covers/${project.cover}/${bitrate}.jpg`;
@@ -141,6 +147,7 @@ export const Request = (id, bitrate) => {
         project.editor = project.editor.toLowerCase();
         project.category = project.category.toLowerCase();
         project.description = project.description.toLowerCase();
+        project.starts_at = parseStartsAt(project.starts_at);
         return project
     });
 

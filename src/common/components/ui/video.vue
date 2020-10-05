@@ -64,7 +64,8 @@
             'video',
             'poster',
             'paused',
-            'active'
+            'active',
+            'time'
         ],
 
         data () {
@@ -86,6 +87,7 @@
             setSource () {
                 if (this.active) {
                     this.$refs.video.src = this.video;
+                    this.$refs.video.currentTime = this.time || 0;
                     !this.paused && this.$refs.video.play();
                 }
                 else {

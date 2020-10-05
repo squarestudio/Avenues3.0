@@ -78,6 +78,7 @@
                 :poster="project.frame"
                 :active="i === active"
                 :paused="false"
+                :time="project.starts_at"
             />
 
 

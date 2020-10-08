@@ -62,7 +62,7 @@
         <!-- filter -->
 
         <div class="filter u-row" :class="{invisible: private}">
-            <a @click="$emit('update:editors', true)">{{ filter ? filter : 'Editors'}}</a>
+            <a @click.stop="$emit('update:editors', true)">{{ filter ? filter : 'Editors'}}</a>
             <span />
             <a @click="$emit('update:filter', false)">All</a>
         </div>

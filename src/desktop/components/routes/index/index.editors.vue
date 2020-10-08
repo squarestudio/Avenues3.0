@@ -20,6 +20,7 @@
 
 <template>
     <div class="editors u-stretch u-col" v-show="editors">
+        <a @click="select(false)">All</a>
         <a v-for="editor in list" :key="editor" @click="select(editor)">{{editor}}</a>
     </div>
 </template>
@@ -65,11 +66,22 @@
 
         methods: {
 
+            outside () {
+                this.editors && this.$emit('update:editors', false);
+            },
+
             select (editor) {
                 this.$emit('update:filter', editor);
-                this.$emit('update:editors', false);
             }
 
+        },
+
+        mounted () {
+            document.addEventListener('click', this.outside)
+        },
+
+        destroyed () {
+            document.removeEventListener('click', this.outside)
         }
 
 

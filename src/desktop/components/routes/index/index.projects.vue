@@ -75,7 +75,7 @@
             <ui-video
                 class="hd"
                 :video="project.video"
-                :poster="project.frame"
+                :poster="project.cover"
                 :active="i === active"
                 :paused="false"
                 :time="project.starts_at"

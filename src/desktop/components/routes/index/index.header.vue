@@ -61,10 +61,12 @@
 
         <!-- filter -->
 
-        <div class="filter u-row" :class="{invisible: private}">
-            <a @click.stop="$emit('update:editors', true)">{{ filter ? filter : 'Editors'}}</a>
-            <span />
-            <a @click="$emit('update:filter', false)">All</a>
+        <div class="filter" :class="{invisible: private}">
+            <a class="u-row" @click.stop="$emit('update:editors', !editors)">
+                Editors
+                <span />
+                {{ filter ? filter : 'All'}}
+            </a>
         </div>
 
 
@@ -98,7 +100,8 @@
         },
 
         props: [
-            'filter'
+            'filter',
+            'editors'
         ],
 
         computed: {

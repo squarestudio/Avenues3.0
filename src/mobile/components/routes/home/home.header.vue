@@ -20,6 +20,10 @@
         padding: var(--padding);
         transition: opacity .5s, transform .5s;
         transform: translateY(calc(-100% + var(--padding) + var(--padding) + 1rem));
+        pointer-events: none;
+    }
+    .menu > * {
+        pointer-events: auto;
     }
     .menu .u-text {
         width: 75%;
@@ -64,7 +68,7 @@
         flex-shrink: 0;
     }
 
-    
+
 </style>
 
 
@@ -80,7 +84,7 @@
         <!-- overlay -->
 
         <transition name="fade">
-            <div class="overlay u-stretch" v-show="menu"></div>
+            <div class="overlay u-stretch" v-show="menu" @click="toggleMenu(false)"></div>
         </transition>
 
 
@@ -95,7 +99,7 @@
                     <span v-html="about.description"></span>
                 </div>
 
-                <a class="u-link" @click="toggleMenu">{{ menu ? 'Close' : 'Avenues' }}</a>
+                <a class="u-link" @click="toggleMenu()">{{ menu ? 'Close' : 'Avenues' }}</a>
 
             </div>
         </transition>
@@ -171,8 +175,8 @@
 
         methods: {
 
-            toggleMenu () {
-                this.$emit('update:menu', !this.menu);
+            toggleMenu (value = !this.menu) {
+                this.$emit('update:menu', value);
             },
 
             open (name) {

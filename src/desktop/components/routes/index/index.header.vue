@@ -5,6 +5,15 @@
 <style scoped>
 
 
+    /* main */
+
+    header {
+        position: sticky;
+        top: 0;
+        background: inherit;
+    }
+
+
     /* filter */
 
     .filter span {

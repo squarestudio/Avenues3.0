@@ -5,6 +5,7 @@
 <style scoped>
 
     .editors {
+        position: fixed;
         align-items: center;
         justify-content: center;
         background: rgba(247,247,247,0.98);

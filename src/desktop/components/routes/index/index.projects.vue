@@ -58,41 +58,43 @@
 -->
 
 <template>
-    <div class="u-grid">
-        <router-link
-            class="project"
-            v-for="(project, i) in home"
-            v-show="canShow(project)"
-            :key="project.id"
-            :to="{name: private ? 'private' : 'home', query: {id: project.id}}"
-            @mouseenter.native="enter(i)"
-            @mouseleave.native="leave(i)"
-            @click.native="set({muted: false})">
+    <main>
+        <div class="u-grid">
+            <router-link
+                class="project"
+                v-for="(project, i) in home"
+                v-show="canShow(project)"
+                :key="project.id"
+                :to="{name: private ? 'private' : 'home', query: {id: project.id}}"
+                @mouseenter.native="enter(i)"
+                @mouseleave.native="leave(i)"
+                @click.native="set({muted: false})">
 
 
-            <!-- video -->
+                <!-- video -->
 
-            <ui-video
-                class="hd"
-                :video="project.video"
-                :poster="project.cover"
-                :active="i === active"
-                :paused="false"
-                :time="project.starts_at"
-            />
-
-
-            <!-- ticker -->
-
-            <ui-ticker :active="i === active">
-                <span>{{ project.title }}</span>
-                <span>{{ project.client }}</span>
-                <span>{{ project.editor }}</span>
-            </ui-ticker>
+                <ui-video
+                    class="hd"
+                    :video="project.video"
+                    :poster="project.cover"
+                    :active="i === active"
+                    :paused="false"
+                    :time="project.starts_at"
+                />
 
 
-        </router-link>
-    </div>
+                <!-- ticker -->
+
+                <ui-ticker :active="i === active">
+                    <span>{{ project.title }}</span>
+                    <span>{{ project.client }}</span>
+                    <span>{{ project.editor }}</span>
+                </ui-ticker>
+
+
+            </router-link>
+        </div>
+    </main>
 </template>
 
 

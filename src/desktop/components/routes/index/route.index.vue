@@ -4,9 +4,11 @@
 
 <style>
 
-    #index main {
-        position: relative;
+    #index {
         overflow: auto;
+    }
+    #index header {
+        z-index: 1;
     }
 
 </style>
@@ -20,11 +22,9 @@
 <template>
     <section id="index" class="u-stretch u-col">
         <index-header :filter.sync="filter" :editors.sync="editors" @back="back" />
-        <main class="u-flex">
-            <index-projects :filter="filter" />
-            <index-editors :filter.sync="filter" :editors.sync="editors" />
-        </main>
+        <index-projects :filter="filter" class="u-flex" />
         <index-footer />
+        <index-editors :filter.sync="filter" :editors.sync="editors" />
     </section>
 </template>
 

@@ -149,7 +149,7 @@
                     :style="{transform: `translateY(-${infoPadding})`}"
                     :active.sync="infoActive"
                     :target="about.title"
-                    :source="about.description"
+                    :source="about.description_desktop"
                     @enter="infoEnter"
                     @leave="infoLeave"
                 />

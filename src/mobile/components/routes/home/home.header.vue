@@ -96,7 +96,7 @@
                 <div class="u-text">
                     <span>Avenues is</span>
                     <span v-html="about.title"></span>
-                    <span v-html="about.description"></span>
+                    <span v-html="about.description_mobile"></span>
                 </div>
 
                 <a class="u-link" @click="toggleMenu()">{{ menu ? 'Close' : 'Avenues' }}</a>

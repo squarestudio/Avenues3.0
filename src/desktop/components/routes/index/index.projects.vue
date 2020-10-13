@@ -12,7 +12,6 @@
     }
     .project {
         overflow: hidden;
-        margin-top: var(--padding);
     }
 
 

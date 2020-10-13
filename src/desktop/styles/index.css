@@ -16,6 +16,6 @@ body {
 .u-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-gap: var(--padding);
+    grid-gap: calc(var(--padding) * 1.5);
     padding: var(--padding);
 }

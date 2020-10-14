@@ -10,6 +10,9 @@
     .row.active {
         z-index: 1;
     }
+    .row:hover {
+        background: #E5E5E5;
+    }
 
 
     /* video */

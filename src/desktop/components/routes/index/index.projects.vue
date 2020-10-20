@@ -32,22 +32,6 @@
     }
 
 
-    /* title animation */
-
-    .title .move.play {
-        animation: index-title linear infinite;
-    }
-    .title .move.play p {
-        padding-right: 2.5rem;
-    }
-    .move.play p:nth-child(2) {
-        display: block;
-    }
-    @keyframes index-title {
-        100% {transform: translateX(-50%);}
-    }
-
-
 </style>
 
 
@@ -88,6 +72,7 @@
                     <span>{{ project.title }}</span>
                     <span>{{ project.client }}</span>
                     <span>{{ project.editor }}</span>
+                    <span>{{ project.description }}</span>
                 </ui-ticker>
 
 

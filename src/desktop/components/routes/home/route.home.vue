@@ -79,7 +79,7 @@
         },
 
         mixins: [
-            minimize
+            minimize(2000)
         ],
 
         data () {

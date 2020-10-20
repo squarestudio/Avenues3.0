@@ -130,7 +130,7 @@
         },
 
         mixins: [
-            minimize
+            minimize()
         ],
 
         data () {

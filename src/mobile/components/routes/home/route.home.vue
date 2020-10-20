@@ -4,8 +4,8 @@
 
 <style>
 
-    
-    
+
+
 </style>
 
 
@@ -53,7 +53,7 @@
         },
 
         mixins: [
-            minimize
+            minimize()
         ],
 
         data () {

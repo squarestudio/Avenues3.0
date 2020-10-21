@@ -7,8 +7,12 @@
 
     /* main */
 
+    main {
+        overflow: auto;
+    }
     .u-grid {
         padding-top: 0;
+        padding-bottom: 0;
     }
     .project {
         overflow: hidden;

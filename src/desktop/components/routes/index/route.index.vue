@@ -4,12 +4,6 @@
 
 <style>
 
-    #index {
-        overflow: auto;
-    }
-    #index header {
-        z-index: 1;
-    }
 
 </style>
 

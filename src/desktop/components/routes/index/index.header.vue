@@ -8,9 +8,6 @@
     /* main */
 
     header {
-        position: sticky;
-        top: 0;
-        background: inherit;
         padding-bottom: calc(var(--padding) * 2);
     }
 

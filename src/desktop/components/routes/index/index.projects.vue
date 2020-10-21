@@ -19,10 +19,11 @@
     }
 
 
+
     /* ticker */
 
     .ui-ticker {
-        margin-top: .75rem;
+        padding-top: .75rem;
     }
     .ui-ticker span:after {
         content: '/';
@@ -62,12 +63,14 @@
 
                 <ui-video
                     class="hd"
+                    :style="{maxHeight}"
                     :video="project.video"
                     :poster="project.cover"
                     :active="i === active"
                     :paused="false"
                     :time="project.starts_at"
                 />
+
 
 
                 <!-- ticker -->
@@ -110,7 +113,8 @@
 
         data () {
             return {
-                active: -1
+                active: -1,
+                maxHeight: ''
             }
         },
 
@@ -139,8 +143,26 @@
 
             canShow (project) {
                 return !this.filter || project.editor.includes(this.filter);
+            },
+
+            resize () {
+                const $grid = this.$el.firstElementChild;
+                const $item = $grid.firstElementChild;
+                const $note = $item.lastElementChild;
+                const gap = getComputedStyle($grid).getPropertyValue('grid-row-gap');
+                this.maxHeight = (this.$el.offsetHeight - 2 * parseFloat(gap)) / 3 - $note.offsetHeight + 'px'
             }
 
+        },
+
+        mounted () {
+            if (this.home.length < 9) return;
+            this.resize();
+            window.addEventListener('resize', this.resize);
+        },
+
+        destroyed () {
+            window.removeEventListener('resize', this.resize);
         }
 
     }

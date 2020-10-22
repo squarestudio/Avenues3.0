@@ -74,7 +74,7 @@
         <!-- index -->
 
         <div>
-            <router-link class="u-link" v-if="!isArchive" :to="{name: private ? 'private-index' : 'index'}">Index</router-link>
+            <router-link class="u-link" v-if="!archive" :to="{name: private ? 'private-index' : 'index'}">Index</router-link>
         </div>
 
 
@@ -99,7 +99,7 @@
 
         <div class="buttons u-row">
             <ui-sound />
-            <router-link v-if="isArchive" to="/archive">Close</router-link>
+            <router-link v-if="archive" :to="{name: 'archive'}">Close</router-link>
             <ui-view v-else @click.native="$emit('update:contain', !contain)" :active="contain" />
         </div>
 
@@ -148,7 +148,7 @@
                 'private'
             ]),
 
-            isArchive () {
+            archive () {
                 return this.view === 'archive'
             }
 
@@ -157,8 +157,9 @@
         methods: {
 
             logo () {
-                if (this.contain) this.$emit('update:contain', false);
-                else this.$router.push({query: {}});
+                if (this.archive) return;
+                if (this.contain) return this.$emit('update:contain', false);
+                this.$router.push({query: {}});
             }
 
         }

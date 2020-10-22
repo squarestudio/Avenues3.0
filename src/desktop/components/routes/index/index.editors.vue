@@ -10,6 +10,12 @@
         justify-content: center;
         background: rgba(247,247,247,0.98);
     }
+    .editors a {
+        padding: .2rem .4rem;
+    }
+    .editors a:hover {
+        background: #E5E5E5;
+    }
 
 </style>
 

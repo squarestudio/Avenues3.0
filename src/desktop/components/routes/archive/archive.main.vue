@@ -19,7 +19,7 @@
 
     .video {
         position: fixed;
-        width: 50rem;
+        width: 30rem;
         max-width: calc(50% - 10px);
         pointer-events: none;
         background: #000;

@@ -157,7 +157,7 @@
         methods: {
 
             logo () {
-                if (this.archive) return;
+                if (this.archive) return this.$router.push('/');
                 if (this.contain) return this.$emit('update:contain', false);
                 this.$router.push({query: {}});
             }

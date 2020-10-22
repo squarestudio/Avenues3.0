@@ -27,7 +27,7 @@
         <div class="u-center">
             <ui-video
                 ref="video"
-                v-for="(project, i) in home"
+                v-for="(project, i) in projects"
                 v-show="i === index"
                 :key="project.id"
                 :video="project.video"
@@ -59,6 +59,7 @@
         },
 
         props: [
+            'projects',
             'index',
             'video',
             'contain',
@@ -73,14 +74,6 @@
 
         },
 
-        computed: {
-
-            ...mapState([
-                'home'
-            ])
-
-        },
-
         methods: {
 
             setVideo () {
@@ -88,7 +81,7 @@
             },
 
             resize () {
-                this.styles = this.home.map(project => {
+                this.styles = this.projects.map(project => {
                     const maxW = this.$el.offsetWidth / project.videoWidth;
                     const maxH = this.$el.offsetHeight / project.videoHeight;
                     const maxS = Math.max(maxW, maxH);

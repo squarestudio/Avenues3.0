@@ -95,7 +95,7 @@
              @click="$emit('next')">
 
             <div class="badge">
-                {{ index | index(home.length) }}
+                {{ index | index(projects.length) }}
             </div>
 
         </div>
@@ -123,6 +123,7 @@
         },
 
         props: [
+            'projects',
             'paused',
             'index',
             'video',
@@ -141,14 +142,6 @@
             return {
                 timeout: new Timeout(5000)
             }
-        },
-
-        computed: {
-
-            ...mapState([
-                'home'
-            ])
-
         },
 
         methods: {

@@ -74,7 +74,7 @@
         <!-- index -->
 
         <div>
-            <router-link class="u-link" :to="{name: private ? 'private-index' : 'index'}">Index</router-link>
+            <router-link class="u-link" v-if="!isArchive" :to="{name: private ? 'private-index' : 'index'}">Index</router-link>
         </div>
 
 
@@ -82,7 +82,7 @@
 
         <div class="project"
              :class="{active: projectInfo}"
-             v-for="project in home"
+             v-for="project in projects"
              v-if="project.id === active"
              :key="project.id">
 
@@ -99,7 +99,8 @@
 
         <div class="buttons u-row">
             <ui-sound />
-            <ui-view @click.native="$emit('update:contain', !contain)" :active="contain" />
+            <router-link v-if="isArchive" to="/archive">Close</router-link>
+            <ui-view v-else @click.native="$emit('update:contain', !contain)" :active="contain" />
         </div>
 
 
@@ -128,6 +129,8 @@
         },
 
         props: [
+            'view',
+            'projects',
             'contain',
             'active',
             'minimized'
@@ -142,9 +145,12 @@
         computed: {
 
             ...mapState([
-                'home',
                 'private'
-            ])
+            ]),
+
+            isArchive () {
+                return this.view === 'archive'
+            }
 
         },
 

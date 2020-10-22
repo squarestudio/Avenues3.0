@@ -37,7 +37,10 @@ const routes = [
     {
         name: 'home',
         path: '/',
-        component: view
+        component: view,
+        props: {
+            view: 'home'
+        }
     },
     {
         name: 'index',
@@ -48,6 +51,14 @@ const routes = [
         name: 'archive',
         path: '/archive',
         component: archive
+    },
+    {
+        name: 'archive-view',
+        path: '/archive/view',
+        component: view,
+        props: {
+            view: 'archive'
+        }
     },
     {
         name: 'private',

@@ -22,6 +22,7 @@
     <section id="home" class="u-stretch u-col" @mousemove="minimizeReset">
 
         <home-player
+            :projects="projects"
             :contain="contain"
             :index="index"
             :paused="paused"
@@ -30,6 +31,8 @@
         />
 
         <home-header
+            :view="view"
+            :projects="projects"
             :contain.sync="contain"
             :minimized="minimized"
             :active="active"
@@ -37,6 +40,7 @@
 
         <home-controls
             class="u-flex"
+            :projects="projects"
             :index="index"
             :video="video"
             :minimized="minimized"
@@ -78,6 +82,10 @@
             homeFooter
         },
 
+        props: [
+            'view'
+        ],
+
         mixins: [
             minimize(2000)
         ],
@@ -85,25 +93,22 @@
         data () {
             return {
                 video: {},
-                contain: false,
-                paused: false
+                contain: this.view === 'archive',
+                paused: false,
+                projects: this.$store.state[this.view]
             }
         },
 
         computed: {
 
-            ...mapState([
-                'home'
-            ]),
-
             active () {
                 const id = +this.$route.query.id;
-                if (!id || !this.home.find(project => project.id === id)) return this.home[0].id;
+                if (!id || !this.projects.find(project => project.id === id)) return this.projects[0].id;
                 return id;
             },
 
             index () {
-                return this.home.findIndex(project => project.id === this.active);
+                return this.projects.findIndex(project => project.id === this.active);
             }
 
         },
@@ -112,14 +117,14 @@
 
             next () {
                 let next = this.index + 1;
-                if (next > this.home.length - 1) next = 0;
-                this.$router.push({query: {id: this.home[next].id}});
+                if (next > this.projects.length - 1) next = 0;
+                this.$router.push({query: {id: this.projects[next].id}});
             },
 
             prev () {
                 let prev = this.index - 1;
-                if (prev < 0) prev = this.home.length - 1;
-                this.$router.push({query: {id: this.home[prev].id}});
+                if (prev < 0) prev = this.projects.length - 1;
+                this.$router.push({query: {id: this.projects[prev].id}});
             }
 
         },

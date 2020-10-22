@@ -56,12 +56,20 @@
 
         <!-- rows -->
 
-        <div class="u-grid row" v-for="project in sorted" v-show="canShow(project)" :key="project.id" @mousemove="move($event, project.id)">
+        <router-link
+            class="u-grid row"
+            v-for="project in sorted"
+            v-show="canShow(project)"
+            :key="project.id"
+            :to="{name: 'archive-view', query: {id: project.id}}"
+            @mousemove.native="move($event, project.id)">
+
             <div>{{project.client}}</div>
             <div>{{project.title}}</div>
             <div>{{project.category}}</div>
             <div>{{project.editor}}</div>
-        </div>
+
+        </router-link>
 
 
     </main>

@@ -20,7 +20,7 @@
     .video {
         position: fixed;
         width: 30rem;
-        max-width: calc(50% - 10px);
+        max-width: calc(50% - 1.5rem);
         pointer-events: none;
         background: #000;
     }
@@ -118,7 +118,7 @@
             },
 
             move (event, id) {
-                const margin = 10;
+                const margin = 1.5 * parseFloat(document.documentElement.style.fontSize);
                 const $video = this.$refs.video;
                 const video = $video.getBoundingClientRect();
                 let y = event.clientY + margin;

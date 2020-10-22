@@ -123,6 +123,8 @@
 
             transition () {
                 if (!this.route.from) return 'route-fade'
+                if (this.route.to === 'archive-view') return;
+                if (this.route.from === 'archive-view') return;
                 if (this.route.to === 'archive') return 'route-up';
                 if (this.route.from === 'archive') return 'route-down';
                 return null;

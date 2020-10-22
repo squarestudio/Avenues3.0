@@ -93,9 +93,9 @@
         data () {
             return {
                 video: {},
-                contain: this.view === 'archive',
+                contain: false,
                 paused: false,
-                projects: this.$store.state[this.view]
+                projects: []
             }
         },
 
@@ -133,6 +133,14 @@
 
             index () {
                 this.paused = false;
+            },
+
+            view: {
+                immediate: true,
+                handler (value) {
+                    this.contain = value === 'archive';
+                    this.projects = this.$store.state[value];
+                }
             }
 
         }

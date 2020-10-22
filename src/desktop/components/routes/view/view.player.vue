@@ -7,7 +7,7 @@
     main {
         overflow: hidden;
     }
-    main .ui-video {
+    main.ready .ui-video {
         transition: transform .3s;
     }
     main:not(.contain) .ui-video {
@@ -23,7 +23,7 @@
 -->
 
 <template>
-    <main class="u-stretch" :class="{contain}">
+    <main class="u-stretch" :class="{contain, ready}">
         <div class="u-center">
             <ui-video
                 ref="video"
@@ -69,6 +69,7 @@
         data () {
 
             return {
+                ready: false,
                 styles: []
             }
 
@@ -108,6 +109,7 @@
             window.addEventListener('resize', this.resize);
             this.resize();
             this.setVideo();
+            setTimeout(() => this.ready = true);
         },
 
         destroyed () {

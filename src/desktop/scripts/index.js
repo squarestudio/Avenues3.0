@@ -7,7 +7,7 @@ import Router from '@/common/scripts/modules/router'
 import Store from '@/common/scripts/modules/store'
 
 import app from '@/desktop/components/app.vue'
-import home from '@/desktop/components/routes/home/route.home.vue'
+import view from '@/desktop/components/routes/view/route.view.vue'
 import index from '@/desktop/components/routes/index/route.index.vue'
 import archive from '@/desktop/components/routes/archive/route.archive.vue'
 
@@ -37,7 +37,7 @@ const routes = [
     {
         name: 'home',
         path: '/',
-        component: home
+        component: view
     },
     {
         name: 'index',
@@ -52,7 +52,7 @@ const routes = [
     {
         name: 'private',
         path: '/private/:id',
-        component: home
+        component: view
     },
     {
         name: 'private-index',

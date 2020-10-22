@@ -64,10 +64,10 @@
 
     import {mapState} from 'vuex'
     import minimize from '@/common/scripts/mixins/minimize'
-    import homeHeader from './home.header.vue'
-    import homeControls from './home.controls.vue'
-    import homePlayer from './home.player.vue'
-    import homeFooter from './home.footer.vue'
+    import homeHeader from './view.header.vue'
+    import homeControls from './view.controls.vue'
+    import homePlayer from './view.player.vue'
+    import homeFooter from './view.footer.vue'
 
     export default {
 

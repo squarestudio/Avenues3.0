@@ -63,7 +63,10 @@ const routes = [
     {
         name: 'private',
         path: '/private/:id',
-        component: view
+        component: view,
+        props: {
+            view: 'home'
+        }
     },
     {
         name: 'private-index',

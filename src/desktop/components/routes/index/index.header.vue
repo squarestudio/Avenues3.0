@@ -62,7 +62,7 @@
 
         <div>
             <p v-if="private" class="u-row u-link private">{{ privateInfo.title }}<icon-down /></p>
-            <a v-else class="u-link" @click="$emit('back')">Fullscreen</a>
+            <router-link v-else class="u-link" to="/">Fullscreen</router-link>
         </div>
 
 

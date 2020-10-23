@@ -93,8 +93,20 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapState, mapMutations} from 'vuex'
     import loader from './loader.vue'
+
+    function history (route) {
+        switch (route) {
+            case 'home': return ['home'];
+            case 'index': return ['home', 'index'];
+            case 'archive': return ['home', 'archive'];
+            case 'archive-view': return ['home', 'archive', 'archive-view'];
+            case 'private': return ['private'];
+            case 'private-index': return ['private', 'private-index'];
+            default: return ['home'];
+        }
+    }
 
     export default {
 
@@ -132,10 +144,26 @@
 
         },
 
+        methods: {
+
+            ...mapMutations([
+                'set',
+                'navigate'
+            ])
+
+        },
+
         watch: {
+
             '$route.name' (to, from) {
                 this.route = {to, from};
+                this.navigate(this.route);
             }
+
+        },
+
+        created () {
+            this.set({history: history(this.$route.name)});
         }
 
     }

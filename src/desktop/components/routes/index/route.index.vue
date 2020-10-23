@@ -15,7 +15,7 @@
 
 <template>
     <section id="index" class="u-stretch u-col">
-        <index-header :filter.sync="filter" :editors.sync="editors" @back="back" />
+        <index-header :filter.sync="filter" :editors.sync="editors" />
         <index-projects :filter="filter" class="u-flex" />
         <index-footer />
         <index-editors :filter.sync="filter" :editors.sync="editors" />
@@ -30,7 +30,6 @@
 
 <script>
 
-    import mixinBack from '@/common/scripts/mixins/back'
     import indexHeader from './index.header.vue'
     import indexProjects from './index.projects.vue'
     import indexFooter from './index.footer.vue'
@@ -44,10 +43,6 @@
             indexEditors,
             indexFooter
         },
-
-        mixins: [
-            mixinBack
-        ],
 
         data () {
             return {

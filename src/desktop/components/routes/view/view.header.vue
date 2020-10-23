@@ -99,7 +99,7 @@
 
         <div class="buttons u-row">
             <ui-sound />
-            <router-link v-if="archive" :to="{name: 'archive'}">Close</router-link>
+            <router-link v-if="archive" :to="{name: back}">Close</router-link>
             <ui-view v-else @click.native="$emit('update:contain', !contain)" :active="contain" />
         </div>
 
@@ -115,7 +115,7 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapState, mapGetters} from 'vuex'
     import uiView from '@/common/components/ui/view.vue'
     import uiSound from '@/desktop/components/ui/sound.vue'
     import uiMenu from '@/desktop/components/ui/menu.vue'
@@ -146,6 +146,10 @@
 
             ...mapState([
                 'private'
+            ]),
+
+            ...mapGetters([
+                'back'
             ]),
 
             archive () {

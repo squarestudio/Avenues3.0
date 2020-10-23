@@ -29,7 +29,7 @@
 <template>
     <section id="archive" class="u-stretch u-col">
         <div class="stick">
-            <archive-header :search.sync="search" @back="back" />
+            <archive-header :search.sync="search" />
             <archive-sort :sort.sync="sort" />
         </div>
         <archive-main :sort="sort" :search="search" class="u-flex" />
@@ -45,7 +45,6 @@
 
 <script>
 
-    import mixinBack from '@/common/scripts/mixins/back'
     import archiveHeader from './archive.header.vue'
     import archiveSort from './archive.sort.vue'
     import archiveMain from './archive.main.vue'
@@ -59,10 +58,6 @@
             archiveMain,
             archiveFooter
         },
-
-        mixins: [
-            mixinBack
-        ],
 
         data () {
             return {

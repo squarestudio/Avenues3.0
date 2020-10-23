@@ -33,7 +33,7 @@
         margin-left: .25rem;
         flex-shrink: 0;
     }
-    
+
 </style>
 
 
@@ -70,10 +70,10 @@
         <!-- close -->
 
         <div>
-            <a class="close u-row u-link" @click="$emit('back')">
+            <router-link class="close u-row u-link" :to="{name: back}">
                 <span>Close archive</span>
                 <icon-close />
-            </a>
+            </router-link>
         </div>
 
 
@@ -88,6 +88,7 @@
 
 <script>
 
+    import {mapGetters} from 'vuex'
     import uiSound from '@/desktop/components/ui/sound.vue'
     import iconClose from '@/common/assets/icons/close.svg'
     import iconRight from '@/common/assets/icons/right.svg'
@@ -103,6 +104,14 @@
         props: [
             'search'
         ],
+
+        computed: {
+
+            ...mapGetters([
+                'back'
+            ])
+
+        },
 
         methods: {
 

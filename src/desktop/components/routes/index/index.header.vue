@@ -62,7 +62,7 @@
 
         <div>
             <p v-if="private" class="u-row u-link private">{{ privateInfo.title }}<icon-down /></p>
-            <router-link v-else class="u-link" to="/">Fullscreen</router-link>
+            <router-link v-else class="u-link" :to="{name: back}">Fullscreen</router-link>
         </div>
 
 
@@ -95,7 +95,7 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapState, mapGetters} from 'vuex'
     import uiSound from '@/desktop/components/ui/sound.vue'
     import iconDown from '@/common/assets/icons/down.svg'
 
@@ -116,6 +116,10 @@
             ...mapState([
                 'private',
                 'privateInfo'
+            ]),
+
+            ...mapGetters([
+                'back'
             ])
 
         }

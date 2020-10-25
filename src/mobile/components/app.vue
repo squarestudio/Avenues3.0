@@ -96,6 +96,7 @@
         computed: {
 
             ...mapState([
+                'private',
                 'loaded'
             ]),
 
@@ -104,6 +105,7 @@
             },
 
             theme () {
+                if (this.private) return 'private';
                 if (this.$route.query.contain) return 'black';
                 if (this.$route.name === 'archive') return 'white';
                 return 'black';
@@ -135,6 +137,10 @@
             contain (value) {
                 this.set({muted: !value})
             }
+        },
+
+        mounted () {
+            document.body.classList.add(this.private ? 'th-private' : 'th-black');
         }
 
     }

@@ -5,6 +5,7 @@
 import Vue from 'vue';
 import Router from '@/common/scripts/modules/router'
 import Store from '@/common/scripts/modules/store'
+import FastClick from 'fastclick'
 
 import app from '@/mobile/components/app.vue'
 import home from '@/mobile/components/routes/home/route.home.vue'

@@ -35,10 +35,6 @@ function configurePlugins (mode, type) {
         chunks: ['bundle', 'bundle_head']
     })];
 
-    if (type === 'mobile') {
-        plugins.push(new webpack.ProvidePlugin({ FastClick : 'fastclick' }));
-    }
-
     if (mode === 'production') {
         // plugins.push(new PrerenderSPAPlugin({
         //     staticDir: absPath(`dist/${type}`),

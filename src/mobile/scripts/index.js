@@ -20,6 +20,14 @@ import '@/mobile/styles/index.css'
 
 
 // ------------------
+// Fast click
+// ------------------
+
+FastClick.attach(document.body);
+
+
+
+// ------------------
 // Disable Vue logs
 // ------------------
 

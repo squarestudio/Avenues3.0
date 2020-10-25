@@ -35,6 +35,10 @@ function configurePlugins (mode, type) {
         chunks: ['bundle', 'bundle_head']
     })];
 
+    if (type === 'mobile') {
+        plugins.push(new webpack.ProvidePlugin({ FastClick : 'fastclick' }));
+    }
+
     if (mode === 'production') {
         // plugins.push(new PrerenderSPAPlugin({
         //     staticDir: absPath(`dist/${type}`),
@@ -87,7 +91,7 @@ module.exports = ({mode, type, port = 49018}) => ({
             DEV: JSON.stringify(mode === 'development'),
             API_ORIGIN: JSON.stringify('http://18.132.9.29:49001'),
             API_PROJECT: JSON.stringify('avenues')
-        }),
+        })
     ],
 
     devServer: {

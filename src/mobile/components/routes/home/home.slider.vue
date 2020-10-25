@@ -13,7 +13,12 @@
     .slider.immediate {
         transition: none !important;
     }
-    
+    .arrow {
+        position: absolute;
+        right: var(--padding);
+        width: .8rem;
+    }
+
 </style>
 
 
@@ -24,8 +29,11 @@
 
 <template>
     <main class="u-stretch">
-        <div class="slider" ref="slider" :class="{immediate}" @transitionend="update">
 
+
+        <!-- slider -->
+
+        <div class="slider" ref="slider" :class="{immediate}" @transitionend="update">
             <home-project
                 v-for="project in projects"
                 :key="project.id"
@@ -35,10 +43,17 @@
                 @video="$emit('update:video', $event)"
                 @end="next"
             />
-
             <home-footer />
-
         </div>
+
+
+        <!-- arrow -->
+
+        <transition name="fade">
+            <icon-scroll class="arrow u-vertical" v-show="index === 0 && !menu"/>
+        </transition>
+
+
     </main>
 </template>
 
@@ -50,6 +65,7 @@
 
 <script>
 
+    import iconScroll from '@/common/assets/icons/scroll.svg'
     import homeProject from './home.project.vue'
     import homeFooter from './home.footer.vue'
 
@@ -66,6 +82,7 @@
     export default {
 
         components: {
+            iconScroll,
             homeProject,
             homeFooter
         },
@@ -73,7 +90,8 @@
         props: [
             'contain',
             'index',
-            'video'
+            'video',
+            'menu'
         ],
 
         data () {
@@ -101,7 +119,6 @@
 
             start (event) {
                 if (this.contain) return;
-                // this.immediate =
                 const y = this.$slider.getBoundingClientRect().top;
                 const e = pageY(event);
                 this.drag = {y, e};

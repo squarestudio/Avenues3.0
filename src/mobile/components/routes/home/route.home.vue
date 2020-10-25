@@ -17,7 +17,7 @@
 <template>
     <section id="home" class="u-stretch" @mousemove="minimizeReset">
 
-        <home-slider :contain.sync="contain" :index.sync="index" :video.sync="video" />
+        <home-slider :contain.sync="contain" :index.sync="index" :video.sync="video" :menu="menu" />
 
         <transition name="fade">
             <home-header v-show="!footer && !minimized" :contain.sync="contain" :menu.sync="menu" :index="index" />

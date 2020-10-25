@@ -92,15 +92,8 @@
 
         <transition name="fade">
             <div class="menu u-stretch u-col" v-show="!contain" :class="{active: menu}">
-
-                <div class="u-text">
-                    <span>Avenues is</span>
-                    <span v-html="about.title"></span>
-                    <span v-html="about.description_mobile"></span>
-                </div>
-
+                <div class="u-text" v-html="about.mobile_description" />
                 <a class="u-link" @click="toggleMenu()">{{ menu ? 'Close' : 'Avenues' }}</a>
-
             </div>
         </transition>
 

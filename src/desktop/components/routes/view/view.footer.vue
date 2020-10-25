@@ -148,8 +148,8 @@
                     ref="infoMenu"
                     :style="{transform: `translateY(-${infoPadding})`}"
                     :active.sync="infoActive"
-                    :target="about.title"
-                    :source="about.description_desktop"
+                    :target="about.desktop_title"
+                    :source="about.desktop_description"
                     @enter="infoEnter"
                     @leave="infoLeave"
                 />

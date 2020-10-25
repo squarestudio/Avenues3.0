@@ -28,7 +28,7 @@
         margin-left: .25rem;
         flex-shrink: 0;
     }
-    
+
 </style>
 
 
@@ -43,7 +43,7 @@
 
         <!-- texts -->
 
-        <div class="title" v-html="about.title"></div>
+        <div class="title" v-html="about.desktop_title"></div>
         <div class="u-text" v-html="about.contacts_1"></div>
         <div class="u-text" v-html="about.contacts_2"></div>
 

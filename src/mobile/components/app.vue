@@ -59,10 +59,18 @@
 <template>
     <div id="app" class="u-stretch">
 
-<!--        <transition :name="transition">-->
-            <router-view v-if="loaded" />
+        <transition name="route-fade">
+
+            <div class="u-stretch" v-if="loaded">
+                <transition :name="transition">
+                    <router-view />
+                </transition>
+            </div>
+
             <loader v-else :class="`th-${theme}`" />
-<!--        </transition>-->
+
+
+        </transition>
 
     </div>
 </template>
@@ -112,7 +120,7 @@
             },
 
             transition () {
-                if (!this.route.from) return 'route-fade'
+                // if (!this.route.from) return 'route-fade'
                 if (this.route.to === 'archive') return 'route-up';
                 if (this.route.from === 'archive') return 'route-down';
                 return null;

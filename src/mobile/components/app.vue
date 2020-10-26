@@ -59,10 +59,10 @@
 <template>
     <div id="app" class="u-stretch">
 
-        <transition :name="transition">
+<!--        <transition :name="transition">-->
             <router-view v-if="loaded" />
             <loader v-else :class="`th-${theme}`" />
-        </transition>
+<!--        </transition>-->
 
     </div>
 </template>

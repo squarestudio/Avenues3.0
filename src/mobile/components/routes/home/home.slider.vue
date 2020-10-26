@@ -50,7 +50,7 @@
         <!-- arrow -->
 
         <transition name="fade">
-            <icon-scroll class="arrow u-vertical" v-show="index === 0 && !menu"/>
+            <icon-scroll class="arrow u-vertical" v-show="index === 0 && !menu && !contain"/>
         </transition>
 
 

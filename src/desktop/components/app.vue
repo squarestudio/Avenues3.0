@@ -25,7 +25,7 @@
         color: #000000;
     }
     .th-private-index {
-        background: #B1B1B1;
+        background: #A86F6F;
         color: #000000;
     }
 

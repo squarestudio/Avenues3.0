@@ -15,7 +15,7 @@
 -->
 
 <template>
-    <section id="home" class="u-stretch" @mousemove="minimizeReset">
+    <section id="home" class="u-stretch" :class="private ? 'th-private' : 'th-black'" @mousemove="minimizeReset">
 
         <home-slider :contain.sync="contain" :index.sync="index" :video.sync="video" :menu="menu" />
 
@@ -66,7 +66,8 @@
         computed: {
 
             ...mapState([
-                'home'
+                'home',
+                'private'
             ]),
 
             footer () {

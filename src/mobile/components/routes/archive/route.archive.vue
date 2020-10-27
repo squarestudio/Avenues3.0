@@ -218,7 +218,7 @@
         },
 
         created () {
-            this.$parent.$on('afterEnter', () => this.showed = true);
+            this.$parent.$once('afterEnter', () => this.showed = true);
         }
 
     }

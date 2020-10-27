@@ -125,7 +125,7 @@
             ]),
 
             afterEnter () {
-                this.$emit('afterEnter');
+                document.dispatchEvent(new Event('routeTransitionEnd'));
             }
 
         },

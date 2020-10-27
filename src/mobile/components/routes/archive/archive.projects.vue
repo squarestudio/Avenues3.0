@@ -84,14 +84,13 @@
 
                 <div class="accordion" ref="accordion" v-show="i === index">
                     <ui-video
-                        v-if="i === index || showed"
-                        :ref="`video${i}`"
                         :video="project.video"
                         :poster="project.frame"
                         :paused="project.paused"
-                        :active="project.active"
+                        :active="project.active && started"
                         :style="project.style"
                         @end="next"
+                        @ready="setVideo"
                         @click.native="$emit('update:contain', true)"
                     />
                 </div>
@@ -144,14 +143,14 @@
             'contain',
             'search',
             'sort',
-            'video',
-            'showed'
+            'video'
         ],
 
         data () {
             return {
                 archive: extend(this),
-                immediate: true
+                immediate: true,
+                started: false
             }
         },
 
@@ -241,10 +240,8 @@
                 this.$emit('update:active', id);
             },
 
-            setVideo () {
-                const $ref = this.$refs[`video${this.index}`];
-                const $video = $ref ? $ref[0].$refs.video : {};
-                this.$emit('update:video', $video);
+            setVideo ($node) {
+                this.$emit('update:video', $node);
             },
 
             next () {
@@ -260,6 +257,10 @@
                 this.$emit('update:active', -1);
             },
 
+            start () {
+                this.started = true;
+            }
+
         },
 
         watch: {
@@ -272,12 +273,7 @@
                 this.reset();
             },
 
-            showed () {
-                this.resize();
-            },
-
             async index (curr, prev) {
-                this.setVideo();
                 await this.$nextTick();
                 this.scrollToVideo(curr, prev);
             },
@@ -290,7 +286,6 @@
         },
 
         async mounted () {
-            this.setVideo();
             this.resize();
             await this.$nextTick();
             this.scrollToVideo(this.index, -1);
@@ -299,8 +294,13 @@
             window.addEventListener('resize', this.resize);
         },
 
+        created () {
+            document.addEventListener('routeTransitionEnd', this.start);
+        },
+
         destroyed () {
             window.removeEventListener('resize', this.resize);
+            document.removeEventListener('routeTransitionEnd', this.start);
         }
 
     }

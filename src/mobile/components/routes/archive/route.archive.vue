@@ -71,7 +71,6 @@
             />
 
             <archive-projects
-                :showed="showed"
                 :active.sync="active"
                 :contain.sync="contain"
                 :video.sync="video"
@@ -136,7 +135,6 @@
 
         data () {
             return {
-                showed: false,
                 sort: false,
                 search: '',
                 video: {},
@@ -215,10 +213,6 @@
                 this.animation.from(from).to(to).duration(duration).start();
             }
 
-        },
-
-        created () {
-            this.$parent.$once('afterEnter', () => this.showed = true);
         }
 
     }

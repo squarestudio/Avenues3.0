@@ -5,6 +5,7 @@
 import Vue from 'vue';
 import Router from '@/common/scripts/modules/router'
 import Store from '@/common/scripts/modules/store'
+import FastClick from 'fastclick'
 
 import app from '@/mobile/components/app.vue'
 import home from '@/mobile/components/routes/home/route.home.vue'
@@ -16,6 +17,14 @@ import '@/common/scripts/filters/time'
 import '@/common/styles/base.css'
 import '@/common/styles/utils.css'
 import '@/mobile/styles/index.css'
+
+
+
+// ------------------
+// Fast click
+// ------------------
+
+FastClick.attach(document.body);
 
 
 

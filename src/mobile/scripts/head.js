@@ -16,8 +16,9 @@ font([
 */
 
 function setHeight () {
-    document.documentElement.style.setProperty('--windowHeight', window.innerHeight + 'px');
+    document.documentElement.style.setProperty('--windowHeight', Math.max(document.documentElement.clientHeight, window.innerHeight || 0) + 'px');
 }
 
 window.addEventListener('resize', setHeight);
+window.addEventListener('orientationchange', setHeight);
 setHeight();

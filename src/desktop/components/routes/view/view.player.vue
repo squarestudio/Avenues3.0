@@ -26,7 +26,6 @@
     <main class="u-stretch" :class="{contain, ready}">
         <div class="u-center">
             <ui-video
-                ref="video"
                 v-for="(project, i) in projects"
                 v-show="i === index"
                 :key="project.id"
@@ -36,6 +35,7 @@
                 :active="i === index"
                 :style="styles[i]"
                 @end="$emit('next')"
+                @ready="setVideo"
             />
         </div>
     </main>
@@ -77,8 +77,8 @@
 
         methods: {
 
-            setVideo () {
-                this.$emit('update:video', this.$refs.video[this.index].$refs.video);
+            setVideo ($video) {
+                this.$emit('update:video', $video);
             },
 
             resize () {
@@ -97,18 +97,9 @@
 
         },
 
-        watch: {
-
-            index () {
-                this.setVideo();
-            }
-
-        },
-
         mounted () {
             window.addEventListener('resize', this.resize);
             this.resize();
-            this.setVideo();
             setTimeout(() => this.ready = true);
         },
 

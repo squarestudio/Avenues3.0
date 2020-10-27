@@ -14,6 +14,7 @@
         object-fit: cover;
     }
     .ui-video video {
+        position: relative;
         width: 100%;
         height: 100%;
         object-fit: cover;
@@ -47,8 +48,8 @@
 
 <template>
     <div class="ui-video">
-        <img class="u-stretch" :src="poster" v-show="!this.active || !this.canplay">
-        <video playsinline @canplay="canplay = true" ref="video" @ended="$emit('end')" />
+        <img class="u-stretch" :src="poster">
+        <video playsinline v-if="active" :src="video" @loadstart="start" ref="video" @ended="$emit('end')"  />
     </div>
 </template>
 
@@ -72,12 +73,6 @@
             'time'
         ],
 
-        data () {
-            return {
-                canplay: false
-            }
-        },
-
         computed: {
 
             ...mapState([
@@ -88,26 +83,33 @@
 
         methods: {
 
+            start () {
+                this.setMute();
+                this.setTime();
+                this.setPause();
+                this.$emit('ready', this.$refs.video);
+            },
+
             setSource () {
-                if (this.active) {
-                    this.$refs.video.src = this.video;
-                    if (this.time) this.$refs.video.currentTime = this.time;
-                    !this.paused && this.$refs.video.play();
-                }
-                else {
-                    this.canplay = false;
-                    this.$refs.video.pause();
-                    this.$refs.video.src = '';
-                    this.$refs.video.load();
-                }
+                if (this.$refs.video || this.active) return;
+                this.$refs.video.pause();
+                this.$refs.video.src = '';
+                this.$refs.video.load();
+            },
+
+            setTime () {
+                if (!this.$refs.video || !this.time) return;
+                this.$refs.video.currentTime = this.time;
             },
 
             setPause () {
+                if (!this.$refs.video) return;
                 if (this.paused) this.$refs.video.pause();
-                else if (this.active) this.$refs.video.play();
+                else this.$refs.video.play();
             },
 
             setMute () {
+                if (!this.$refs.video) return;
                 this.$refs.video.muted = this.muted;
             }
 
@@ -126,13 +128,6 @@
             muted () {
                 this.setMute();
             }
-
-        },
-
-        mounted () {
-            this.setMute();
-            this.setSource();
-            this.setPause();
 
         }
 

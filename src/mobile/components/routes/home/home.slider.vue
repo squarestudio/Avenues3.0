@@ -35,11 +35,12 @@
 
         <div class="slider" ref="slider" :class="{immediate}" @transitionend="update">
             <home-project
-                v-for="project in projects"
+                v-for="(project, i) in projects"
                 :key="project.id"
                 :project="project"
                 :contain="contain"
                 :active="project.active"
+                :show="i === index || showed"
                 @video="$emit('update:video', $event)"
                 @end="next"
             />
@@ -91,7 +92,8 @@
             'contain',
             'index',
             'video',
-            'menu'
+            'menu',
+            'showed'
         ],
 
         data () {

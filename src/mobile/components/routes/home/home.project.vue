@@ -28,6 +28,7 @@
         <div class="u-center">
             <ui-video
                 ref="video"
+                v-if="show"
                 :video="project.video"
                 :poster="project.frame"
                 :active="active"
@@ -58,7 +59,8 @@
         props: [
             'project',
             'contain',
-            'active'
+            'active',
+            'show'
         ],
 
         data () {

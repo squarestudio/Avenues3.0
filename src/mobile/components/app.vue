@@ -58,16 +58,9 @@
 
 <template>
     <div id="app" class="u-stretch">
-        <transition name="route-fade">
-
-            <div class="u-stretch" v-if="loaded">
-                <transition :name="transition">
-                    <router-view />
-                </transition>
-            </div>
-
+        <transition :name="transition" @after-enter="afterEnter">
+            <router-view ref="view" v-if="loaded" />
             <loader v-else :class="`th-${theme}`" />
-
         </transition>
     </div>
 </template>
@@ -117,6 +110,7 @@
             },
 
             transition () {
+                if (!this.route.from) return 'route-fade'
                 if (this.route.to === 'archive') return 'route-up';
                 if (this.route.from === 'archive') return 'route-down';
                 return null;
@@ -128,7 +122,11 @@
 
             ...mapMutations([
                 'set'
-            ])
+            ]),
+
+            afterEnter () {
+                this.$emit('afterEnter');
+            }
 
         },
 

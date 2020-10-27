@@ -84,6 +84,7 @@
 
                 <div class="accordion" ref="accordion" v-show="i === index">
                     <ui-video
+                        v-if="i === index || showed"
                         ref="video"
                         :video="project.video"
                         :poster="project.frame"
@@ -143,7 +144,8 @@
             'contain',
             'search',
             'sort',
-            'video'
+            'video',
+            'showed'
         ],
 
         data () {
@@ -240,6 +242,7 @@
             },
 
             setVideo () {
+                if (!this.$refs.video) return;
                 const $video = this.$refs.video[this.index];
                 this.$emit('update:video', $video ? $video.$refs.video : {});
             },
@@ -267,6 +270,10 @@
 
             search () {
                 this.reset();
+            },
+
+            showed () {
+                this.resize();
             },
 
             async index (curr, prev) {

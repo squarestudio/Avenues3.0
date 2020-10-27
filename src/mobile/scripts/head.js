@@ -12,13 +12,18 @@ font([
 
 
 /*
-    windowHeight as CSS variable
+    window size as CSS variable
 */
 
-function setHeight () {
-    document.documentElement.style.setProperty('--windowHeight', Math.max(document.documentElement.clientHeight, window.innerHeight || 0) + 'px');
+function setViewPort () {
+    const width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+    const height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    document.documentElement.style.setProperty('--windowWidth', width + 'px');
+    document.documentElement.style.setProperty('--windowHeight', height + 'px');
+    window.appRealWidth = width;
+    window.appRealHeight = height;
 }
 
-window.addEventListener('resize', setHeight);
-window.addEventListener('orientationchange', setHeight);
-setHeight();
+window.addEventListener('resize', setViewPort);
+window.addEventListener('orientationchange', setViewPort);
+setViewPort();

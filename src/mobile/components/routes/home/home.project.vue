@@ -96,6 +96,7 @@
         mounted () {
             this.resize();
             window.addEventListener('resize', this.resize);
+            window.addEventListener('orientationchange', this.resize);
         },
 
         created () {
@@ -104,6 +105,7 @@
 
         destroyed () {
             window.removeEventListener('resize', this.resize);
+            window.removeEventListener('orientationchange', this.resize);
             document.removeEventListener('routeTransitionEnd', this.start);
         }
 

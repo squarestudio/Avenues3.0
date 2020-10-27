@@ -130,7 +130,7 @@
                 if (!this.drag) return;
                 const e = pageY(event);
                 let y = this.drag.y + e - this.drag.e;
-                if (y > 0 || y < window.innerHeight - this.$slider.offsetHeight) y = this.drag.y + (e - this.drag.e) / 4;
+                if (y > 0 || y < window.appRealHeight - this.$slider.offsetHeight) y = this.drag.y + (e - this.drag.e) / 4;
                 this.$slider.style.transform = `translateY(${y}px)`;
                 event.preventDefault();
             },
@@ -146,9 +146,9 @@
                     const y11 = slide.top;
                     const y12 = y11 + slide.height;
                     const y21 = 0;
-                    const y22 = y21 + window.innerHeight;
+                    const y22 = y21 + window.appRealHeight;
                     const h = Math.min(y12, y22) - Math.max(y11, y21);
-                    if (h > window.innerHeight * 0.1) return true;
+                    if (h > window.appRealHeight * 0.1) return true;
                 });
 
                 if (index !== -1) return this.$emit('update:index', index);

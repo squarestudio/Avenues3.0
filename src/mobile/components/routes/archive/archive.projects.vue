@@ -202,8 +202,8 @@
 
             resize (event) {
                 this.archive.forEach(project => {
-                    const rw = window.innerWidth / project.videoWidth;
-                    const rh = window.innerHeight / project.videoHeight;
+                    const rw = window.appRealWidth / project.videoWidth;
+                    const rh = window.appRealHeight / project.videoHeight;
                     const r = Math.min(rw, rh);
                     project.style.width = r * project.videoWidth + 'px';
                     project.style.height = r * project.videoHeight + 'px';
@@ -219,7 +219,7 @@
                 const $prev = this.$refs.accordion[prev];
                 const height = parseFloat(this.sorted[curr].style.height);
                 const top = $curr.getBoundingClientRect().top;
-                let scroll = top - (window.innerHeight - height) / 2;
+                let scroll = top - (window.appRealHeight - height) / 2;
                 if (prev > -1 && prev < curr) scroll -= $prev.getBoundingClientRect().height;
                 this.$emit('scroll', scroll, this.immediate ? 0 : 300);
             },
@@ -230,7 +230,7 @@
                 if (!this.contain) return ($accordion.style.transform = '');
                 const top = $accordion.offsetTop - document.getElementById('archive').scrollTop;
                 const height = parseFloat(this.sorted[this.index].style.height);
-                const y = (window.innerHeight - height) / 2 - top;
+                const y = (window.appRealHeight - height) / 2 - top;
                 $accordion.style.transform = `translateY(${y}px)`;
             },
 
@@ -292,6 +292,7 @@
             await timeout();
             this.centerVideo();
             window.addEventListener('resize', this.resize);
+            window.addEventListener('orientationchange', this.resize);
         },
 
         created () {
@@ -300,6 +301,7 @@
 
         destroyed () {
             window.removeEventListener('resize', this.resize);
+            window.removeEventListener('orientationchange', this.resize);
             document.removeEventListener('routeTransitionEnd', this.start);
         }
 

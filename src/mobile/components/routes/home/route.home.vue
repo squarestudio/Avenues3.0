@@ -17,7 +17,7 @@
 <template>
     <section id="home" class="u-stretch" :class="private ? 'th-private' : 'th-black'" @mousemove="minimizeReset">
 
-        <home-slider :contain.sync="contain" :index.sync="index" :video.sync="video" :menu="menu" :showed="showed" />
+        <home-slider :contain.sync="contain" :index.sync="index" :video.sync="video" :menu="menu" />
 
         <transition name="fade">
             <home-header v-show="!footer && !minimized" :contain.sync="contain" :menu.sync="menu" :index="index" />
@@ -59,7 +59,6 @@
         data () {
             return {
                 video: {},
-                showed: false,
                 menu: false
             }
         },
@@ -116,10 +115,6 @@
                 }});
             }
 
-        },
-
-        created () {
-            this.$parent.$once('afterEnter', () => this.showed = true);
         }
 
     }

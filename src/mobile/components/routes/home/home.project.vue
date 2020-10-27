@@ -28,12 +28,12 @@
         <div class="u-center">
             <ui-video
                 ref="video"
-                v-if="show"
                 :video="project.video"
                 :poster="project.frame"
-                :active="active"
+                :active="active && started"
                 :paused="false"
                 :style="style"
+                @ready="setVideo"
                 @end="$emit('end')"
             />
         </div>
@@ -59,13 +59,13 @@
         props: [
             'project',
             'contain',
-            'active',
-            'show'
+            'active'
         ],
 
         data () {
             return {
-                style: {}
+                style: {},
+                started: false
             }
         },
 
@@ -83,28 +83,28 @@
                 this.style = {width: w + 'px', height: h + 'px', transform: `scale(${minS})`}
             },
 
-            setVideo () {
-                this.$emit('video', this.$refs.video.$refs.video);
-            }
+            setVideo ($node) {
+                this.$emit('video', $node);
+            },
 
-        },
-
-        watch: {
-
-            active (value) {
-                value && this.setVideo();
+            start () {
+                this.started = true;
             }
 
         },
 
         mounted () {
             this.resize();
-            this.active && this.setVideo();
             window.addEventListener('resize', this.resize);
+        },
+
+        created () {
+            document.addEventListener('routeTransitionEnd', this.start);
         },
 
         destroyed () {
             window.removeEventListener('resize', this.resize);
+            document.removeEventListener('routeTransitionEnd', this.start);
         }
 
     }

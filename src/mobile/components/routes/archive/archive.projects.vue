@@ -85,7 +85,7 @@
                 <div class="accordion" ref="accordion" v-show="i === index">
                     <ui-video
                         v-if="i === index || showed"
-                        ref="video"
+                        :ref="`video${i}`"
                         :video="project.video"
                         :poster="project.frame"
                         :paused="project.paused"
@@ -242,9 +242,9 @@
             },
 
             setVideo () {
-                if (!this.$refs.video) return;
-                const $video = this.$refs.video[this.index];
-                this.$emit('update:video', $video ? $video.$refs.video : {});
+                const $ref = this.$refs[`video${this.index}`];
+                const $video = $ref ? $ref[0].$refs.video : {};
+                this.$emit('update:video', $video);
             },
 
             next () {

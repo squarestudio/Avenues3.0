@@ -14,22 +14,6 @@
     #loader   {z-index: 4;}
 
 
-    /* themes */
-
-    .th-home {
-        background: #000000;
-        color: #f7f7f7;
-    }
-    .th-index, .th-archive {
-        background: #f7f7f7;
-        color: #000000;
-    }
-    .th-private-index {
-        background: #A86F6F;
-        color: #000000;
-    }
-
-
     /* route move transitions */
 
     .route-up-enter-active,
@@ -78,8 +62,8 @@
     <div id="app" class="u-stretch">
 
         <transition :name="transition">
-            <router-view v-if="loaded" :class="theme" />
-            <loader v-else :class="theme" />
+            <router-view v-if="loaded" :class="`th-${theme}`" />
+            <loader v-else :class="`th-${theme}`" />
         </transition>
 
     </div>
@@ -130,7 +114,12 @@
             ]),
 
             theme () {
-                return 'th-' + this.$route.name;
+                switch (this.$route.name) {
+                    case 'index': return 'white'
+                    case 'archive': return 'white'
+                    case 'private-index': return 'private'
+                    default: return 'black'
+                }
             },
 
             transition () {

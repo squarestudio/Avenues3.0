@@ -69,3 +69,24 @@
 .u-link {
     display: inline-flex;
 }
+
+
+
+/*
+    Themes
+*/
+
+.th-black {
+    background: #000000;
+    color: #f7f7f7;
+}
+.th-black .u-text a:hover {
+    opacity: 0.75;
+}
+.th-white {
+    background: #f7f7f7;
+    color: #000000;
+}
+.th-white .u-text a:hover {
+    background: #F00;
+}

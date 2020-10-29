@@ -19,3 +19,7 @@ body {
     grid-gap: calc(var(--padding) * 1.5);
     padding: var(--padding);
 }
+.th-private {
+    background: #A86F6F;
+    color: #000000;
+}

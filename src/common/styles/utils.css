@@ -56,6 +56,9 @@
 .u-text a {
     display: inline-block;
 }
+.u-text a:hover {
+    opacity: .75;
+}
 .u-link {
     display: inline-flex;
 }
@@ -70,14 +73,12 @@
     background: #000000;
     color: #f7f7f7;
 }
-.th-black .u-text a:hover {
-    opacity: 0.75;
-}
 .th-white {
     background: #f7f7f7;
     color: #000000;
 }
 .th-white .u-text a:hover {
+    opacity: 1;
     background: #E5E5E5;
     box-shadow: -.2rem 0 0 0 #E5E5E5, .2rem 0 0 0 #E5E5E5;
 }

@@ -4,10 +4,17 @@
 
 import font from '@/common/scripts/utils/font'
 
-font([
-    {width: 1024, height: 1366, size: 20},
-    {width: 500,  height: 750,  size: 16}
-])
+font({
+    width: 500,
+    height: 750,
+    size: 16,
+    less: false
+}, {
+    width: 1024,
+    height: 1366,
+    size: 20,
+    more: false
+})
 
 
 

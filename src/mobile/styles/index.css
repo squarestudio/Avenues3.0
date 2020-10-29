@@ -11,14 +11,6 @@ body{
 
 /* themes */
 
-.th-black {
-    background: #000000;
-    color: #FFFFFF;
-}
-.th-white {
-    background: #FFFFFF;
-    color: #000000;
-}
 .th-private {
     background: #A86F6F;
     color: #FFFFFF;

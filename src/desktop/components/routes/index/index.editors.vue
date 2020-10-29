@@ -10,12 +10,6 @@
         justify-content: center;
         background: rgba(247,247,247,0.98);
     }
-    .editors a {
-        padding: 0 .2rem;
-    }
-    .editors a:hover {
-        background: #E5E5E5;
-    }
 
 </style>
 
@@ -26,7 +20,7 @@
 -->
 
 <template>
-    <div class="editors u-stretch u-col" v-show="editors">
+    <div class="editors u-stretch u-col u-text" v-show="editors">
         <a @click="select(false)">All</a>
         <a v-for="editor in list" :key="editor" @click="select(editor)">{{editor}}</a>
     </div>

@@ -16,7 +16,7 @@
     .arrow {
         position: absolute;
         right: var(--padding);
-        width: .8rem;
+        width: .6rem;
     }
 
 </style>

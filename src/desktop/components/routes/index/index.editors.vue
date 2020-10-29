@@ -11,7 +11,7 @@
         background: rgba(247,247,247,0.98);
     }
     .editors a {
-        padding: .2rem .4rem;
+        padding: 0 .2rem;
     }
     .editors a:hover {
         background: #E5E5E5;

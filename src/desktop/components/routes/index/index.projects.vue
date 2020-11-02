@@ -76,9 +76,7 @@
                 <!-- ticker -->
 
                 <ui-ticker :active="i === active">
-                    <span>{{ project.title }}</span>
                     <span>{{ project.client }}</span>
-                    <span>{{ project.editor }}</span>
                     <span>{{ project.description }}</span>
                 </ui-ticker>
 

@@ -63,7 +63,7 @@
 
                 <ui-video
                     class="hd"
-                    :style="{maxHeight}"
+                    :style="{height}"
                     :video="project.video"
                     :poster="project.cover"
                     :active="i === active"
@@ -112,7 +112,7 @@
         data () {
             return {
                 active: -1,
-                maxHeight: ''
+                height: ''
             }
         },
 
@@ -148,7 +148,7 @@
                 const $item = $grid.firstElementChild;
                 const $note = $item.lastElementChild;
                 const gap = getComputedStyle($grid).getPropertyValue('grid-row-gap');
-                this.maxHeight = (this.$el.offsetHeight - 2 * parseFloat(gap)) / 3 - $note.offsetHeight + 'px'
+                this.height = (this.$el.offsetHeight - 2 * parseFloat(gap)) / 3 - $note.offsetHeight + 'px'
             }
 
         },

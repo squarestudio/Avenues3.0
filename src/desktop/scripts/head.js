@@ -5,6 +5,7 @@
 import font from '@/common/scripts/utils/font'
 
 font({
+    max: 17,
     pointA: {
         width: 1280,
         height: 720,

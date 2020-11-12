@@ -5,15 +5,18 @@
 import font from '@/common/scripts/utils/font'
 
 font({
-    width: 500,
-    height: 750,
-    size: 16,
-    less: false
-}, {
-    width: 1024,
-    height: 1366,
-    size: 20,
-    more: false
+    min: 16,
+    max: 20,
+    pointA: {
+        width: 500,
+        height: 750,
+        size: 16
+    },
+    pointB: {
+        width: 1024,
+        height: 1366,
+        size: 20
+    }
 })
 
 

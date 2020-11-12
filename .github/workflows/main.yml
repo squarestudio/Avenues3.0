@@ -15,7 +15,7 @@ jobs:
           script: |
             cd /srv/projects/avenues/client
             git checkout -- .
-            git pull https://${{ secrets.GIT_USERNAME }}:${{ secrets.GIT_PASSWORD }}@github.com/karpovsystems/vue-avenues.git
+            git pull https://${{ secrets.GIT_USERNAME }}:${{ secrets.GIT_PASSWORD }}@github.com/dmtkpv/vue-avenues.git
             npm install
             npm run build:desktop
             npm run build:mobile

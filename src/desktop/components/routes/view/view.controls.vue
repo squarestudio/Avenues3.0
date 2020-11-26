@@ -169,6 +169,10 @@
                 this.video.currentTime = 0;
                 this.timeout.start();
                 this.$emit('update:paused', false);
+            },
+
+            keydown (event) {
+                event.keyCode === 32 && this.$emit('update:paused', !this.paused);
             }
 
         },
@@ -179,6 +183,14 @@
                 this.timeout.stop();
             }
 
+        },
+
+        mounted () {
+            document.addEventListener('keydown', this.keydown);
+        },
+
+        destroyed () {
+            document.removeEventListener('keydown', this.keydown);
         }
 
     }

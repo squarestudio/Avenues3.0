@@ -30,8 +30,9 @@ export default function (time = 8000) {
             contain: {
                 immediate: true,
                 handler (value) {
+                    this.timeout.stop();
+                    this.minimized = false;
                     if (value) this.timeout.start();
-                    else this.timeout.stop();
                 }
             }
 

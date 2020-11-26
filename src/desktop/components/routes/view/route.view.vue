@@ -66,7 +66,7 @@
 
 <script>
 
-    import {mapState} from 'vuex'
+    import {mapGetters} from 'vuex'
     import minimize from '@/common/scripts/mixins/minimize'
     import homeHeader from './view.header.vue'
     import homeControls from './view.controls.vue'
@@ -87,7 +87,7 @@
         ],
 
         mixins: [
-            minimize(2000)
+            minimize(1000)
         ],
 
         data () {
@@ -99,7 +99,16 @@
             }
         },
 
+        beforeRouteLeave (to, from, next) {
+            if (document.fullscreenElement) document.exitFullscreen();
+            next();
+        },
+
         computed: {
+
+            ...mapGetters([
+                'back'
+            ]),
 
             active () {
                 const id = +this.$route.query.id;
@@ -125,11 +134,23 @@
                 let prev = this.index - 1;
                 if (prev < 0) prev = this.projects.length - 1;
                 this.$router.push({query: {id: this.projects[prev].id}});
+            },
+
+            fullscreen () {
+                this.contain = !!document.fullscreenElement;
             }
 
         },
 
         watch: {
+
+            contain (value) {
+                if (value) document.documentElement.requestFullscreen();
+                else {
+                    if (document.fullscreenElement) document.exitFullscreen();
+                    if (this.view === 'archive') this.$router.push({ name: this.back });
+                }
+            },
 
             index () {
                 this.paused = false;
@@ -143,6 +164,14 @@
                 }
             }
 
+        },
+
+        mounted () {
+            document.documentElement.addEventListener('fullscreenchange', this.fullscreen);
+        },
+
+        destroyed () {
+            document.documentElement.removeEventListener('fullscreenchange', this.fullscreen);
         }
 
 
